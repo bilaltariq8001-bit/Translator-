@@ -362,5 +362,4 @@
     <string name="analytics_share_title">匿名の利用統計を共有</string>
     <string name="analytics_share_body">アプリの改善に役立ちます。テキスト、音声、写真は一切含まれません。設定でいつでも変更できます。</string>
     <string name="ad_privacy_choices">広告のプライバシー設定</string>
-    <string name="ad_attribution">広告</string>
 </resources>

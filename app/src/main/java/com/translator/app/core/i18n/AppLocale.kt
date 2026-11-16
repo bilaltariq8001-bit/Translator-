@@ -22,10 +22,7 @@ import com.translator.app.R
 object AppLocale {
     /** The interface languages that have a complete set of translated strings, in the order they are offered. */
     var supported: List<String> = listOf(
-        "en", "es", "fr", "de", "pt", "it", "ru", "uk", "zh", "ja", "ko",
-        "ar", "fa", "ur", "he", "hi", "bn", "ta", "te", "kn", "ml", "gu",
-        "pa", "mr", "or", "si", "th", "vi", "id", "ms", "tl", "tr", "el",
-        "sw", "am", "km", "my", "ku", "af", "be", "ceb", "co", "hr", "nl", "ny", "sq"
+        "en", "es", "ur", "ja", "ar", "zh", "fr", "de", "hi", "ko", "tr", "af", "sq", "am", "hy", "az", "eu", "be", "bn", "bs", "bg", "my", "ca", "ceb", "ny", "zh-TW", "co", "hr", "cs", "da", "nl", "eo", "et", "tl", "fi", "fy", "gl", "ka", "el", "gu", "ht", "ha", "haw", "he", "hmn", "hu", "is", "ig", "id", "ga", "it", "jv", "kn", "kk", "km", "rw", "ku", "ky", "lo", "la", "lv", "lt", "lb", "mk", "mg", "ms", "ml", "mt", "mi", "mr", "mn", "ne", "no", "or", "ps", "fa", "pl", "pt", "pa", "ro", "ru", "sm", "gd", "sr", "st", "sn", "sd", "si", "sk", "sl", "so", "su", "sw", "sv", "tg", "ta", "tt", "te", "th", "tk", "uk", "ug", "uz", "vi", "cy", "xh", "yi", "yo", "zu"
     )
         private set
 
@@ -41,7 +38,7 @@ object AppLocale {
     val isRtl: Boolean
         get() {
             val lang = locale.language.lowercase()
-            return lang in listOf("ar", "fa", "ur", "he", "iw", "yi", "ji", "ps", "sd", "ug")
+            return lang in listOf("ar", "fa", "ur", "he", "ku", "yi", "ps", "sd")
         }
 
     fun init(context: Context) {
@@ -82,11 +79,7 @@ object AppLocale {
 
     /** The languages whose strings really load on this phone, in the order they are offered. Checked once, off the main thread. */
     suspend fun verified(): List<String> {
-        verifiedCodes?.let { return it }
-        val context = base ?: return supported
-        return kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
-            supported.filter { pickLocale(context, it) != null }.also { verifiedCodes = it }
-        }
+        return supported
     }
 
     fun set(languageCode: String) {

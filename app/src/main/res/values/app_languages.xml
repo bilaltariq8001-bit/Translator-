@@ -3,37 +3,35 @@
     <string-array name="app_language_codes" translatable="false">
         <item>en</item>
         <item>es</item>
+        <item>ur</item>
+        <item>ja</item>
+        <item>ar</item>
+        <item>zh</item>
         <item>fr</item>
         <item>de</item>
-        <item>ur</item>
-        <item>ar</item>
         <item>hi</item>
-        <item>ja</item>
-        <item>zh</item>
+        <item>ko</item>
+        <item>tr</item>
         <item>af</item>
+        <item>sq</item>
         <item>am</item>
+        <item>hy</item>
         <item>az</item>
+        <item>eu</item>
         <item>be</item>
-        <item>bg</item>
         <item>bn</item>
         <item>bs</item>
+        <item>bg</item>
+        <item>my</item>
         <item>ca</item>
         <item>ceb</item>
-        <item>co</item>
-        <item>cs</item>
-        <item>eu</item>
-        <item>hr</item>
-        <item>hy</item>
-        <item>ko</item>
-        <item>my</item>
-        <item>nl</item>
         <item>ny</item>
-        <item>pt</item>
-        <item>sq</item>
-        <item>tr</item>
         <item>zh-TW</item>
-        <!-- Added Nov 2026: interface strings machine-translated from values/strings.xml -->
+        <item>co</item>
+        <item>hr</item>
+        <item>cs</item>
         <item>da</item>
+        <item>nl</item>
         <item>eo</item>
         <item>et</item>
         <item>tl</item>
@@ -80,6 +78,7 @@
         <item>ps</item>
         <item>fa</item>
         <item>pl</item>
+        <item>pt</item>
         <item>pa</item>
         <item>ro</item>
         <item>ru</item>

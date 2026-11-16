@@ -362,5 +362,4 @@
     <string name="analytics_share_title">مشاركة إحصاءات استخدام مجهولة</string>
     <string name="analytics_share_body">يساعد على تحسين التطبيق. لا يتضمن نصك أو صوتك أو صورك أبدًا. يمكنك تغيير ذلك في أي وقت من الإعدادات.</string>
     <string name="ad_privacy_choices">خيارات خصوصية الإعلانات</string>
-    <string name="ad_attribution">إعلان</string>
 </resources>
