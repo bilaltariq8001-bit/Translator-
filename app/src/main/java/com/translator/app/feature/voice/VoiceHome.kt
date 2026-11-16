@@ -117,23 +117,21 @@ fun VoiceHome(
                     )
                 }
             } else {
-                BannerFrame(RcKeys.SLOT_VOICE) {
-                    Column(Modifier.fillMaxSize()) {
-                        ScreenHeader(str(R.string.voice_translator), Modifier.padding(horizontal = pad - 8.dp)) { HistoryAction(onOpenHistory) }
-                        LanguageBarCard(state.source.localName(), state.target.localName(), { pickingFor = "from" }, { pickingFor = "to" }, vm::onSwap, Modifier.padding(horizontal = pad))
-                        Column(
-                            Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = pad, vertical = 14.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp),
-                        ) {
-                            WaveHero()
-                            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                ModeTile(AppIcons.Convo, str(R.string.conversation), str(R.string.two_people_one_phone_take), listOf(Tk.Primary, Color(0xFF4C86F0)), Modifier.weight(1f)) { openVoiceAd { open = LiveMode.Conversation.name } }
-                                ModeTile(AppIcons.Wave, str(R.string.real_time), str(R.string.hands_free_subtitles_as_you), listOf(Color(0xFF5B3FD6), Color(0xFF8C6CF2)), Modifier.weight(1f)) { openVoiceAd { open = LiveMode.Realtime.name } }
-                            }
-                            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                                ModeTile(AppIcons.Headphones, str(R.string.headphone), str(R.string.hear_each_translation_read_aloud), listOf(Color(0xFF0B7A6C), Color(0xFF1FA68F)), Modifier.weight(1f)) { openVoiceAd { open = LiveMode.Headphone.name } }
-                                ModeTile(AppIcons.Chat, str(R.string.manual), str(R.string.tap_speak_read_simple_and), listOf(CoralDeep, CoralSoft), Modifier.weight(1f)) { openVoiceAd { open = "manual" } }
-                            }
+                Column(Modifier.fillMaxSize()) {
+                    ScreenHeader(str(R.string.voice_translator), Modifier.padding(horizontal = pad - 8.dp)) { HistoryAction(onOpenHistory) }
+                    LanguageBarCard(state.source.localName(), state.target.localName(), { pickingFor = "from" }, { pickingFor = "to" }, vm::onSwap, Modifier.padding(horizontal = pad))
+                    Column(
+                        Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = pad, vertical = 14.dp),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        WaveHero()
+                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            ModeTile(AppIcons.Convo, str(R.string.conversation), str(R.string.two_people_one_phone_take), listOf(Tk.Primary, Color(0xFF4C86F0)), Modifier.weight(1f)) { openVoiceAd { open = LiveMode.Conversation.name } }
+                            ModeTile(AppIcons.Wave, str(R.string.real_time), str(R.string.hands_free_subtitles_as_you), listOf(Color(0xFF5B3FD6), Color(0xFF8C6CF2)), Modifier.weight(1f)) { openVoiceAd { open = LiveMode.Realtime.name } }
+                        }
+                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                            ModeTile(AppIcons.Headphones, str(R.string.headphone), str(R.string.hear_each_translation_read_aloud), listOf(Color(0xFF0B7A6C), Color(0xFF1FA68F)), Modifier.weight(1f)) { openVoiceAd { open = LiveMode.Headphone.name } }
+                            ModeTile(AppIcons.Chat, str(R.string.manual), str(R.string.tap_speak_read_simple_and), listOf(CoralDeep, CoralSoft), Modifier.weight(1f)) { openVoiceAd { open = "manual" } }
                         }
                     }
                 }
