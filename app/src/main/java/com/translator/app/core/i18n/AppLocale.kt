@@ -41,7 +41,7 @@ object AppLocale {
     val isRtl: Boolean
         get() {
             val lang = locale.language.lowercase()
-            return lang in listOf("ar", "fa", "ur", "he", "ku", "yi", "ps", "sd")
+            return lang in listOf("ar", "fa", "ur", "he", "iw", "yi", "ji", "ps", "sd", "ug")
         }
 
     fun init(context: Context) {
