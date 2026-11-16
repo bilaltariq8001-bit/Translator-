@@ -134,7 +134,7 @@ fun AiToolsHost(
     BackHandler(enabled = current == ToolScreen.ChatHistory) { screen = ToolScreen.Chat.name }
     when (current) {
         ToolScreen.List -> ToolsList(openToolAd, onOpenHistory, onOpenPhoto, onOpenOffline) { screen = it.name }
-        ToolScreen.Chat -> ChatScreen(vms.chat, aiAllowed, back) { screen = ToolScreen.ChatHistory.name }
+        ToolScreen.Chat -> BannerFrame(RcKeys.SLOT_TOOLS) { ChatScreen(vms.chat, aiAllowed, back) { screen = ToolScreen.ChatHistory.name } }
         ToolScreen.ChatHistory -> ChatHistoryScreen(
             vms.chat, onBack = { screen = ToolScreen.Chat.name },
             onOpen = { id -> vms.chat.onOpen(id); screen = ToolScreen.Chat.name },

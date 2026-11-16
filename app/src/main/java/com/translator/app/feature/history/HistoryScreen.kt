@@ -106,56 +106,31 @@ class HistoryViewModel(private val history: HistoryRepository) : ViewModel() {
 
 @Composable
 fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: () -> Unit) {
-    val state by vm.state.collectAsStateWithLifecycle()
-    var confirmClear by rememberSaveable { mutableStateOf(false) }
-    // The search box keeps its own text, so typing never waits for the filtered list.
-    var query by rememberSaveable { mutableStateOf(vm.currentQuery) }
-    val clipboard = LocalClipboardManager.current
-    BoxWithConstraints(Modifier.fillMaxSize()) {
-        val pad = pagePadding(maxWidth.value)
-        Column(Modifier.fillMaxSize()) {
-            Box(Modifier.fillMaxWidth().height(60.dp).padding(horizontal = pad - 8.dp)) {
-                IconAction(AppIcons.Back, str(R.string.back), onBack, Modifier.align(Alignment.CenterStart))
-                Row(Modifier.align(Alignment.Center), horizontalArrangement = Arrangement.spacedBy(28.dp), verticalAlignment = Alignment.CenterVertically) {
-                    listOf(false to str(R.string.history), true to str(R.string.favorites)).forEach { (fav, label) ->
-                        val on = state.favoritesOnly == fav
-                        Column(Modifier.clickable(role = Role.Tab) { vm.onFavoritesOnly(fav) }.padding(vertical = 6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                            Text(label, color = if (on) Tk.Primary else Tk.Muted, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                            Box(Modifier.padding(top = 4.dp).size(width = 28.dp, height = 3.dp).clip(RoundedCornerShape(2.dp)).background(if (on) Tk.Primary else androidx.compose.ui.graphics.Color.Transparent))
+    com.translator.app.core.ads.BannerFrame(com.translator.app.core.config.RcKeys.SLOT_HISTORY) {
+        val state by vm.state.collectAsStateWithLifecycle()
+        var confirmClear by rememberSaveable { mutableStateOf(false) }
+        // The search box keeps its own text, so typing never waits for the filtered list.
+        var query by rememberSaveable { mutableStateOf(vm.currentQuery) }
+        val clipboard = LocalClipboardManager.current
+        BoxWithConstraints(Modifier.fillMaxSize()) {
+            val pad = pagePadding(maxWidth.value)
+            Column(Modifier.fillMaxSize()) {
+                Box(Modifier.fillMaxWidth().height(60.dp).padding(horizontal = pad - 8.dp)) {
+                    IconAction(AppIcons.Back, str(R.string.back), onBack, Modifier.align(Alignment.CenterStart))
+                    Row(Modifier.align(Alignment.Center), horizontalArrangement = Arrangement.spacedBy(28.dp), verticalAlignment = Alignment.CenterVertically) {
+                        listOf(false to str(R.string.history), true to str(R.string.favorites)).forEach { (fav, label) ->
+                            val on = state.favoritesOnly == fav
+                            Column(Modifier.clickable(role = Role.Tab) { vm.onFavoritesOnly(fav) }.padding(vertical = 6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text(label, color = if (on) Tk.Primary else Tk.Muted, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                                Box(Modifier.padding(top = 4.dp).size(width = 28.dp, height = 3.dp).clip(RoundedCornerShape(2.dp)).background(if (on) Tk.Primary else androidx.compose.ui.graphics.Color.Transparent))
+                            }
                         }
                     }
+                    if (state.all.isNotEmpty()) IconAction(AppIcons.Trash, str(R.string.clear_all_history), { confirmClear = true }, Modifier.align(Alignment.CenterEnd), tint = Tk.Text)
                 }
-                if (state.all.isNotEmpty()) IconAction(AppIcons.Trash, str(R.string.clear_all_history), { confirmClear = true }, Modifier.align(Alignment.CenterEnd), tint = Tk.Text)
-            }
-            if (state.all.isEmpty()) {
-                // Keep the native card in a reserved slot below the empty state. Only the empty
-                // state scrolls on short screens, so the ad cannot cover its action button.
-                Column(
-                    Modifier.weight(1f).fillMaxWidth(),
-                ) {
-                    Box(
-                        Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        EmptyState(onStartTranslating, Modifier)
-                    }
-                    com.translator.app.core.ads.NativeAdCard("history")
-                }
-            } else {
-                Row(
-                    Modifier.fillMaxWidth().padding(start = pad, end = pad, top = 12.dp).clip(Radius.Pill).background(Tk.Surface2).padding(horizontal = 14.dp).defaultMinSize(minHeight = 48.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    AppIcon(AppIcons.Search, Tk.Muted, size = 18.dp)
-                    BasicTextField(
-                        query, { query = it; vm.onQuery(it) }, singleLine = true,
-                        textStyle = Type.Body.copy(color = Tk.Text), cursorBrush = SolidColor(Tk.Primary),
-                        modifier = Modifier.weight(1f),
-                        decorationBox = { inner -> Box { if (query.isEmpty()) Text(str(R.string.search_history), color = Tk.Muted, style = Type.Body); inner() } },
-                    )
-                }
-                if (state.visible.isEmpty()) {
+                if (state.all.isEmpty()) {
+                    // Keep the native card in a reserved slot below the empty state. Only the empty
+                    // state scrolls on short screens, so the ad cannot cover its action button.
                     Column(
                         Modifier.weight(1f).fillMaxWidth(),
                     ) {
@@ -163,46 +138,73 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
                             Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()),
                             contentAlignment = Alignment.Center,
                         ) {
-                            Column(
-                                Modifier.fillMaxWidth().padding(pad),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                Text(
-                                    if (state.favoritesOnly && state.query.isBlank()) str(R.string.no_favorites_yet_tap_the) else str(R.string.nothing_matches_your_search),
-                                    color = Tk.Muted,
-                                    fontSize = 14.sp,
-                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                                )
-                            }
+                            EmptyState(onStartTranslating, Modifier)
                         }
                         com.translator.app.core.ads.NativeAdCard("history")
                     }
                 } else {
-                    LazyColumn(
-                        Modifier.weight(1f).fillMaxWidth(),
-                        contentPadding = androidx.compose.foundation.layout.PaddingValues(start = pad, end = pad, top = 12.dp, bottom = pad),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                    Row(
+                        Modifier.fillMaxWidth().padding(start = pad, end = pad, top = 12.dp).clip(Radius.Pill).background(Tk.Surface2).padding(horizontal = 14.dp).defaultMinSize(minHeight = 48.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
-                        items(state.visible, key = { it.id }) { item ->
-                            HistoryRow(item, onFavorite = { vm.onToggleFavorite(item) }, onCopy = { clipboard.setText(AnnotatedString(item.translation)); Analytics.copied("history") }, onDelete = { vm.onDelete(item) })
-                        }
-                        item {
+                        AppIcon(AppIcons.Search, Tk.Muted, size = 18.dp)
+                        BasicTextField(
+                            query, { query = it; vm.onQuery(it) }, singleLine = true,
+                            textStyle = Type.Body.copy(color = Tk.Text), cursorBrush = SolidColor(Tk.Primary),
+                            modifier = Modifier.weight(1f),
+                            decorationBox = { inner -> Box { if (query.isEmpty()) Text(str(R.string.search_history), color = Tk.Muted, style = Type.Body); inner() } },
+                        )
+                    }
+                    if (state.visible.isEmpty()) {
+                        Column(
+                            Modifier.weight(1f).fillMaxWidth(),
+                        ) {
+                            Box(
+                                Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                Column(
+                                    Modifier.fillMaxWidth().padding(pad),
+                                    verticalArrangement = Arrangement.Center,
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    Text(
+                                        if (state.favoritesOnly && state.query.isBlank()) str(R.string.no_favorites_yet_tap_the) else str(R.string.nothing_matches_your_search),
+                                        color = Tk.Muted,
+                                        fontSize = 14.sp,
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                    )
+                                }
+                            }
                             com.translator.app.core.ads.NativeAdCard("history")
+                        }
+                    } else {
+                        LazyColumn(
+                            Modifier.weight(1f).fillMaxWidth(),
+                            contentPadding = androidx.compose.foundation.layout.PaddingValues(start = pad, end = pad, top = 12.dp, bottom = pad),
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+                        ) {
+                            items(state.visible, key = { it.id }) { item ->
+                                HistoryRow(item, onFavorite = { vm.onToggleFavorite(item) }, onCopy = { clipboard.setText(AnnotatedString(item.translation)); Analytics.copied("history") }, onDelete = { vm.onDelete(item) })
+                            }
+                            item {
+                                com.translator.app.core.ads.NativeAdCard("history")
+                            }
                         }
                     }
                 }
             }
         }
-    }
-    if (confirmClear) {
-        AppDialog(
-            title = str(R.string.clear_all_history_2),
-            body = str(R.string.translations_will_be_removed_from, state.all.size),
-            primaryLabel = str(R.string.clear_history), onPrimary = { vm.onClearAll(); confirmClear = false },
-            secondaryLabel = str(R.string.cancel), onSecondary = { confirmClear = false },
-            icon = AppIcons.Close, danger = true,
-        )
+        if (confirmClear) {
+            AppDialog(
+                title = str(R.string.clear_all_history_2),
+                body = str(R.string.translations_will_be_removed_from, state.all.size),
+                primaryLabel = str(R.string.clear_history), onPrimary = { vm.onClearAll(); confirmClear = false },
+                secondaryLabel = str(R.string.cancel), onSecondary = { confirmClear = false },
+                icon = AppIcons.Close, danger = true,
+            )
+        }
     }
 }
 
