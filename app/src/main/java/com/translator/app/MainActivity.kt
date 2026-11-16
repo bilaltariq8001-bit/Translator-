@@ -90,6 +90,10 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         updateCoordinator?.onResume()
+        // If the consent check at start did not answer, ask again so ads can start this session.
+        (application as? TranslatorApp)?.container?.ads?.consent?.let { consent ->
+            if (!consent.checkedThisProcess) lifecycleScope.launch { consent.retryIfNeeded(this@MainActivity) }
+        }
         if (updateCoordinator?.isCriticalUpdateRequired == true) {
             showCriticalUpdateDialog()
         }

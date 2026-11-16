@@ -86,6 +86,7 @@ class NativeAdManager(
                                 loadedAds[slot] = nativeAd
                                 Log.d("AdsDebug", "NativeAd: loaded successfully for slot=$slot in ${SystemClock.elapsedRealtime() - startedAt}ms")
                                 AdEvents.loaded(slot, FORMAT, SystemClock.elapsedRealtime() - startedAt)
+                                AdDiagnostics.loaded(FORMAT)
                                 nativeAd.adEventCallback = object : NativeAdEventCallback {
                                     override fun onAdImpression() { AdEvents.shown(slot, FORMAT); Log.d("AdsDebug", "NativeAd: impression for slot=$slot") }
                                     override fun onAdClicked() { AdEvents.clicked(slot, FORMAT); Log.d("AdsDebug", "NativeAd: clicked for slot=$slot") }
@@ -97,6 +98,7 @@ class NativeAdManager(
                         override fun onAdFailedToLoad(adError: LoadAdError) {
                             main.post {
                                 AdEvents.failed(slot, FORMAT, adError.code.toString())
+                                AdDiagnostics.record(FORMAT, adError.code.toString(), adError.message)
                                 fail("code=${adError.code}, message=${adError.message}")
                             }
                         }

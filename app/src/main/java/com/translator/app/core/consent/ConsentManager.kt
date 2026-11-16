@@ -22,6 +22,24 @@ class ConsentManager(context: Context, private val prefs: SyncPrefs) {
     private val app = context.applicationContext
     private val info: ConsentInformation get() = UserMessagingPlatform.getConsentInformation(app)
 
+    /** True once a consent check has answered in this process. Until then [retryIfNeeded] may ask again. */
+    @Volatile var checkedThisProcess = false
+        private set
+    private var lastRetryAt = 0L
+
+    /**
+     * When the check at start-up failed or was too slow (a weak connection, a slow phone), ads would otherwise stay off for the
+     * whole session even where no consent is needed. This asks again, at most every 30 seconds, and shows the form only where
+     * UMP says it is required.
+     */
+    suspend fun retryIfNeeded(activity: Activity) {
+        if (checkedThisProcess) return
+        val now = android.os.SystemClock.elapsedRealtime()
+        if (now - lastRetryAt < 30_000L) return
+        lastRetryAt = now
+        if (requestInfoUpdate(activity) && !activity.isFinishing && !activity.isDestroyed) showFormIfRequired(activity)
+    }
+
     /** Copies UMP's cached answer into the prefs. Cheap; safe on the main thread at start. */
     fun loadCached() = persist()
 
@@ -31,8 +49,8 @@ class ConsentManager(context: Context, private val prefs: SyncPrefs) {
             val params = ConsentRequestParameters.Builder().setTagForUnderAgeOfConsent(false).build()
             info.requestConsentInfoUpdate(
                 activity, params,
-                { persist(); if (cont.isActive) cont.resume(true) },
-                { persist(); if (cont.isActive) cont.resume(false) },
+                { checkedThisProcess = true; persist(); if (cont.isActive) cont.resume(true) },
+                { error -> android.util.Log.w("Ads", "consent check failed: ${error.errorCode} ${error.message}"); persist(); if (cont.isActive) cont.resume(false) },
             )
         } catch (_: Throwable) { if (cont.isActive) cont.resume(false) }
     }

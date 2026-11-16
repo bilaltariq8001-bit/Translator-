@@ -26,6 +26,9 @@ val testNativeId = "ca-app-pub-3940256099942544/2247696110"
 // and AI features report that they are not set up.
 if (file("google-services.json").exists()) {
     apply(plugin = "com.google.gms.google-services")
+    // Crash reports from every tester's phone (model, Android version, full stack trace) in the Firebase console.
+    // Also uploads the R8 mapping file so release stack traces are readable.
+    apply(plugin = "com.google.firebase.crashlytics")
 }
 
 android {
@@ -111,6 +114,7 @@ dependencies {
     implementation(libs.firebase.ai)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.config)
+    implementation(libs.firebase.crashlytics)
     implementation(libs.gma.next.gen)
     implementation(libs.ump)
     implementation(libs.mlkit.translate)

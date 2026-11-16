@@ -54,6 +54,7 @@ object CrashLog {
             val reasons = try { am?.getHistoricalProcessExitReasons(context.packageName, 0, 6).orEmpty() } catch (e: Exception) { emptyList() }
             reasons.forEach { append("Exit: reason ").append(it.reason).append(", importance ").append(it.importance).append(", ").append(SimpleDateFormat("MM-dd HH:mm", Locale.US).format(Date(it.timestamp))).append('\n') }
         }
+        append("\n").append(com.translator.app.core.ads.AdDiagnostics.report(context))
         append("\nLast crash:\n")
         val file = File(context.filesDir, FILE)
         append(if (file.exists()) file.readText() else "none recorded\n")
