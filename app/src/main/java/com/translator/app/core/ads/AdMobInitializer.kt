@@ -29,10 +29,12 @@ class AdMobInitializer(context: Context, private val gate: AdGate) {
     fun whenReady(onFail: () -> Unit = {}, then: () -> Unit): Boolean {
         if (!gate.canRequestAds()) return false
         if (ready) { main.post(then); return true }
-        waiting.add(Waiter(then, onFail))
+        val waiter = Waiter(then, onFail)
+        waiting.add(waiter)
+        // Each caller gets its own deadline. A slow phone or network fails only this caller; the SDK start keeps going and
+        // serves later callers, instead of a second initialize being started on top of the first one.
+        main.postDelayed({ if (waiting.remove(waiter)) { AdDiagnostics.record("init", "timeout"); waiter.onFail() } }, INIT_TIMEOUT_MS)
         if (started.compareAndSet(false, true)) {
-            val watchdog = Runnable { failAll() }
-            main.postDelayed(watchdog, INIT_TIMEOUT_MS)
             Thread({
                 try {
                     MobileAds.initialize(
@@ -42,13 +44,17 @@ class AdMobInitializer(context: Context, private val gate: AdGate) {
                             .build(),
                     ) {
                         ready = true
-                        main.removeCallbacks(watchdog)
-                        val run = waiting.toList()
-                        waiting.clear()
-                        main.post { run.forEach { it.onReady() } }
+                        AdDiagnostics.sdkReady = true
+                        main.post {
+                            val run = waiting.toList()
+                            waiting.removeAll(run.toSet())
+                            run.forEach { it.onReady() }
+                        }
                     }
-                } catch (_: Throwable) {
-                    main.removeCallbacks(watchdog)
+                } catch (t: Throwable) {
+                    android.util.Log.e(AdDiagnostics.TAG, "MobileAds.initialize failed", t)
+                    AdDiagnostics.record("init", t.javaClass.simpleName)
+                    started.set(false)
                     failAll()
                 }
             }, "ads-init").start()
@@ -58,11 +64,11 @@ class AdMobInitializer(context: Context, private val gate: AdGate) {
 
     /** Tells every waiter it will not get an ad now, and lets a later call try to start the SDK again. */
     private fun failAll() {
-        if (ready) return
-        started.set(false)
-        val run = waiting.toList()
-        waiting.clear()
-        main.post { run.forEach { it.onFail() } }
+        main.post {
+            val run = waiting.toList()
+            waiting.removeAll(run.toSet())
+            run.forEach { it.onFail() }
+        }
     }
 
     private companion object { const val INIT_TIMEOUT_MS = 15_000L }

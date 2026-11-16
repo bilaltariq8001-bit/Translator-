@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Same as values-v27, plus forceDarkAllowed (Android 10+). Keep both files in step. -->
+    <style name="Theme.Translator.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#1457F2</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.Translator</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <!-- White navigation bar icons on the blue splash. -->
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <style name="Theme.Translator" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">#F7F9FC</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <!-- The app draws its own light design. Xiaomi, Oppo, Vivo, Realme and Samsung phones can force a "dark mode for
+             apps" on top of it (Android 10+), which inverts colours and leaves white text on white or broken screens. -->
+        <item name="android:forceDarkAllowed">false</item>
+    </style>
+</resources>

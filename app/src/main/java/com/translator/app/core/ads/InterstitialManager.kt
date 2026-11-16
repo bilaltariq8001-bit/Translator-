@@ -89,12 +89,14 @@ class InterstitialManager(
                 InterstitialAd.load(AdRequest.Builder(model.adId).build(), object : AdLoadCallback<InterstitialAd> {
                     override fun onAdLoaded(ad: InterstitialAd) = onMain {
                         AdEvents.loaded(model.placement, FORMAT, SystemClock.elapsedRealtime() - startedAt)
+                        AdDiagnostics.loaded(FORMAT)
                         if (intoCache) { release(); cache.addLast(Cached(ad, SystemClock.elapsedRealtime(), model.adId)) }
                         done(ad)
                     }
 
                     override fun onAdFailedToLoad(adError: LoadAdError) = onMain {
                         AdEvents.failed(model.placement, FORMAT, adError.code.toString())
+                        AdDiagnostics.record(FORMAT, adError.code.toString(), adError.message)
                         release()
                         done(null)
                     }

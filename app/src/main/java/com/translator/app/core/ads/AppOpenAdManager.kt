@@ -74,6 +74,7 @@ class AppOpenAdManager(
                         isLoading = false
                         Log.d(TAG, "load failed code=${error.code}, message=${error.message}")
                         AdEvents.failed(PLACEMENT, FORMAT, error.code.toString())
+                        AdDiagnostics.record(FORMAT, error.code.toString(), error.message)
                     }
                 })
             } catch (error: Throwable) {
