@@ -114,6 +114,7 @@ class BannerAdManager(
                         entry.ad = ad
                         entry.loadedAt = SystemClock.elapsedRealtime()
                         AdEvents.loaded(slot, FORMAT, entry.loadedAt - entry.startedAt)
+                        AdDiagnostics.loaded(FORMAT)
                         ad.adEventCallback = object : BannerAdEventCallback {
                             override fun onAdImpression() { AdEvents.shown(slot, FORMAT) }
                             override fun onAdClicked() { AdEvents.clicked(slot, FORMAT) }
@@ -129,6 +130,7 @@ class BannerAdManager(
                 override fun onAdFailedToLoad(adError: LoadAdError) {
                     activity.runOnUiThread {
                         AdEvents.failed(slot, FORMAT, adError.code.toString())
+                        AdDiagnostics.record(FORMAT, adError.code.toString(), adError.message)
                         if (loading[slot] === entry) fail(slot) else entry.destroy()
                     }
                 }
@@ -179,7 +181,15 @@ fun BannerSlot(slot: String, modifier: Modifier = Modifier) {
 
     val widthDp = LocalConfiguration.current.screenWidthDp
     val size = remember(widthDp) { AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, widthDp) }
-    LaunchedEffect(slot, widthDp, model, ready) { ads.banners.ensureLoaded(activity, model, size) }
+    LaunchedEffect(slot, widthDp, model, ready) {
+        // A failed or stuck request is tried again while the slot stays on screen (ensureLoaded spaces the retries out),
+        // instead of the slot staying empty until the person leaves the screen and comes back.
+        while (true) {
+            ads.banners.ensureLoaded(activity, model, size)
+            if (ads.banners.states[slot] == BannerState.Loaded) break
+            kotlinx.coroutines.delay(15_000)
+        }
+    }
 
     val state = ads.banners.states[slot] ?: BannerState.Loading
     if (state == BannerState.Failed) return

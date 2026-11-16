@@ -106,7 +106,24 @@ fun CameraPane(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val previewView = remember { PreviewView(context).apply { scaleType = PreviewView.ScaleType.FILL_CENTER } }
-    val capture = remember { ImageCapture.Builder().setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY).build() }
+    // The photo is shrunk to 1600 px before it is read, so capturing the full sensor (50 to 200 MP on many phones) only made
+    // each shot slow and memory-hungry, and failed outright on some low-memory phones. Ask for about 2048x1536 instead.
+    val capture = remember {
+        ImageCapture.Builder()
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+            .setResolutionSelector(
+                androidx.camera.core.resolutionselector.ResolutionSelector.Builder()
+                    .setAspectRatioStrategy(androidx.camera.core.resolutionselector.AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY)
+                    .setResolutionStrategy(
+                        androidx.camera.core.resolutionselector.ResolutionStrategy(
+                            android.util.Size(2048, 1536),
+                            androidx.camera.core.resolutionselector.ResolutionStrategy.FALLBACK_RULE_CLOSEST_HIGHER_THEN_LOWER,
+                        ),
+                    )
+                    .build(),
+            )
+            .build()
+    }
     var camera by remember { mutableStateOf<Camera?>(null) }
     var zoom by remember { mutableFloatStateOf(1f) }
     var torch by remember { mutableStateOf(false) }

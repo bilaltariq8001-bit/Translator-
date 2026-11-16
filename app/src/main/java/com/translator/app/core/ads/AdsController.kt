@@ -46,7 +46,7 @@ class AdsController(context: Context, val prefs: SyncPrefs, isOnline: () -> Bool
 
     init {
         if (!BuildConfig.DEBUG && BuildConfig.ADS_USING_TEST_IDS) android.util.Log.w("Ads", "Release build is using Google test ad ids; set real ids in local.properties.")
-        consent.onChanged = { consentVersion++ }
+        consent.onChanged = { consentVersion++; tryPreload() }
         try {
             context.getSystemService(android.net.ConnectivityManager::class.java)?.registerDefaultNetworkCallback(object : android.net.ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: android.net.Network) { netVersion++; tryPreload() }
