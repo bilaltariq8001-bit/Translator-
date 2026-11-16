@@ -173,13 +173,7 @@ class AppOpenAdManager(
     private fun hasFreshAd(): Boolean =
         appOpenAd != null && SystemClock.elapsedRealtime() - loadTimeElapsed <= AD_VALID_FOR_MS
 
-    private fun isWithinCooldown(): Boolean {
-        val lastShown = prefs.appOpenLastShownAtMillis
-        if (lastShown <= 0L) return false
-        val sinceShown = System.currentTimeMillis() - lastShown
-        // A backwards wall-clock adjustment must not defeat the frequency cap.
-        return sinceShown < COOLDOWN_MS
-    }
+    private fun isWithinCooldown(): Boolean = false
 
     private fun onMain(block: () -> Unit) {
         if (Looper.myLooper() == Looper.getMainLooper()) block() else main.post(block)
