@@ -357,7 +357,7 @@ private fun bannerSlotFor(tab: Tab): String? = when (tab) {
     Tab.Text -> RcKeys.SLOT_TEXT
     Tab.Voice -> RcKeys.SLOT_VOICE
     Tab.Tools -> RcKeys.SLOT_TOOLS
-    Tab.Me -> RcKeys.SLOT_SETTINGS
+    Tab.Me -> null
     Tab.Photo -> null
 }
 
