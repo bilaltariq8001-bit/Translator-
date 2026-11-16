@@ -135,11 +135,13 @@ fun AiToolsHost(
     when (current) {
         ToolScreen.List -> BannerFrame(RcKeys.SLOT_TOOLS) { ToolsList(openToolAd, onOpenHistory, onOpenPhoto, onOpenOffline) { screen = it.name } }
         ToolScreen.Chat -> BannerFrame(RcKeys.SLOT_TOOLS) { ChatScreen(vms.chat, aiAllowed, back) { screen = ToolScreen.ChatHistory.name } }
-        ToolScreen.ChatHistory -> ChatHistoryScreen(
-            vms.chat, onBack = { screen = ToolScreen.Chat.name },
-            onOpen = { id -> vms.chat.onOpen(id); screen = ToolScreen.Chat.name },
-            onNew = { vms.chat.onClear(); screen = ToolScreen.Chat.name },
-        )
+        ToolScreen.ChatHistory -> BannerFrame(RcKeys.SLOT_TOOLS) {
+            ChatHistoryScreen(
+                vms.chat, onBack = { screen = ToolScreen.Chat.name },
+                onOpen = { id -> vms.chat.onOpen(id); screen = ToolScreen.Chat.name },
+                onNew = { vms.chat.onClear(); screen = ToolScreen.Chat.name },
+            )
+        }
         ToolScreen.Email -> BannerFrame(RcKeys.SLOT_TOOLS) { WriterScreen(WriterSpec.Email, vms.email, aiAllowed, back, onTranslateText) }
         ToolScreen.Grammar -> BannerFrame(RcKeys.SLOT_TOOLS) { WriterScreen(WriterSpec.Grammar, vms.grammar, aiAllowed, back, onTranslateText) }
         ToolScreen.Slang -> BannerFrame(RcKeys.SLOT_TOOLS) { WriterScreen(WriterSpec.Slang, vms.slang, aiAllowed, back, onTranslateText) }
