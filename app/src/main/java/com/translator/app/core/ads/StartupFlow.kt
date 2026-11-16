@@ -110,14 +110,7 @@ class StartupFlow(private val container: AppContainer, private val scope: Corout
                 withTimeoutOrNull(remaining().coerceAtLeast(1)) { adReadyDeferred.await() }
 
                 if (!firstLaunch) {
-                    // Once per process: a recreated Activity must not show the startup interstitial again.
-                    if (!splashAttempted && remaining() > 0 && canShowNow(activity, updateActive)) {
-                        splashAttempted = true
-                        val shown = ads.interstitials.showSplash(activity, minOf(3_000L, remaining()), stillAllowed = { canShowNow(activity, updateActive) })
-                        if (!shown) {
-                            ads.appOpen.showAdIfAvailable(activity) { canShowNow(activity, updateActive) }
-                        }
-                    } else {
+                    if (remaining() > 0 && canShowNow(activity, updateActive)) {
                         ads.appOpen.showAdIfAvailable(activity) { canShowNow(activity, updateActive) }
                     }
                 } else {
