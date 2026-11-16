@@ -77,21 +77,16 @@ object AppLocale {
         return null
     }
 
-    /** The languages whose strings really load on this phone, in the order they are offered. Checked once, off the main thread. */
     suspend fun verified(): List<String> {
-        verifiedCodes?.let { return it }
-        val context = base ?: return supported
-        return kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
-            supported.filter { pickLocale(context, it) != null }.also { verifiedCodes = it }
-        }
+        return supported
     }
 
     fun set(languageCode: String) {
         val context = base ?: return
-        val locale = if (languageCode in supported) pickLocale(context, languageCode) else null
-        val wanted = if (locale != null) languageCode else "en"
+        val locale = pickLocale(context, languageCode) ?: Locale.forLanguageTag(languageCode)
+        val wanted = languageCode
         if (wanted == code && resources != null) return
-        resources = resourcesFor(context, locale ?: Locale.ENGLISH)
+        resources = resourcesFor(context, locale)
         code = wanted
         version++
     }

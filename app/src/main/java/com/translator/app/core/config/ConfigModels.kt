@@ -13,7 +13,10 @@ object RcKeys {
     const val OFFLINE_BACK = "offline_back"
     const val VOICE_MODE_BACK = "voice_mode_back"
     const val AI_TOOL_BACK = "ai_tool_back"
-    val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK)
+    const val PHOTO_OPEN = "photo_open"
+    const val AI_TOOL_OPEN = "ai_tool_open"
+    const val VOICE_MODE_OPEN = "voice_mode_open"
+    val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK, PHOTO_OPEN, AI_TOOL_OPEN, VOICE_MODE_OPEN)
 
     /** Banner slots: keys are <slot>_banner_ad_id, _banner_is_collapsing, _in_screen_ad_enabled, _ad_position, _in_screen_ad_type. */
     const val SLOT_TEXT = "text"

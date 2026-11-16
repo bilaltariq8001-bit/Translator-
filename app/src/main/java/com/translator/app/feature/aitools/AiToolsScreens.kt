@@ -115,6 +115,7 @@ fun AiToolsHost(
 ) {
     var screen by rememberSaveable { mutableStateOf(ToolScreen.List.name) }
     val current = ToolScreen.valueOf(screen)
+    val openToolAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.AI_TOOL_OPEN)
     // An opened tool takes the whole screen: the bottom tabs hide while it is open.
     com.translator.app.core.designsystem.HideTabBar(current != ToolScreen.List)
     // A tool that is loading or streaming an answer is "busy": leaving it shows no ad.
@@ -132,7 +133,7 @@ fun AiToolsHost(
     val back = com.translator.app.core.backpress.rememberBackPressAd(com.translator.app.core.config.RcKeys.AI_TOOL_BACK, enabled = current != ToolScreen.List && current != ToolScreen.ChatHistory) { screen = ToolScreen.List.name }
     BackHandler(enabled = current == ToolScreen.ChatHistory) { screen = ToolScreen.Chat.name }
     when (current) {
-        ToolScreen.List -> ToolsList(onOpenHistory, onOpenPhoto, onOpenOffline) { screen = it.name }
+        ToolScreen.List -> ToolsList(openToolAd, onOpenHistory, onOpenPhoto, onOpenOffline) { screen = it.name }
         ToolScreen.Chat -> ChatScreen(vms.chat, aiAllowed, back) { screen = ToolScreen.ChatHistory.name }
         ToolScreen.ChatHistory -> ChatHistoryScreen(
             vms.chat, onBack = { screen = ToolScreen.Chat.name },
@@ -152,14 +153,16 @@ fun AiToolsHost(
 private data class ToolCardSpec(val title: String, val body: String, val icon: ImageVector, val onClick: (() -> Unit)?)
 
 @Composable
-private fun ToolsList(onOpenHistory: () -> Unit, onOpenPhoto: () -> Unit, onOpenOffline: () -> Unit, onOpen: (ToolScreen) -> Unit) {
+private fun ToolsList(openToolAd: (onNavigate: () -> Unit) -> Unit, onOpenHistory: () -> Unit, onOpenPhoto: () -> Unit, onOpenOffline: () -> Unit, onOpen: (ToolScreen) -> Unit) {
+    val ads = com.translator.app.core.ads.LocalAds.current
+    androidx.compose.runtime.LaunchedEffect(Unit) { ads?.interstitials?.warm(com.translator.app.core.config.RcKeys.AI_TOOL_OPEN) }
     val grid = listOf(
-        ToolCardSpec(str(R.string.email_writer), str(R.string.a_clear_email_in_the), AppIcons.Mail) { onOpen(ToolScreen.Email) },
-        ToolCardSpec(str(R.string.grammar_and_style), str(R.string.fix_mistakes_and_see_why), AppIcons.Check) { onOpen(ToolScreen.Grammar) },
-        ToolCardSpec(str(R.string.slang_translator), str(R.string.what_street_phrases_really_mean), AppIcons.Quote) { onOpen(ToolScreen.Slang) },
-        ToolCardSpec(str(R.string.travel_phrases), str(R.string.ready_phrases_for_where_you), AppIcons.Plane) { onOpen(ToolScreen.Travel) },
+        ToolCardSpec(str(R.string.email_writer), str(R.string.a_clear_email_in_the), AppIcons.Mail) { openToolAd { onOpen(ToolScreen.Email) } },
+        ToolCardSpec(str(R.string.grammar_and_style), str(R.string.fix_mistakes_and_see_why), AppIcons.Check) { openToolAd { onOpen(ToolScreen.Grammar) } },
+        ToolCardSpec(str(R.string.slang_translator), str(R.string.what_street_phrases_really_mean), AppIcons.Quote) { openToolAd { onOpen(ToolScreen.Slang) } },
+        ToolCardSpec(str(R.string.travel_phrases), str(R.string.ready_phrases_for_where_you), AppIcons.Plane) { openToolAd { onOpen(ToolScreen.Travel) } },
         ToolCardSpec(str(R.string.offline_languages), str(R.string.download_packs_to_translate_without), AppIcons.Globe) { onOpenOffline() },
-        ToolCardSpec(str(R.string.translator_keyboard), str(R.string.type_in_your_language_send), AppIcons.Keyboard) { onOpen(ToolScreen.Keyboard) },
+        ToolCardSpec(str(R.string.translator_keyboard), str(R.string.type_in_your_language_send), AppIcons.Keyboard) { openToolAd { onOpen(ToolScreen.Keyboard) } },
     )
     BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         val pad = pagePadding(maxWidth.value)
@@ -168,7 +171,7 @@ private fun ToolsList(onOpenHistory: () -> Unit, onOpenPhoto: () -> Unit, onOpen
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = pad, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Text(str(R.string.advanced_features), style = Type.Headline, color = Tk.Text)
                 Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    FeatureTile(str(R.string.ai_chat), str(R.string.ask_practise_or_get_a), AppIcons.Chat, listOf(Tk.Primary, Color(0xFF4C86F0)), true, Modifier.weight(1f)) { onOpen(ToolScreen.Chat) }
+                    FeatureTile(str(R.string.ai_chat), str(R.string.ask_practise_or_get_a), AppIcons.Chat, listOf(Tk.Primary, Color(0xFF4C86F0)), true, Modifier.weight(1f)) { openToolAd { onOpen(ToolScreen.Chat) } }
                     FeatureTile(str(R.string.photo_translate), str(R.string.signs_and_menus_translated), AppIcons.Camera, listOf(Color(0xFF0E8F7E), Color(0xFF3CC5A8)), true, Modifier.weight(1f)) { onOpenPhoto() }
                 }
                 Text(str(R.string.ai_tools), style = Type.Headline, color = Tk.Text, modifier = Modifier.padding(top = 6.dp))
