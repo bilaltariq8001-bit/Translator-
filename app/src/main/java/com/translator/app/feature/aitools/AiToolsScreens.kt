@@ -236,7 +236,7 @@ private fun chatSuggestions() = listOf(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun ChatScreen(vm: AiChatViewModel, aiAllowed: Boolean, onBack: () -> Unit, onHistory: () -> Unit) {
-    val state by vm.state.collectAsStateWithLifecycle()
+    val state by vm.state.collectAsStateWithLifecycle(context = kotlinx.coroutines.Dispatchers.Main.immediate)
     val listState = rememberLazyListState()
     // A new message scrolls into view smoothly; while an answer is streaming in, the list just stays pinned to its end
     // (re-starting a scroll animation for every few words made the text jitter).
@@ -339,7 +339,7 @@ private enum class WriterSpec(
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun WriterScreen(spec: WriterSpec, vm: AiWriterViewModel, aiAllowed: Boolean, onBack: () -> Unit, onTranslateText: (String) -> Unit) {
-    val state by vm.state.collectAsStateWithLifecycle()
+    val state by vm.state.collectAsStateWithLifecycle(context = kotlinx.coroutines.Dispatchers.Main.immediate)
     val clipboard = LocalClipboardManager.current
     BoxWithConstraints(Modifier.fillMaxSize().imePadding()) {
         val pad = pagePadding(maxWidth.value)
@@ -390,7 +390,7 @@ private fun WriterScreen(spec: WriterSpec, vm: AiWriterViewModel, aiAllowed: Boo
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun TravelScreen(vm: AiTravelViewModel, aiAllowed: Boolean, speechRate: Float, lang: Language, onBack: () -> Unit) {
-    val state by vm.state.collectAsStateWithLifecycle()
+    val state by vm.state.collectAsStateWithLifecycle(context = kotlinx.coroutines.Dispatchers.Main.immediate)
     val tts = rememberTtsPlayer()
     val clipboard = LocalClipboardManager.current
     BoxWithConstraints(Modifier.fillMaxSize()) {

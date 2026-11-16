@@ -62,6 +62,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -92,8 +93,10 @@ class HistoryViewModel(private val history: HistoryRepository) : ViewModel() {
 
     val state: StateFlow<HistoryUiState> = combine(history.items, query, favoritesOnly) { all, q, fav ->
         HistoryUiState(q, fav, all, filterHistory(all, q, fav))
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HistoryUiState())
+    }.flowOn(kotlinx.coroutines.Dispatchers.Default) // filtering a long history never holds up the screen
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HistoryUiState())
 
+    val currentQuery: String get() = query.value
     fun onQuery(value: String) { query.value = value }
     fun onFavoritesOnly(value: Boolean) { favoritesOnly.value = value }
     fun onToggleFavorite(item: HistoryItem) { if (!item.favorite) Analytics.log(Ev.RESULT_FAVORITED) { token("source", "history") }; viewModelScope.launch { history.setFavorite(item.id, !item.favorite) } }
@@ -105,6 +108,8 @@ class HistoryViewModel(private val history: HistoryRepository) : ViewModel() {
 fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: () -> Unit) {
     val state by vm.state.collectAsStateWithLifecycle()
     var confirmClear by rememberSaveable { mutableStateOf(false) }
+    // The search box keeps its own text, so typing never waits for the filtered list.
+    var query by rememberSaveable { mutableStateOf(vm.currentQuery) }
     val clipboard = LocalClipboardManager.current
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val pad = pagePadding(maxWidth.value)
@@ -144,10 +149,10 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
                 ) {
                     AppIcon(AppIcons.Search, Tk.Muted, size = 18.dp)
                     BasicTextField(
-                        state.query, vm::onQuery, singleLine = true,
+                        query, { query = it; vm.onQuery(it) }, singleLine = true,
                         textStyle = Type.Body.copy(color = Tk.Text), cursorBrush = SolidColor(Tk.Primary),
                         modifier = Modifier.weight(1f),
-                        decorationBox = { inner -> Box { if (state.query.isEmpty()) Text(str(R.string.search_history), color = Tk.Muted, style = Type.Body); inner() } },
+                        decorationBox = { inner -> Box { if (query.isEmpty()) Text(str(R.string.search_history), color = Tk.Muted, style = Type.Body); inner() } },
                     )
                 }
                 if (state.visible.isEmpty()) {

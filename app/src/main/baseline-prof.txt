@@ -1,0 +1,5 @@
+# Startup profile: every class and method of the app is compiled ahead of time when the APK is installed, instead of
+# running interpreted for the first minutes of use (the main cause of stutter on a fresh install and on slower phones).
+# Compose, Navigation, Lifecycle and the other AndroidX libraries add their own profiles automatically.
+HSPLcom/translator/app/**;->**(**)**
+Lcom/translator/app/**;

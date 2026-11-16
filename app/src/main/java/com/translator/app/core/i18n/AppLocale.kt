@@ -56,7 +56,8 @@ object AppLocale {
     private val legacyCodes = mapOf("he" to "iw", "id" to "in", "yi" to "ji")
     private val probeIds = intArrayOf(R.string.skip, R.string.continue_label, R.string.translate, R.string.history)
     private val chosenLocale = java.util.concurrent.ConcurrentHashMap<String, Locale>()
-    private var verifiedCodes: List<String>? = null
+    @Volatile private var verifiedCodes: List<String>? = null
+    @Volatile private var englishSample: List<String>? = null
 
     private fun resourcesFor(context: Context, locale: Locale): Resources {
         val config = Configuration(context.resources.configuration).apply { setLocale(locale); setLayoutDirection(locale) }
@@ -67,8 +68,7 @@ object AppLocale {
     private fun pickLocale(context: Context, code: String): Locale? {
         if (code == "en") return Locale.ENGLISH
         chosenLocale[code]?.let { return it }
-        val english = resourcesFor(context, Locale.ENGLISH)
-        val sample = probeIds.map { english.getString(it) }
+        val sample = englishSample ?: probeIds.map { resourcesFor(context, Locale.ENGLISH).getString(it) }.also { englishSample = it }
         val candidates = listOfNotNull(Locale.forLanguageTag(code), legacyCodes[code]?.let { Locale(it) })
         for (locale in candidates) {
             val res = resourcesFor(context, locale)

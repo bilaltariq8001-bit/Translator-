@@ -65,11 +65,12 @@ fun MicOrb(
     size: Dp = 88.dp,
     idleColors: List<Color> = listOf(CoralSoft, CoralDeep),
 ) {
-    val t = rememberInfiniteTransition(label = "orb")
-    val ring by t.animateFloat(1f, 1.7f, infiniteRepeatable(tween(1600, easing = FastOutSlowInEasing), RepeatMode.Restart), label = "ring")
-    val ring2 by t.animateFloat(1f, 1.7f, infiniteRepeatable(tween(1600, 800, FastOutSlowInEasing), RepeatMode.Restart), label = "ring2")
     Box(modifier.size(size * 1.8f), contentAlignment = Alignment.Center) {
         if (listening) {
+            // The rings only run while listening; an idle mic button costs no frames at all.
+            val t = rememberInfiniteTransition(label = "orb")
+            val ring by t.animateFloat(1f, 1.7f, infiniteRepeatable(tween(1600, easing = FastOutSlowInEasing), RepeatMode.Restart), label = "ring")
+            val ring2 by t.animateFloat(1f, 1.7f, infiniteRepeatable(tween(1600, 800, FastOutSlowInEasing), RepeatMode.Restart), label = "ring2")
             Box(Modifier.size(size).graphicsLayer { scaleX = ring; scaleY = ring; alpha = (1.7f - ring) * 0.7f }.background(Tk.Coral, CircleShape))
             Box(Modifier.size(size).graphicsLayer { scaleX = ring2; scaleY = ring2; alpha = (1.7f - ring2) * 0.7f }.background(Tk.Coral, CircleShape))
         } else {

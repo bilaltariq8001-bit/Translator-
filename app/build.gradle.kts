@@ -65,7 +65,9 @@ android {
 
     buildTypes {
         release {
-            signingConfig = signingConfigs.getByName("release")
+            // Signed with the release key when it is present; otherwise (a CI machine, another computer) with the debug key, so
+            // an optimized release APK can still be built and tested. Only the release-key build goes to Play.
+            signingConfig = if (rootProject.file("../keystore/stylishkeyboardstation.keystore").exists()) signingConfigs.getByName("release") else signingConfigs.getByName("debug")
             // R8 shrinking and optimization, and removal of unused resources.
             isMinifyEnabled = true
             isShrinkResources = true
@@ -101,6 +103,9 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.activity.compose)
     implementation(libs.androidx.splashscreen)
+    // Installs the startup profile (src/main/baseline-prof.txt plus the ones Compose ships), so screens run as compiled code
+    // from the first launch instead of being interpreted, also on APKs installed outside the Play Store.
+    implementation(libs.profileinstaller)
     implementation(libs.play.app.update)
     implementation(libs.play.app.update.ktx)
     implementation(libs.lifecycle.runtime.compose)

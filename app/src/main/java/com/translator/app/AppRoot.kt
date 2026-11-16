@@ -149,25 +149,28 @@ private fun MainNav(container: AppContainer) {
             initializer { TranslateViewModel(container.settings, container.translateText, container.history, container.aiInsights, container::warmUpTranslation) }
         },
     )
-    val state by vm.state.collectAsStateWithLifecycle()
+    // Collected without waiting for the next frame, so the text box and the state never disagree while typing. The value is
+    // only read inside the tab that shows it: reading it here would rebuild the whole navigation on every keystroke.
+    val state by vm.state.collectAsStateWithLifecycle(context = kotlinx.coroutines.Dispatchers.Main.immediate)
     val voiceVm: VoiceViewModel = viewModel(factory = viewModelFactory { initializer { VoiceViewModel(container.translateText) } })
     // Conversation, Real-time and Headphone each have their own view model, so what was said in one never shows up in another.
-    val liveVms: Map<com.translator.app.feature.voice.LiveMode, LiveViewModel> = com.translator.app.feature.voice.LiveMode.entries.associateWith { mode ->
+    val liveVmList = com.translator.app.feature.voice.LiveMode.entries.map { mode ->
         viewModel<LiveViewModel>(key = "live-" + mode.name, factory = viewModelFactory { initializer { LiveViewModel(container.translateText) } })
     }
+    // Kept as the same map object while the view models stay the same, so screens that take it can skip redrawing.
+    val liveVms: Map<com.translator.app.feature.voice.LiveMode, LiveViewModel> = remember(liveVmList) { com.translator.app.feature.voice.LiveMode.entries.zip(liveVmList).toMap() }
     val offlineVm: OfflineViewModel = viewModel(factory = viewModelFactory { initializer { OfflineViewModel(container.offlinePacks) } })
     val offlineReady by container.offlinePacks.ready.collectAsStateWithLifecycle()
     val offlineBusy by container.offlinePacks.busy.collectAsStateWithLifecycle()
     androidx.compose.runtime.LaunchedEffect(Unit) { kotlinx.coroutines.delay(1_500); container.offlinePacks.refresh() }
     val photoVm: PhotoViewModel = viewModel(factory = viewModelFactory { initializer { PhotoViewModel(container.aiPhoto) } })
     val historyVm: HistoryViewModel = viewModel(factory = viewModelFactory { initializer { HistoryViewModel(container.history) } })
-    val toolsVms = AiToolsViewModels(
-        chat = viewModel(key = "ai-chat", factory = viewModelFactory { initializer { AiChatViewModel(container.aiChat, container.chats) } }),
-        email = viewModel(key = "ai-email", factory = viewModelFactory { initializer { AiWriterViewModel(AiWriterKind.Email, container.aiTools) } }),
-        grammar = viewModel(key = "ai-grammar", factory = viewModelFactory { initializer { AiWriterViewModel(AiWriterKind.Grammar, container.aiTools) } }),
-        slang = viewModel(key = "ai-slang", factory = viewModelFactory { initializer { AiWriterViewModel(AiWriterKind.Slang, container.aiTools) } }),
-        travel = viewModel(key = "ai-travel", factory = viewModelFactory { initializer { AiTravelViewModel(container.aiTools) } }),
-    )
+    val chatVm: AiChatViewModel = viewModel(key = "ai-chat", factory = viewModelFactory { initializer { AiChatViewModel(container.aiChat, container.chats) } })
+    val emailVm: AiWriterViewModel = viewModel(key = "ai-email", factory = viewModelFactory { initializer { AiWriterViewModel(AiWriterKind.Email, container.aiTools) } })
+    val grammarVm: AiWriterViewModel = viewModel(key = "ai-grammar", factory = viewModelFactory { initializer { AiWriterViewModel(AiWriterKind.Grammar, container.aiTools) } })
+    val slangVm: AiWriterViewModel = viewModel(key = "ai-slang", factory = viewModelFactory { initializer { AiWriterViewModel(AiWriterKind.Slang, container.aiTools) } })
+    val travelVm: AiTravelViewModel = viewModel(key = "ai-travel", factory = viewModelFactory { initializer { AiTravelViewModel(container.aiTools) } })
+    val toolsVms = remember(chatVm, emailVm, grammarVm, slangVm, travelVm) { AiToolsViewModels(chatVm, emailVm, grammarVm, slangVm, travelVm) }
     val settings by container.settings.settings.collectAsStateWithLifecycle(initialValue = AppSettings(onboardingDone = true))
     val historyCount by historyVm.state.collectAsStateWithLifecycle()
     val scope = rememberCoroutineScope()
@@ -177,7 +180,7 @@ private fun MainNav(container: AppContainer) {
 
     // Screens doing work are "busy": leaving them never shows an ad on top of the work.
     val photoWorking by remember { photoVm.state.map { it is com.translator.app.feature.camera.PhotoUiState.Working }.distinctUntilChanged() }.collectAsStateWithLifecycle(initialValue = false)
-    ReportBusy("translate", state.loading)
+    BusyWhile("translate") { state.loading }
     ReportBusy("photo", photoWorking)
     LaunchedEffect(tab) { Analytics.screen(Tab.entries[tab].name.lowercase()) }
     // Analytics switch in Settings: shows what is really in effect (consent rules can keep it off).
@@ -364,3 +367,7 @@ private fun NavItem(tab: Tab, selected: Boolean, modifier: Modifier = Modifier, 
         Text(str(tab.label), color = color, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, maxLines = 1, modifier = Modifier.padding(top = 3.dp))
     }
 }
+
+/** Reports a screen as busy from its own small scope, so a change in [busy] redraws only this and not the caller. */
+@Composable
+private fun BusyWhile(key: String, busy: () -> Boolean) = ReportBusy(key, busy())
