@@ -53,6 +53,20 @@ class BackPressAds(private val interstitials: InterstitialManager, val busy: Bus
         interstitials.show(activity, placement, onShown = { main.removeCallbacks(safety) }, onDone = { main.removeCallbacks(safety); finish() })
     }
 
+    fun handleNavigation(activity: Activity?, placement: String, navigate: () -> Unit) {
+        if (inFlight) return
+        if (activity == null || busy.isBusy) { navigate(); return }
+        TtsPlayer.stopAll()
+        inFlight = true
+        var done = false
+        val finish = {
+            if (!done) { done = true; inFlight = false; navigate() }
+        }
+        val safety = Runnable { finish() }
+        main.postDelayed(safety, SAFETY_MS)
+        interstitials.showNavigation(activity, placement, onShown = { main.removeCallbacks(safety) }, onDone = { main.removeCallbacks(safety); finish() })
+    }
+
     private companion object { const val SAFETY_MS = 6_000L }
 }
 
@@ -84,4 +98,18 @@ fun rememberBackPressAd(placement: String, enabled: Boolean = true, onNavigate: 
     }
     BackHandler(enabled = enabled) { back() }
     return back
+}
+
+/**
+ * Returns a navigation lambda that shows an interstitial ad for [placement] before running [onNavigate].
+ */
+@Composable
+fun rememberNavigationAd(placement: String): (onNavigate: () -> Unit) -> Unit {
+    val backAds = LocalBackAds.current
+    val activity = LocalContext.current as? Activity
+    return remember(backAds, activity, placement) {
+        { onNavigate ->
+            if (backAds == null) onNavigate() else backAds.handleNavigation(activity, placement, onNavigate)
+        }
+    }
 }

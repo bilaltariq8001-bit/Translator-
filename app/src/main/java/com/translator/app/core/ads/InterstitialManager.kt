@@ -125,6 +125,46 @@ class InterstitialManager(
         present(cached.ad, activity, placement, onShown, onDone)
     }
 
+    /**
+     * Shows the ad for a navigation [placement], loading it with a timeout if not cached, then calls [onDone].
+     */
+    fun showNavigation(activity: Activity, placement: String, onShown: () -> Unit = {}, onDone: () -> Unit) = onMain {
+        val model = config.interstitial(placement)
+        if (showing || !model.enabled || !gate.canLoad() || activity.isFinishing || activity.isDestroyed) { onDone(); return@onMain }
+        capping.recordEligible()
+        dropExpired()
+        if (!capping.allows(config.capping(), model.counterEnabled)) { onDone(); return@onMain }
+        val index = cache.indexOfFirst { it.adId == model.adId }
+        if (index >= 0) {
+            val cached = cache.removeAt(index)
+            present(cached.ad, activity, placement, onShown, onDone)
+            return@onMain
+        }
+        var resolved = false
+        val safety = Runnable {
+            if (!resolved) {
+                resolved = true
+                onDone()
+                warm(placement)
+            }
+        }
+        main.postDelayed(safety, 3_000L)
+        request(model, intoCache = false) { ad ->
+            if (resolved) {
+                try { ad?.destroy() } catch (_: Throwable) {}
+                return@request
+            }
+            resolved = true
+            main.removeCallbacks(safety)
+            if (ad != null) {
+                present(ad, activity, placement, onShown, onDone)
+            } else {
+                onDone()
+                warm(placement)
+            }
+        }
+    }
+
     private fun present(ad: InterstitialAd, activity: Activity, placement: String, onShown: () -> Unit, onDone: () -> Unit) {
         showing = true
         var finished = false

@@ -173,7 +173,15 @@ private fun MainNav(container: AppContainer) {
     val scope = rememberCoroutineScope()
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val tabBar = remember { com.translator.app.core.designsystem.TabBarController() }
-    val goTo: (Tab) -> Unit = { tab = it.ordinal }
+    androidx.compose.runtime.LaunchedEffect(Unit) { container.ads.interstitials.warm(com.translator.app.core.config.RcKeys.PHOTO_OPEN) }
+    val openPhotoAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.PHOTO_OPEN)
+    val goTo: (Tab) -> Unit = { t ->
+        if (t == Tab.Photo) {
+            openPhotoAd { tab = t.ordinal }
+        } else {
+            tab = t.ordinal
+        }
+    }
 
     // Screens doing work are "busy": leaving them never shows an ad on top of the work.
     val photoWorking by remember { photoVm.state.map { it is com.translator.app.feature.camera.PhotoUiState.Working }.distinctUntilChanged() }.collectAsStateWithLifecycle(initialValue = false)
@@ -228,8 +236,9 @@ private fun MainNav(container: AppContainer) {
             }
             androidx.compose.runtime.CompositionLocalProvider(com.translator.app.core.designsystem.LocalTabBar provides tabBar) {
             MainScaffold(tab, { tab = it }, tabBar.hidden) { current ->
+                val openPhoto = { openPhotoAd { goTo(Tab.Photo) } }
                 when (current) {
-                    Tab.Text -> TranslateHome(state, vm, settings, onOpenHistory = { openHistory() }, onOpenVoice = { goTo(Tab.Voice) }, onOpenPhoto = { goTo(Tab.Photo) })
+                    Tab.Text -> TranslateHome(state, vm, settings, onOpenHistory = { openHistory() }, onOpenVoice = { goTo(Tab.Voice) }, onOpenPhoto = openPhoto)
                     Tab.Voice -> VoiceHome(state, vm, voiceVm, liveVms, settings, onOpenHistory = { openHistory() }, onTypeInstead = { goTo(Tab.Text) })
                     Tab.Photo -> PhotoScreen(state, vm, photoVm, settings, onOpenHistory = { openHistory() })
                     Tab.Tools -> AiToolsHost(
@@ -240,7 +249,7 @@ private fun MainNav(container: AppContainer) {
                         // "Translate result" hands the text to the Text tab, ready to translate.
                         onTranslateText = { text -> vm.onTextChange(text); goTo(Tab.Text) },
                         onOpenHistory = { openHistory() },
-                        onOpenPhoto = { goTo(Tab.Photo) },
+                        onOpenPhoto = openPhoto,
                         onOpenOffline = { nav.navigate("offline") },
                     )
                     Tab.Me -> SettingsScreen(
@@ -315,6 +324,7 @@ private fun TabContent(current: Tab, content: @Composable (Tab) -> Unit) {
 @Composable
 private fun MainScaffold(selected: Int, onSelect: (Int) -> Unit, barHidden: Boolean, content: @Composable (Tab) -> Unit) {
     val current = Tab.entries[selected]
+    val openPhotoAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.PHOTO_OPEN)
     BoxWithConstraints(Modifier.fillMaxSize()) {
         if (maxWidth > 560.dp) {
             Row(Modifier.fillMaxSize()) {
@@ -322,7 +332,7 @@ private fun MainScaffold(selected: Int, onSelect: (Int) -> Unit, barHidden: Bool
                     Modifier.fillMaxHeight().width(88.dp).background(Tk.Surface).padding(vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                ) { Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected) { onSelect(i) } } }
+                ) { Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected) { if (t == Tab.Photo) openPhotoAd { onSelect(i) } else onSelect(i) } } }
                 Box(Modifier.weight(1f).fillMaxHeight()) { BannerFrame(bannerSlotFor(current), show = !barHidden) { TabContent(current, content) } }
             }
         } else {
@@ -332,7 +342,7 @@ private fun MainScaffold(selected: Int, onSelect: (Int) -> Unit, barHidden: Bool
                 if (!androidx.compose.foundation.layout.WindowInsets.Companion.isImeVisible && !barHidden) {
                     HorizontalDivider(color = Tk.Line)
                     Row(Modifier.fillMaxWidth().background(Tk.Surface).padding(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 6.dp)) {
-                        Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected, Modifier.weight(1f)) { onSelect(i) } }
+                        Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected, Modifier.weight(1f)) { if (t == Tab.Photo) openPhotoAd { onSelect(i) } else onSelect(i) } }
                     }
                 }
             }

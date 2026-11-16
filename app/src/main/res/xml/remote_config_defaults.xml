@@ -7,7 +7,7 @@
     </entry>
     <entry>
         <key>is_interstitial_time_capping_enabled</key>
-        <value>true</value>
+        <value>false</value>
     </entry>
     <entry>
         <key>interstitial_cooldown_seconds</key>
@@ -124,6 +124,54 @@
     <entry>
         <key>ai_tool_back_inter_counter_enabled</key>
         <value>true</value>
+    </entry>
+    <entry>
+        <key>photo_open_inter_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>photo_open_inter_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>photo_open_inter_should_load</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>photo_open_inter_counter_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>ai_tool_open_inter_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>ai_tool_open_inter_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>ai_tool_open_inter_should_load</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>ai_tool_open_inter_counter_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>voice_mode_open_inter_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>voice_mode_open_inter_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>voice_mode_open_inter_should_load</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>voice_mode_open_inter_counter_enabled</key>
+        <value>false</value>
     </entry>
     <entry>
         <key>text_banner_ad_id</key>
