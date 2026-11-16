@@ -131,8 +131,10 @@ fun AiToolsHost(
     // Chat history back to the chat is just navigation inside the tool: no ad.
     val back = com.translator.app.core.backpress.rememberBackPressAd(com.translator.app.core.config.RcKeys.AI_TOOL_BACK, enabled = current != ToolScreen.List && current != ToolScreen.ChatHistory) { screen = ToolScreen.List.name }
     BackHandler(enabled = current == ToolScreen.ChatHistory) { screen = ToolScreen.Chat.name }
+    val navAd = com.translator.app.core.backpress.rememberNavAd()
     when (current) {
-        ToolScreen.List -> ToolsList(onOpenHistory, onOpenPhoto, onOpenOffline) { screen = it.name }
+        // Opening a tool shows the feature-navigation interstitial first (History, Photo and Offline already do, in AppRoot).
+        ToolScreen.List -> ToolsList(onOpenHistory, onOpenPhoto, onOpenOffline) { t -> navAd { screen = t.name } }
         ToolScreen.Chat -> ChatScreen(vms.chat, aiAllowed, back) { screen = ToolScreen.ChatHistory.name }
         ToolScreen.ChatHistory -> ChatHistoryScreen(
             vms.chat, onBack = { screen = ToolScreen.Chat.name },

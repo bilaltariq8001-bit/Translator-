@@ -89,6 +89,9 @@ fun VoiceHome(
     val closeMode = com.translator.app.core.backpress.rememberBackPressAd(com.translator.app.core.config.RcKeys.VOICE_MODE_BACK, enabled = open != null) { open = null }
     // A voice mode takes the whole screen: the bottom tabs hide while one is open.
     com.translator.app.core.designsystem.HideTabBar(open != null)
+    // Opening a mode shows the feature-navigation interstitial first.
+    val navAd = com.translator.app.core.backpress.rememberNavAd()
+    val openMode: (String) -> Unit = { mode -> navAd { open = mode } }
 
     BoxWithConstraints(modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
         val pad = pagePadding(maxWidth.value)
@@ -122,12 +125,12 @@ fun VoiceHome(
                 ) {
                     WaveHero()
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        ModeTile(AppIcons.Convo, str(R.string.conversation), str(R.string.two_people_one_phone_take), listOf(Tk.Primary, Color(0xFF4C86F0)), Modifier.weight(1f)) { open = LiveMode.Conversation.name }
-                        ModeTile(AppIcons.Wave, str(R.string.real_time), str(R.string.hands_free_subtitles_as_you), listOf(Color(0xFF5B3FD6), Color(0xFF8C6CF2)), Modifier.weight(1f)) { open = LiveMode.Realtime.name }
+                        ModeTile(AppIcons.Convo, str(R.string.conversation), str(R.string.two_people_one_phone_take), listOf(Tk.Primary, Color(0xFF4C86F0)), Modifier.weight(1f)) { openMode(LiveMode.Conversation.name) }
+                        ModeTile(AppIcons.Wave, str(R.string.real_time), str(R.string.hands_free_subtitles_as_you), listOf(Color(0xFF5B3FD6), Color(0xFF8C6CF2)), Modifier.weight(1f)) { openMode(LiveMode.Realtime.name) }
                     }
                     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        ModeTile(AppIcons.Headphones, str(R.string.headphone), str(R.string.hear_each_translation_read_aloud), listOf(Color(0xFF0B7A6C), Color(0xFF1FA68F)), Modifier.weight(1f)) { open = LiveMode.Headphone.name }
-                        ModeTile(AppIcons.Chat, str(R.string.manual), str(R.string.tap_speak_read_simple_and), listOf(CoralDeep, CoralSoft), Modifier.weight(1f)) { open = "manual" }
+                        ModeTile(AppIcons.Headphones, str(R.string.headphone), str(R.string.hear_each_translation_read_aloud), listOf(Color(0xFF0B7A6C), Color(0xFF1FA68F)), Modifier.weight(1f)) { openMode(LiveMode.Headphone.name) }
+                        ModeTile(AppIcons.Chat, str(R.string.manual), str(R.string.tap_speak_read_simple_and), listOf(CoralDeep, CoralSoft), Modifier.weight(1f)) { openMode("manual") }
                     }
                 }
             }

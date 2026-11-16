@@ -69,6 +69,21 @@ fun ReportBusy(key: String, busy: Boolean) {
 }
 
 /**
+ * Returns a lambda that runs a forward navigation (a tab switch, opening a feature) through the [RcKeys.FEATURE_NAV]
+ * interstitial: the ad shows first and [navigate] runs once it is closed, or at once when there is no ad (off, not loaded,
+ * capped, a busy screen). Same single path and re-entry guard as Back, so a double tap never opens two things.
+ */
+@Composable
+fun rememberNavAd(placement: String = com.translator.app.core.config.RcKeys.FEATURE_NAV): (navigate: () -> Unit) -> Unit {
+    val backAds = LocalBackAds.current
+    val activity = LocalContext.current as? Activity
+    return remember(backAds, activity, placement) {
+        val run: (() -> Unit) -> Unit = { navigate -> if (backAds == null) navigate() else backAds.handle(activity, placement, navigate) }
+        run
+    }
+}
+
+/**
  * Returns the Back lambda for a screen with an ad [placement]. It is also registered as the system Back handler while
  * [enabled], so the arrow and the system Back run the same code. [onNavigate] is the screen's normal leave action.
  */

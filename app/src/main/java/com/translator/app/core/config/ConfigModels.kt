@@ -13,7 +13,10 @@ object RcKeys {
     const val OFFLINE_BACK = "offline_back"
     const val VOICE_MODE_BACK = "voice_mode_back"
     const val AI_TOOL_BACK = "ai_tool_back"
-    val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK)
+    /** Forward navigation: switching tabs and opening any feature (a voice mode, an AI tool, History, Offline). */
+    const val FEATURE_NAV = "feature_nav"
+    /** Placements the interstitial cache keeps warm. Feature navigation comes first: it fires most often. */
+    val BACK_PLACEMENTS = listOf(FEATURE_NAV, HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK)
 
     /** Banner slots: keys are <slot>_banner_ad_id, _banner_is_collapsing, _in_screen_ad_enabled, _ad_position, _in_screen_ad_type. */
     const val SLOT_TEXT = "text"
