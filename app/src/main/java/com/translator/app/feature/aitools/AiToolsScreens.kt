@@ -133,7 +133,7 @@ fun AiToolsHost(
     val back = com.translator.app.core.backpress.rememberBackPressAd(com.translator.app.core.config.RcKeys.AI_TOOL_BACK, enabled = current != ToolScreen.List && current != ToolScreen.ChatHistory) { screen = ToolScreen.List.name }
     BackHandler(enabled = current == ToolScreen.ChatHistory) { screen = ToolScreen.Chat.name }
     when (current) {
-        ToolScreen.List -> ToolsList(openToolAd, onOpenHistory, onOpenPhoto, onOpenOffline) { screen = it.name }
+        ToolScreen.List -> BannerFrame(RcKeys.SLOT_TOOLS) { ToolsList(openToolAd, onOpenHistory, onOpenPhoto, onOpenOffline) { screen = it.name } }
         ToolScreen.Chat -> BannerFrame(RcKeys.SLOT_TOOLS) { ChatScreen(vms.chat, aiAllowed, back) { screen = ToolScreen.ChatHistory.name } }
         ToolScreen.ChatHistory -> ChatHistoryScreen(
             vms.chat, onBack = { screen = ToolScreen.Chat.name },
