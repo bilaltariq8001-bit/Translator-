@@ -362,4 +362,5 @@
     <string name="analytics_share_title">分享匿名使用统计</string>
     <string name="analytics_share_body">有助于改进应用。绝不包含您的文字、语音或照片。您可随时在设置中更改。</string>
     <string name="ad_privacy_choices">广告隐私选项</string>
+    <string name="ad_attribution">广告</string>
 </resources>

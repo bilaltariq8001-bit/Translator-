@@ -38,7 +38,7 @@ object AppLocale {
     val isRtl: Boolean
         get() {
             val lang = locale.language.lowercase()
-            return lang in listOf("ar", "fa", "ur", "he", "ku", "yi", "ps", "sd")
+            return lang in listOf("ar", "fa", "ur", "he", "iw", "yi", "ji", "ps", "sd", "ug")
         }
 
     fun init(context: Context) {
@@ -79,7 +79,11 @@ object AppLocale {
 
     /** The languages whose strings really load on this phone, in the order they are offered. Checked once, off the main thread. */
     suspend fun verified(): List<String> {
-        return supported
+        verifiedCodes?.let { return it }
+        val context = base ?: return supported
+        return kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+            supported.filter { pickLocale(context, it) != null }.also { verifiedCodes = it }
+        }
     }
 
     fun set(languageCode: String) {

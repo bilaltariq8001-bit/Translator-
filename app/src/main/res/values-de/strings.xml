@@ -362,4 +362,5 @@
     <string name="analytics_share_title">Anonyme Nutzungsstatistiken teilen</string>
     <string name="analytics_share_body">Hilft, die App zu verbessern. Enthält nie Ihren Text, Ihre Stimme oder Fotos. Jederzeit in den Einstellungen änderbar.</string>
     <string name="ad_privacy_choices">Datenschutzoptionen für Werbung</string>
+    <string name="ad_attribution">Anzeige</string>
 </resources>
