@@ -5,6 +5,9 @@ on:
   push:
     branches: [main, ci/apk-build]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -50,3 +53,12 @@ jobs:
           name: translator-apk
           path: app/build/outputs/apk/**/*.apk
           if-no-files-found: error
+
+      - name: Publish APK to the debug-latest pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: debug-latest
+          name: Latest debug APK
+          prerelease: true
+          make_latest: false
+          files: app/build/outputs/apk/debug/app-debug.apk
