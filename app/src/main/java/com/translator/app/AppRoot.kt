@@ -89,6 +89,7 @@ import com.translator.app.core.analytics.Analytics
 import com.translator.app.core.analytics.Ev
 import com.translator.app.core.backpress.ReportBusy
 import com.translator.app.core.backpress.rememberBackPressAd
+import com.translator.app.core.backpress.rememberNavAd
 import com.translator.app.core.config.RcKeys
 import com.translator.app.core.consent.currentSignals
 import com.translator.app.core.consent.applyAnalytics
@@ -173,7 +174,10 @@ private fun MainNav(container: AppContainer) {
     val scope = rememberCoroutineScope()
     var tab by rememberSaveable { mutableIntStateOf(0) }
     val tabBar = remember { com.translator.app.core.designsystem.TabBarController() }
-    val goTo: (Tab) -> Unit = { tab = it.ordinal }
+    // Every forward move (a tab, a feature) shows the feature-navigation interstitial first, then navigates.
+    val navAd = rememberNavAd()
+    val goTo: (Tab) -> Unit = { t -> if (t.ordinal != tab) navAd { tab = t.ordinal } }
+    val selectTab: (Int) -> Unit = { i -> if (i != tab) navAd { tab = i } }
 
     // Screens doing work are "busy": leaving them never shows an ad on top of the work.
     val photoWorking by remember { photoVm.state.map { it is com.translator.app.feature.camera.PhotoUiState.Working }.distinctUntilChanged() }.collectAsStateWithLifecycle(initialValue = false)
@@ -199,7 +203,8 @@ private fun MainNav(container: AppContainer) {
             }
         }
     }
-    val openHistory = { nav.navigate("history") }
+    val openHistory = { navAd { nav.navigate("history") } }
+    val openOffline = { navAd { nav.navigate("offline") } }
 
     androidx.compose.runtime.CompositionLocalProvider(
         LocalOfflineReady provides offlineReady,
@@ -227,7 +232,7 @@ private fun MainNav(container: AppContainer) {
                 )
             }
             androidx.compose.runtime.CompositionLocalProvider(com.translator.app.core.designsystem.LocalTabBar provides tabBar) {
-            MainScaffold(tab, { tab = it }, tabBar.hidden) { current ->
+            MainScaffold(tab, selectTab, tabBar.hidden) { current ->
                 when (current) {
                     Tab.Text -> TranslateHome(state, vm, settings, onOpenHistory = { openHistory() }, onOpenVoice = { goTo(Tab.Voice) }, onOpenPhoto = { goTo(Tab.Photo) })
                     Tab.Voice -> VoiceHome(state, vm, voiceVm, liveVms, settings, onOpenHistory = { openHistory() }, onTypeInstead = { goTo(Tab.Text) })
@@ -238,16 +243,16 @@ private fun MainNav(container: AppContainer) {
                         speechRate = settings.speechRate,
                         targetLang = state.target,
                         // "Translate result" hands the text to the Text tab, ready to translate.
-                        onTranslateText = { text -> vm.onTextChange(text); goTo(Tab.Text) },
+                        onTranslateText = { text -> vm.onTextChange(text); tab = Tab.Text.ordinal },
                         onOpenHistory = { openHistory() },
                         onOpenPhoto = { goTo(Tab.Photo) },
-                        onOpenOffline = { nav.navigate("offline") },
+                        onOpenOffline = { openOffline() },
                     )
                     Tab.Me -> SettingsScreen(
                         settings = settings,
                         historyCount = historyCount.all.size,
                         offlineCount = offlineReady.size,
-                        onOpenOffline = { nav.navigate("offline") },
+                        onOpenOffline = { openOffline() },
                         onAppLanguage = { scope.launch { container.settings.setAppLanguage(it) } },
                         onSpeakAloud = { scope.launch { container.settings.setSpeakAloud(it) } },
                         onHaptics = { scope.launch { container.settings.setHaptics(it) } },
@@ -282,7 +287,7 @@ private fun MainNav(container: AppContainer) {
         ) {
             LaunchedEffect(Unit) { Analytics.screen("history") }
             val back = rememberBackPressAd(RcKeys.HISTORY_BACK) { nav.popBackStack() }
-            BannerFrame(RcKeys.SLOT_HISTORY) { HistoryScreen(historyVm, onBack = back, onStartTranslating = { goTo(Tab.Text); nav.popBackStack() }) }
+            BannerFrame(RcKeys.SLOT_HISTORY) { HistoryScreen(historyVm, onBack = back, onStartTranslating = { tab = Tab.Text.ordinal; nav.popBackStack() }) }
         }
         composable(
             "offline",

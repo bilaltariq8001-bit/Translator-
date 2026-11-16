@@ -61,6 +61,24 @@
         <key>splash_inter_counter_enabled</key>
         <value>false</value>
     </entry>
+    <!-- Interstitial before every tab switch and every feature opened. counter_enabled=false: not capped, so an ad shows on
+         every tap whenever one is loaded. Set it to true to apply the shared time/click capping instead. -->
+    <entry>
+        <key>feature_nav_inter_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>feature_nav_inter_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>feature_nav_inter_should_load</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>feature_nav_inter_counter_enabled</key>
+        <value>false</value>
+    </entry>
     <entry>
         <key>history_back_inter_id</key>
         <value></value>
