@@ -362,4 +362,5 @@
     <string name="analytics_share_title">گمنام استعمال کے اعداد و شمار شیئر کریں</string>
     <string name="analytics_share_body">ایپ کو بہتر بنانے میں مدد دیتا ہے۔ اس میں آپ کا متن، آواز یا تصاویر کبھی شامل نہیں ہوتیں۔ آپ اسے کسی بھی وقت ترتیبات میں بدل سکتے ہیں۔</string>
     <string name="ad_privacy_choices">اشتہارات کی رازداری کے اختیارات</string>
+    <string name="ad_attribution">اشتہار</string>
 </resources>
