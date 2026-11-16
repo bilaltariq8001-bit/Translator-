@@ -1,0 +1,11 @@
+sdk.dir=
+# Firebase AI Logic: put google-services.json in app/ (never commit it).
+# Filled in once the manager's API client is provided. Never commit real values.
+API_BASE_URL=
+API_KEY=
+# AdMob (optional). Without these the app uses Google's public TEST ad ids. Never commit real ids.
+admob.appId=
+admob.bannerId=
+admob.interstitialId=
+admob.appOpenId=
+admob.nativeId=

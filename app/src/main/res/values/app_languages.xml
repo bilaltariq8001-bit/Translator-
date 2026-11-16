@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="app_language_codes" translatable="false">
+        <item>en</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>ur</item>
+        <item>ar</item>
+        <item>hi</item>
+        <item>ja</item>
+        <item>zh</item>
+        <item>af</item>
+        <item>am</item>
+        <item>az</item>
+        <item>be</item>
+        <item>bg</item>
+        <item>bn</item>
+        <item>bs</item>
+        <item>ca</item>
+        <item>ceb</item>
+        <item>co</item>
+        <item>cs</item>
+        <item>eu</item>
+        <item>hr</item>
+        <item>hy</item>
+        <item>ko</item>
+        <item>my</item>
+        <item>nl</item>
+        <item>ny</item>
+        <item>pt</item>
+        <item>sq</item>
+        <item>tr</item>
+        <item>zh-TW</item>
+    </string-array>
+</resources>
