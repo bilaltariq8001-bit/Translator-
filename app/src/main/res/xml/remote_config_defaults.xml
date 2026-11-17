@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Defaults for Firebase Remote Config; also read directly when Firebase is not set up. Empty ad ids mean the build default id. -->
 <defaultsMap>
+    <!-- One ad unit id per format for every screen. Empty means the build default (local.properties), else Google test ids. -->
+    <entry>
+        <key>banner_ad_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>interstitial_ad_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>native_ad_id</key>
+        <value></value>
+    </entry>
     <entry>
         <key>interstitial_cache_size</key>
         <value>2</value>
@@ -30,24 +43,12 @@
         <value>true</value>
     </entry>
     <entry>
-        <key>history_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>history_native_enabled</key>
         <value>true</value>
     </entry>
     <entry>
-        <key>favorites_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>favorites_native_enabled</key>
         <value>true</value>
-    </entry>
-    <entry>
-        <key>translate_count_inter_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>translate_count_inter_enabled</key>
@@ -66,16 +67,8 @@
         <value>3</value>
     </entry>
     <entry>
-        <key>tools_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>tools_native_enabled</key>
         <value>true</value>
-    </entry>
-    <entry>
-        <key>splash_inter_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>splash_inter_enabled</key>
@@ -90,10 +83,6 @@
         <value>false</value>
     </entry>
     <entry>
-        <key>history_back_inter_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>history_back_inter_enabled</key>
         <value>true</value>
     </entry>
@@ -104,10 +93,6 @@
     <entry>
         <key>history_back_inter_counter_enabled</key>
         <value>true</value>
-    </entry>
-    <entry>
-        <key>offline_back_inter_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>offline_back_inter_enabled</key>
@@ -122,10 +107,6 @@
         <value>true</value>
     </entry>
     <entry>
-        <key>voice_mode_back_inter_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>voice_mode_back_inter_enabled</key>
         <value>true</value>
     </entry>
@@ -136,10 +117,6 @@
     <entry>
         <key>voice_mode_back_inter_counter_enabled</key>
         <value>true</value>
-    </entry>
-    <entry>
-        <key>ai_tool_back_inter_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>ai_tool_back_inter_enabled</key>
@@ -154,10 +131,6 @@
         <value>true</value>
     </entry>
     <entry>
-        <key>photo_open_inter_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>photo_open_inter_enabled</key>
         <value>true</value>
     </entry>
@@ -168,10 +141,6 @@
     <entry>
         <key>photo_open_inter_counter_enabled</key>
         <value>false</value>
-    </entry>
-    <entry>
-        <key>ai_tool_open_inter_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>ai_tool_open_inter_enabled</key>
@@ -186,10 +155,6 @@
         <value>false</value>
     </entry>
     <entry>
-        <key>voice_mode_open_inter_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>voice_mode_open_inter_enabled</key>
         <value>true</value>
     </entry>
@@ -200,10 +165,6 @@
     <entry>
         <key>voice_mode_open_inter_counter_enabled</key>
         <value>false</value>
-    </entry>
-    <entry>
-        <key>text_banner_ad_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>text_banner_is_collapsing</key>
@@ -222,14 +183,6 @@
         <value>BANNER</value>
     </entry>
     <entry>
-        <key>text_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
-        <key>voice_banner_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>voice_banner_is_collapsing</key>
         <value>false</value>
     </entry>
@@ -244,14 +197,6 @@
     <entry>
         <key>voice_in_screen_ad_type</key>
         <value>BANNER</value>
-    </entry>
-    <entry>
-        <key>voice_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
-        <key>tools_banner_ad_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>tools_banner_is_collapsing</key>
@@ -270,10 +215,6 @@
         <value>BANNER</value>
     </entry>
     <entry>
-        <key>settings_banner_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>settings_banner_is_collapsing</key>
         <value>false</value>
     </entry>
@@ -288,14 +229,6 @@
     <entry>
         <key>settings_in_screen_ad_type</key>
         <value>BANNER</value>
-    </entry>
-    <entry>
-        <key>settings_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
-        <key>history_banner_ad_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>history_banner_is_collapsing</key>
@@ -314,10 +247,6 @@
         <value>BANNER</value>
     </entry>
     <entry>
-        <key>offline_banner_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>offline_banner_is_collapsing</key>
         <value>false</value>
     </entry>
@@ -332,14 +261,6 @@
     <entry>
         <key>offline_in_screen_ad_type</key>
         <value>BANNER</value>
-    </entry>
-    <entry>
-        <key>offline_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
-        <key>chat_history_banner_ad_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>chat_history_banner_is_collapsing</key>
@@ -358,24 +279,12 @@
         <value>BANNER</value>
     </entry>
     <entry>
-        <key>chat_history_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>chat_history_native_enabled</key>
         <value>true</value>
     </entry>
     <entry>
-        <key>chat_favorites_native_ad_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>chat_favorites_native_enabled</key>
         <value>true</value>
-    </entry>
-    <entry>
-        <key>voice_mode_use_inter_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>voice_mode_use_inter_enabled</key>
@@ -394,10 +303,6 @@
         <value>3</value>
     </entry>
     <entry>
-        <key>ai_tool_use_inter_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>ai_tool_use_inter_enabled</key>
         <value>true</value>
     </entry>
@@ -414,10 +319,6 @@
         <value>3</value>
     </entry>
     <entry>
-        <key>onboarding_done_inter_id</key>
-        <value></value>
-    </entry>
-    <entry>
         <key>onboarding_done_inter_enabled</key>
         <value>true</value>
     </entry>
@@ -428,10 +329,6 @@
     <entry>
         <key>onboarding_done_inter_counter_enabled</key>
         <value>false</value>
-    </entry>
-    <entry>
-        <key>onboarding_native_ad_id</key>
-        <value></value>
     </entry>
     <entry>
         <key>onboarding_native_enabled</key>

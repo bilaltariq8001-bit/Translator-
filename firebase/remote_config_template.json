@@ -54,11 +54,12 @@
     },
     "Native ads": {
       "parameters": {
-        "history_native_ad_id": {
+        "native_ad_id": {
           "defaultValue": {
             "value": "ca-app-pub-3940256099942544/2247696110"
           },
-          "valueType": "STRING"
+          "valueType": "STRING",
+          "description": "Native ad unit id used by every native slot"
         },
         "history_native_enabled": {
           "defaultValue": {
@@ -66,47 +67,11 @@
           },
           "valueType": "BOOLEAN"
         },
-        "tools_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
-        },
         "tools_native_enabled": {
           "defaultValue": {
             "value": "true"
           },
           "valueType": "BOOLEAN"
-        },
-        "text_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
-        },
-        "voice_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
-        },
-        "settings_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
-        },
-        "offline_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
-        },
-        "chat_history_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
         },
         "chat_history_native_enabled": {
           "defaultValue": {
@@ -115,12 +80,6 @@
           "valueType": "BOOLEAN",
           "description": "Native ad on AI chat history (All tab), shown only when there is at least one chat"
         },
-        "favorites_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
-        },
         "favorites_native_enabled": {
           "defaultValue": {
             "value": "true"
@@ -128,24 +87,12 @@
           "valueType": "BOOLEAN",
           "description": "Native ad on the Favorites tab, shown only when there is at least one favorite"
         },
-        "chat_favorites_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
-        },
         "chat_favorites_native_enabled": {
           "defaultValue": {
             "value": "true"
           },
           "valueType": "BOOLEAN",
           "description": "Native ad on AI chat history Favorites tab, shown only when there is at least one favorite chat"
-        },
-        "onboarding_native_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/2247696110"
-          },
-          "valueType": "STRING"
         },
         "onboarding_native_enabled": {
           "defaultValue": {
@@ -158,11 +105,12 @@
     },
     "Interstitial ads": {
       "parameters": {
-        "splash_inter_id": {
+        "interstitial_ad_id": {
           "defaultValue": {
             "value": "ca-app-pub-3940256099942544/1033173712"
           },
-          "valueType": "STRING"
+          "valueType": "STRING",
+          "description": "Interstitial ad unit id used by every placement"
         },
         "splash_inter_enabled": {
           "defaultValue": {
@@ -182,12 +130,6 @@
           },
           "valueType": "BOOLEAN"
         },
-        "history_back_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
-        },
         "history_back_inter_enabled": {
           "defaultValue": {
             "value": "true"
@@ -205,12 +147,6 @@
             "value": "true"
           },
           "valueType": "BOOLEAN"
-        },
-        "offline_back_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
         },
         "offline_back_inter_enabled": {
           "defaultValue": {
@@ -230,12 +166,6 @@
           },
           "valueType": "BOOLEAN"
         },
-        "voice_mode_back_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
-        },
         "voice_mode_back_inter_enabled": {
           "defaultValue": {
             "value": "true"
@@ -253,12 +183,6 @@
             "value": "true"
           },
           "valueType": "BOOLEAN"
-        },
-        "ai_tool_back_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
         },
         "ai_tool_back_inter_enabled": {
           "defaultValue": {
@@ -278,12 +202,6 @@
           },
           "valueType": "BOOLEAN"
         },
-        "photo_open_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
-        },
         "photo_open_inter_enabled": {
           "defaultValue": {
             "value": "true"
@@ -301,12 +219,6 @@
             "value": "false"
           },
           "valueType": "BOOLEAN"
-        },
-        "ai_tool_open_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
         },
         "ai_tool_open_inter_enabled": {
           "defaultValue": {
@@ -326,12 +238,6 @@
           },
           "valueType": "BOOLEAN"
         },
-        "voice_mode_open_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
-        },
         "voice_mode_open_inter_enabled": {
           "defaultValue": {
             "value": "true"
@@ -349,12 +255,6 @@
             "value": "false"
           },
           "valueType": "BOOLEAN"
-        },
-        "translate_count_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
         },
         "translate_count_inter_enabled": {
           "defaultValue": {
@@ -383,12 +283,6 @@
           "valueType": "NUMBER",
           "description": "N: show the ad on every Nth successful translation"
         },
-        "voice_mode_use_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
-        },
         "voice_mode_use_inter_enabled": {
           "defaultValue": {
             "value": "true"
@@ -414,12 +308,6 @@
           },
           "valueType": "NUMBER",
           "description": "Free uses per feature before the interstitial (3 = ad before the 4th, 7th, ...)"
-        },
-        "ai_tool_use_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
         },
         "ai_tool_use_inter_enabled": {
           "defaultValue": {
@@ -447,12 +335,6 @@
           "valueType": "NUMBER",
           "description": "Free uses per feature before the interstitial (3 = ad before the 4th, 7th, ...)"
         },
-        "onboarding_done_inter_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/1033173712"
-          },
-          "valueType": "STRING"
-        },
         "onboarding_done_inter_enabled": {
           "defaultValue": {
             "value": "true"
@@ -476,11 +358,12 @@
     },
     "Banner ads": {
       "parameters": {
-        "text_banner_ad_id": {
+        "banner_ad_id": {
           "defaultValue": {
             "value": "ca-app-pub-3940256099942544/9214589741"
           },
-          "valueType": "STRING"
+          "valueType": "STRING",
+          "description": "Banner ad unit id used on every screen"
         },
         "text_banner_is_collapsing": {
           "defaultValue": {
@@ -503,12 +386,6 @@
         "text_in_screen_ad_type": {
           "defaultValue": {
             "value": "BANNER"
-          },
-          "valueType": "STRING"
-        },
-        "voice_banner_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/9214589741"
           },
           "valueType": "STRING"
         },
@@ -536,12 +413,6 @@
           },
           "valueType": "STRING"
         },
-        "tools_banner_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/9214589741"
-          },
-          "valueType": "STRING"
-        },
         "tools_banner_is_collapsing": {
           "defaultValue": {
             "value": "false"
@@ -563,12 +434,6 @@
         "tools_in_screen_ad_type": {
           "defaultValue": {
             "value": "BANNER"
-          },
-          "valueType": "STRING"
-        },
-        "settings_banner_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/9214589741"
           },
           "valueType": "STRING"
         },
@@ -596,12 +461,6 @@
           },
           "valueType": "STRING"
         },
-        "history_banner_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/9214589741"
-          },
-          "valueType": "STRING"
-        },
         "history_banner_is_collapsing": {
           "defaultValue": {
             "value": "false"
@@ -626,12 +485,6 @@
           },
           "valueType": "STRING"
         },
-        "offline_banner_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/9214589741"
-          },
-          "valueType": "STRING"
-        },
         "offline_banner_is_collapsing": {
           "defaultValue": {
             "value": "false"
@@ -653,12 +506,6 @@
         "offline_in_screen_ad_type": {
           "defaultValue": {
             "value": "BANNER"
-          },
-          "valueType": "STRING"
-        },
-        "chat_history_banner_ad_id": {
-          "defaultValue": {
-            "value": "ca-app-pub-3940256099942544/9214589741"
           },
           "valueType": "STRING"
         },

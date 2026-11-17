@@ -58,9 +58,9 @@ class InterstitialCappingTest {
     private val defaults = mapOf(
         "interstitial_cache_size" to "2", "is_interstitial_time_capping_enabled" to "true",
         "interstitial_cooldown_seconds" to "60", "interstitial_click_cap" to "3",
-        "history_back_inter_id" to "", "history_back_inter_enabled" to "true", "history_back_inter_should_load" to "true", "history_back_inter_counter_enabled" to "true",
-        "text_banner_ad_id" to "", "text_banner_is_collapsing" to "false", "text_in_screen_ad_enabled" to "true", "text_ad_position" to "BOTTOM", "text_in_screen_ad_type" to "BANNER",
-        "text_native_ad_id" to "",
+        "interstitial_ad_id" to "", "history_back_inter_enabled" to "true", "history_back_inter_should_load" to "true", "history_back_inter_counter_enabled" to "true",
+        "banner_ad_id" to "", "text_banner_is_collapsing" to "false", "text_in_screen_ad_enabled" to "true", "text_ad_position" to "BOTTOM", "text_in_screen_ad_type" to "BANNER",
+        "native_ad_id" to "",
     )
     private fun ids(debug: Boolean) = AdIdDefaults(
         banner = "build-banner",
@@ -84,7 +84,7 @@ class InterstitialCappingTest {
     }
 
     @Test fun `remote values win and bad values fall back`() {
-        val remote = mapOf("interstitial_cache_size" to "9", "interstitial_click_cap" to "oops", "history_back_inter_id" to "remote-id", "text_ad_position" to "top", "text_banner_ad_id" to "remote-banner")
+        val remote = mapOf("interstitial_cache_size" to "9", "interstitial_click_cap" to "oops", "interstitial_ad_id" to "remote-id", "text_ad_position" to "top", "banner_ad_id" to "remote-banner")
         val r = ConfigReader({ remote[it] }, defaults, ids(false))
         assertEquals(5, r.capping().cacheSize)          // clamped to 1..5
         assertEquals(3, r.capping().clickCap)           // unreadable -> default
@@ -94,17 +94,28 @@ class InterstitialCappingTest {
     }
 
     @Test fun `debug builds always use the test ids`() {
-        val remote = mapOf("history_back_inter_id" to "remote-id", "text_banner_ad_id" to "remote-banner")
+        val remote = mapOf("interstitial_ad_id" to "remote-id", "banner_ad_id" to "remote-banner")
         val r = ConfigReader({ remote[it] }, defaults, ids(true))
         assertEquals("test-inter", r.interstitial("history_back").adId)
         assertEquals("test-banner", r.banner("text").adId)
     }
 
     @Test fun `a slot set to NATIVE is read as a native slot`() {
-        val remote = mapOf("text_in_screen_ad_type" to "native", "text_native_ad_id" to "remote-native")
+        val remote = mapOf("text_in_screen_ad_type" to "native", "native_ad_id" to "remote-native")
         val r = ConfigReader({ remote[it] }, defaults, ids(false))
         assertEquals(InScreenAdType.NATIVE, r.banner("text").type)
         assertEquals("remote-native", r.banner("text").nativeAdId)
+    }
+
+    @Test fun `one id per format is shared by every placement and slot`() {
+        val remote = mapOf("interstitial_ad_id" to "one-inter", "banner_ad_id" to "one-banner", "native_ad_id" to "one-native")
+        val r = ConfigReader({ remote[it] }, defaults, ids(false))
+        assertEquals("one-inter", r.interstitial("history_back").adId)
+        assertEquals("one-inter", r.interstitial("photo_open").adId)
+        assertEquals("one-banner", r.banner("text").adId)
+        assertEquals("one-banner", r.banner("voice").adId)
+        assertEquals("one-native", r.nativeAd("history").adId)
+        assertEquals("one-native", r.nativeAd("onboarding").adId)
     }
 
     @Test fun `native ids fall back to the build id`() {
