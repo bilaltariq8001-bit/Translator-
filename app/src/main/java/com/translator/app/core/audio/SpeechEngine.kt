@@ -34,27 +34,30 @@ class SpeechEngine(private val context: Context) {
         null
     }
 
-    fun isAvailable(): Boolean = SpeechRecognizer.isRecognitionAvailable(context) || googleService() != null
+    fun isAvailable(): Boolean = try { SpeechRecognizer.isRecognitionAvailable(context) } catch (_: Throwable) { false } || googleService() != null
 
     fun start(langCode: String, listener: SpeechListener) {
         destroy()
         val r = try {
             googleService()?.let { SpeechRecognizer.createSpeechRecognizer(context, it) } ?: SpeechRecognizer.createSpeechRecognizer(context)
-        } catch (e: Exception) {
-            try { SpeechRecognizer.createSpeechRecognizer(context) } catch (e2: Exception) { listener.onError(SpeechError.Unavailable); return }
+        } catch (e: Throwable) {
+            try { SpeechRecognizer.createSpeechRecognizer(context) } catch (e2: Throwable) { listener.onError(SpeechError.Unavailable); return }
         }
         recognizer = r
-        r.setRecognitionListener(object : RecognitionListener {
+        try { r.setRecognitionListener(object : RecognitionListener {
             override fun onPartialResults(partialResults: Bundle?) {
+                if (recognizer !== r) return
                 first(partialResults)?.let(listener::onPartial)
             }
 
             override fun onResults(results: Bundle?) {
+                if (recognizer !== r) return
                 val text = first(results)
                 if (text.isNullOrBlank()) listener.onError(SpeechError.NoSpeech) else listener.onFinal(text)
             }
 
             override fun onError(error: Int) {
+                if (recognizer !== r) return
                 listener.onError(
                     when (error) {
                         SpeechRecognizer.ERROR_NO_MATCH, SpeechRecognizer.ERROR_SPEECH_TIMEOUT -> SpeechError.NoSpeech
@@ -73,7 +76,7 @@ class SpeechEngine(private val context: Context) {
             override fun onBufferReceived(buffer: ByteArray?) {}
             override fun onEndOfSpeech() {}
             override fun onEvent(eventType: Int, params: Bundle?) {}
-        })
+        }) } catch (e: Throwable) { destroy(); listener.onError(SpeechError.Unavailable); return }
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             .putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             .putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.forLanguageTag(langCode).toLanguageTag())
@@ -84,18 +87,22 @@ class SpeechEngine(private val context: Context) {
             r.startListening(intent)
         } catch (e: SecurityException) {
             listener.onError(SpeechError.PermissionDenied)
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
             listener.onError(SpeechError.Unavailable)
         }
     }
 
     /** Ends the listening turn; the recognizer then delivers what it heard. */
-    fun stop() { recognizer?.stopListening() }
+    fun stop() { try { recognizer?.stopListening() } catch (_: Throwable) { } }
 
     fun destroy() {
-        recognizer?.destroy()
+        val r = recognizer
         recognizer = null
+        // Several phone makers' recognition services (Vivo's among them) throw "Service not registered" or a
+        // NullPointerException here when the service already went away; that used to close the app.
+        try { r?.cancel() } catch (_: Throwable) { }
+        try { r?.destroy() } catch (_: Throwable) { }
     }
 
-    private fun first(b: Bundle?): String? = b?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull()
+    private fun first(b: Bundle?): String? = try { b?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)?.firstOrNull() } catch (_: Throwable) { null }
 }

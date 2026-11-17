@@ -17,6 +17,7 @@
     <application
         android:name=".TranslatorApp"
         android:allowBackup="false"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="AI Translator"
@@ -33,7 +34,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Translator.Starting"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|layoutDirection|fontScale"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|layoutDirection|fontScale|uiMode"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">

@@ -39,18 +39,23 @@ fun interface PhotoTextReader {
  */
 class MlKitPhotoTextReader : PhotoTextReader {
     override suspend fun read(jpeg: ByteArray): ScannedText = withContext(Dispatchers.Default) {
-        val bitmap = BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size) ?: return@withContext ScannedText("")
+        val bitmap = try { BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size) } catch (_: OutOfMemoryError) { null } ?: return@withContext ScannedText("")
         val image = InputImage.fromBitmap(bitmap, 0)
-        val recognizers = listOf(
-            TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS),
-            TextRecognition.getClient(ChineseTextRecognizerOptions.Builder().build()),
-            TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build()),
-            TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build()),
-            TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build()),
+        // Each script reader is a separate on-device model. They are now opened one at a time and closed straight after use,
+        // instead of all five being held in memory together, which ran low-memory phones (many Vivo Y models) out of memory.
+        val readers: List<() -> com.google.mlkit.vision.text.TextRecognizer> = listOf(
+            { TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS) },
+            { TextRecognition.getClient(ChineseTextRecognizerOptions.Builder().build()) },
+            { TextRecognition.getClient(JapaneseTextRecognizerOptions.Builder().build()) },
+            { TextRecognition.getClient(KoreanTextRecognizerOptions.Builder().build()) },
+            { TextRecognition.getClient(DevanagariTextRecognizerOptions.Builder().build()) },
         )
         try {
             // The script is not known up front, so every reader looks and the one that finds the most text wins.
-            val best = recognizers.map { r -> runCatching { r.process(image).await() }.getOrNull() }.maxByOrNull { it?.text?.trim()?.length ?: 0 }
+            val best = readers.map { make ->
+                val r = try { make() } catch (_: Throwable) { null }
+                try { r?.let { runCatching { it.process(image).await() }.getOrNull() } } finally { try { r?.close() } catch (_: Throwable) { } }
+            }.maxByOrNull { it?.text?.trim()?.length ?: 0 }
                 ?: return@withContext ScannedText("")
             val w = bitmap.width.toFloat()
             val h = bitmap.height.toFloat()
@@ -69,8 +74,10 @@ class MlKitPhotoTextReader : PhotoTextReader {
             // Only the cleaned lines count as the photo's text: no icon marks, file names or tiny background text.
             val lines = cleanScannedLines(raw)
             ScannedText(lines.joinToString("\n") { it.text }, lines)
-        } finally {
-            recognizers.forEach { it.close() }
+        } catch (e: CancellationException) {
+            throw e
+        } catch (_: Throwable) {
+            ScannedText("")
         }
     }
 

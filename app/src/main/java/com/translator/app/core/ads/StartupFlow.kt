@@ -67,6 +67,8 @@ class StartupFlow(private val container: AppContainer, private val scope: Corout
                 formShown = try { ads.consent.showFormIfRequired(activity) } catch (_: Throwable) { false }
                 excluded += android.os.SystemClock.elapsedRealtime() - formStart
             }
+            // The check did not answer in time (common on some Vivo/Oppo phones): outside consent regions, let ads start anyway.
+            if (!checked) ads.consent.allowOutsideConsentRegions()
             applyAnalytics(ads.prefs)
             // User properties are not on the critical path.
             scope.launch { setUserProperties() }

@@ -82,7 +82,7 @@ class FirebaseAiTextGenerator(private val models: List<String> = DEFAULT_MODELS)
         onFirstWorkingModel { name -> modelFor(name, system).generateContent(user).text.orEmpty() }
 
     override suspend fun generateFromImage(system: String, prompt: String, jpeg: ByteArray): String {
-        val bitmap = BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size) ?: throw IllegalArgumentException("Not an image")
+        val bitmap = try { BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size) } catch (_: OutOfMemoryError) { null } ?: throw IllegalArgumentException("Not an image")
         return onFirstWorkingModel { name -> modelFor(name, system).generateContent(content { image(bitmap); text(prompt) }).text.orEmpty() }
     }
 

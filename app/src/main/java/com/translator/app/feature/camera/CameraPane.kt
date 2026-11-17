@@ -91,7 +91,7 @@ fun CameraPane(
             )
             if (denied) {
                 PrimaryButton(str(R.string.open_settings), {
-                    context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null)))
+                    com.translator.app.core.util.SafeIntents.openAppSettings(context)
                 }, Modifier.fillMaxWidth(), height = 52.dp)
             } else {
                 PrimaryButton(str(R.string.allow_camera), { permission.launch(Manifest.permission.CAMERA) }, Modifier.fillMaxWidth(), height = 52.dp, icon = AppIcons.Camera)
@@ -148,23 +148,38 @@ fun CameraPane(
                 failed = true
             }
         }, ContextCompat.getMainExecutor(context))
-        onDispose { provider?.unbindAll(); camera = null }
+        onDispose { try { provider?.unbindAll() } catch (_: Throwable) { }; camera = null }
     }
-    LaunchedEffect(camera, zoom) { camera?.cameraControl?.setZoomRatio(zoom) }
-    LaunchedEffect(camera, torch) { camera?.cameraControl?.enableTorch(torch) }
+    // Phones differ in how far they zoom (some front-heavy budget models stop below 3x) and whether they have a torch; asking
+    // for more than the camera can do is clamped instead of failing.
+    LaunchedEffect(camera, zoom) {
+        val cam = camera ?: return@LaunchedEffect
+        try {
+            val max = cam.cameraInfo.zoomState.value?.maxZoomRatio ?: 1f
+            val min = cam.cameraInfo.zoomState.value?.minZoomRatio ?: 1f
+            cam.cameraControl.setZoomRatio(zoom.coerceIn(min, maxOf(min, max)))
+        } catch (_: Throwable) { }
+    }
+    LaunchedEffect(camera, torch) {
+        val cam = camera ?: return@LaunchedEffect
+        try { if (cam.cameraInfo.hasFlashUnit()) cam.cameraControl.enableTorch(torch) } catch (_: Throwable) { }
+    }
 
     fun shoot() {
         if (busy || !enabled) return
+        if (camera == null) { failed = true; return }
         busy = true
-        val dir = File(context.cacheDir, "photos").apply { mkdirs() }
-        val file = File.createTempFile("scan", ".jpg", dir)
-        capture.takePicture(
+        val file = try {
+            val dir = File(context.cacheDir, "photos").apply { mkdirs() }
+            File.createTempFile("scan", ".jpg", dir)
+        } catch (_: Throwable) { busy = false; failed = true; return }
+        try { capture.takePicture(
             ImageCapture.OutputFileOptions.Builder(file).build(), ContextCompat.getMainExecutor(context),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) { busy = false; onCaptured(Uri.fromFile(file)) }
                 override fun onError(exception: ImageCaptureException) { busy = false; file.delete(); failed = true }
             },
-        )
+        ) } catch (_: Throwable) { busy = false; file.delete(); failed = true }
     }
 
     Box(modifier.clip(RoundedCornerShape(28.dp)).background(Color.Black)) {

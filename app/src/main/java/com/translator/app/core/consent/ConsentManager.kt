@@ -50,9 +50,51 @@ class ConsentManager(context: Context, private val prefs: SyncPrefs) {
             info.requestConsentInfoUpdate(
                 activity, params,
                 { checkedThisProcess = true; persist(); if (cont.isActive) cont.resume(true) },
-                { error -> android.util.Log.w("Ads", "consent check failed: ${error.errorCode} ${error.message}"); persist(); if (cont.isActive) cont.resume(false) },
+                { error -> android.util.Log.w("Ads", "consent check failed: ${error.errorCode} ${error.message}"); persist(); allowOutsideConsentRegions(); if (cont.isActive) cont.resume(false) },
             )
-        } catch (_: Throwable) { if (cont.isActive) cont.resume(false) }
+        } catch (_: Throwable) { allowOutsideConsentRegions(); if (cont.isActive) cont.resume(false) }
+    }
+
+    /**
+     * Some phones (several Vivo, Oppo and Xiaomi models among them) cannot complete the consent check: the request fails or
+     * never answers because of the maker's network or WebView setup. Ads then stayed off for good, even in countries where no
+     * consent form is ever needed. When the check failed, UMP has never said consent rules apply, and the phone's SIM, network
+     * and region are all outside the EEA, UK and Switzerland, ads are allowed (the ads SDK still reads any consent string).
+     */
+    fun allowOutsideConsentRegions() {
+        try {
+            if (prefs.canRequestAds || prefs.consentRegulated) return
+            val status = try { info.consentStatus } catch (_: Throwable) { ConsentInformation.ConsentStatus.UNKNOWN }
+            if (status == ConsentInformation.ConsentStatus.REQUIRED || status == ConsentInformation.ConsentStatus.OBTAINED) return
+            if (inConsentRegion()) return
+            prefs.canRequestAds = true
+            android.util.Log.w("Ads", "consent check failed outside consent regions; ads allowed")
+            com.translator.app.core.ads.AdDiagnostics.record("consent", "fallback_allowed")
+            applyAnalytics(prefs)
+            onChanged()
+        } catch (_: Throwable) { }
+    }
+
+    private fun inConsentRegion(): Boolean {
+        val countries = mutableListOf<String>()
+        try {
+            val tm = app.getSystemService(android.telephony.TelephonyManager::class.java)
+            tm?.simCountryIso?.let(countries::add)
+            tm?.networkCountryIso?.let(countries::add)
+        } catch (_: Throwable) { }
+        countries += java.util.Locale.getDefault().country
+        val known = countries.map { it.trim().uppercase(java.util.Locale.US) }.filter { it.length == 2 }
+        // Nothing known about where the phone is: stay careful.
+        if (known.isEmpty()) return true
+        return known.any { it in CONSENT_REGIONS }
+    }
+
+    private companion object {
+        /** EEA, the UK and Switzerland: where Google requires a consent message before ads. */
+        val CONSENT_REGIONS = setOf(
+            "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL",
+            "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "UK", "CH",
+        )
     }
 
     /** Shows the consent form if (and only if) UMP says it is required. Returns true when a form was shown. */

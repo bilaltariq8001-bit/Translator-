@@ -60,6 +60,8 @@ class TranslatorKeyboardService : InputMethodService(), KeyboardListener {
 
     override fun onStartInputView(info: EditorInfo, restarting: Boolean) {
         super.onStartInputView(info, restarting)
+        // Some phones (Vivo among them) start input before the keyboard view exists; there is nothing to set up yet then.
+        if (!::keyboard.isInitialized) return
         buffer.clear(); undo = null; job?.cancel(); keyboard.setBusy(false); keyboard.setUndoVisible(false); keyboard.showMessage(null)
         val cls = info.inputType and InputType.TYPE_MASK_CLASS
         val variation = info.inputType and InputType.TYPE_MASK_VARIATION
@@ -96,7 +98,9 @@ class TranslatorKeyboardService : InputMethodService(), KeyboardListener {
 
     override fun onText(text: String) {
         val ic = currentInputConnection ?: return
-        undo = null; keyboard.setUndoVisible(false)
+        undo = null
+        if (!::keyboard.isInitialized) { buffer.clear(); return }
+        keyboard.setUndoVisible(false)
         if (protectedField) { ic.commitText(text, 1); return }
         buffer.append(text)
         ic.setComposingText(buffer.text, 1)
@@ -106,7 +110,9 @@ class TranslatorKeyboardService : InputMethodService(), KeyboardListener {
 
     override fun onBackspace() {
         val ic = currentInputConnection ?: return
-        undo = null; keyboard.setUndoVisible(false)
+        undo = null
+        if (!::keyboard.isInitialized) { buffer.clear(); return }
+        keyboard.setUndoVisible(false)
         if (!protectedField && buffer.backspace()) {
             if (buffer.isEmpty) ic.commitText("", 1) else ic.setComposingText(buffer.text, 1)
         } else {
@@ -118,7 +124,9 @@ class TranslatorKeyboardService : InputMethodService(), KeyboardListener {
 
     override fun onEnter() {
         val ic = currentInputConnection ?: return
-        undo = null; keyboard.setUndoVisible(false)
+        undo = null
+        if (!::keyboard.isInitialized) { buffer.clear(); return }
+        keyboard.setUndoVisible(false)
         ic.finishComposingText(); buffer.clear()
         val action = (currentInputEditorInfo?.imeOptions ?: 0) and EditorInfo.IME_MASK_ACTION
         val noEnterAction = (currentInputEditorInfo?.imeOptions ?: 0) and EditorInfo.IME_FLAG_NO_ENTER_ACTION != 0
@@ -127,10 +135,12 @@ class TranslatorKeyboardService : InputMethodService(), KeyboardListener {
     }
 
     override fun onSwitchKeyboard() {
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        val token = window?.window?.attributes?.token
-        // Go to the previous keyboard; if there is none to go back to, show the picker.
-        if (token == null || !imm.switchToLastInputMethod(token)) imm.showInputMethodPicker()
+        try {
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            val token = window?.window?.attributes?.token
+            // Go to the previous keyboard; if there is none to go back to, show the picker.
+            if (token == null || !imm.switchToLastInputMethod(token)) imm.showInputMethodPicker()
+        } catch (_: Throwable) { }
     }
 
     // ------------------------------------------------------------------ translating

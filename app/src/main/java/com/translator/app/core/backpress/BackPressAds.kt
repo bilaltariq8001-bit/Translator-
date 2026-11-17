@@ -45,7 +45,7 @@ class BackPressAds(private val interstitials: InterstitialManager, val busy: Bus
         inFlight = true
         var done = false
         val finish = {
-            if (!done) { done = true; inFlight = false; navigate() }
+            if (!done) { done = true; inFlight = false; try { navigate() } catch (e: Throwable) { android.util.Log.w("Ads", "navigation after ad failed", e) } }
         }
         // Safety for the short wait before the ad appears; cancelled once it is on screen, because people may watch it for long.
         val safety = Runnable { finish() }
@@ -60,7 +60,7 @@ class BackPressAds(private val interstitials: InterstitialManager, val busy: Bus
         inFlight = true
         var done = false
         val finish = {
-            if (!done) { done = true; inFlight = false; navigate() }
+            if (!done) { done = true; inFlight = false; try { navigate() } catch (e: Throwable) { android.util.Log.w("Ads", "navigation after ad failed", e) } }
         }
         val safety = Runnable { finish() }
         main.postDelayed(safety, SAFETY_MS)

@@ -115,7 +115,7 @@ fun rememberDictation(languageCode: String, currentText: String, onText: (String
                 primaryLabel = str(R.string.open_settings),
                 onPrimary = {
                     denied = false
-                    context.startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", context.packageName, null)))
+                    com.translator.app.core.util.SafeIntents.openAppSettings(context)
                 },
                 secondaryLabel = str(R.string.type_instead), onSecondary = { denied = false },
                 icon = AppIcons.Mic, danger = true,

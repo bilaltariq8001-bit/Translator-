@@ -24,8 +24,15 @@ import java.util.Locale
  * [speakingId] holds the id given to [speak] while that text is being read, so a speaker button can show "stop" for the
  * line that is playing and "listen" for the others, whether the reading was started by the button or automatically.
  */
-class TtsPlayer(context: Context, private val onProblem: (String) -> Unit = {}) {
+class TtsPlayer(context: Context, problemHandler: (String) -> Unit = {}) {
     private val appContext = context.applicationContext
+    private val main = android.os.Handler(android.os.Looper.getMainLooper())
+    private fun onMain(block: () -> Unit) {
+        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) block() else main.post(block)
+    }
+    // The speech engine reports from its own threads. A Toast or a Compose state change from there crashed some phones
+    // (Vivo among them), so both always go through the main thread.
+    private val onProblem: (String) -> Unit = { message -> onMain { try { problemHandler(message) } catch (_: Throwable) { } } }
     private var tts: TextToSpeech? = null
     private var ready = false
     private var pending: (() -> Unit)? = null
@@ -38,26 +45,32 @@ class TtsPlayer(context: Context, private val onProblem: (String) -> Unit = {}) 
         private set
 
     private val progress = object : UtteranceProgressListener() {
-        override fun onStart(utteranceId: String?) { speakingId = utteranceId }
-        override fun onDone(utteranceId: String?) { if (speakingId == utteranceId) speakingId = null }
+        override fun onStart(utteranceId: String?) { onMain { speakingId = utteranceId } }
+        override fun onDone(utteranceId: String?) { onMain { if (speakingId == utteranceId) speakingId = null } }
         @Deprecated("Deprecated in Java")
-        override fun onError(utteranceId: String?) { if (speakingId == utteranceId) speakingId = null }
-        override fun onStop(utteranceId: String?, interrupted: Boolean) { if (speakingId == utteranceId) speakingId = null }
+        override fun onError(utteranceId: String?) { onMain { if (speakingId == utteranceId) speakingId = null } }
+        override fun onError(utteranceId: String?, errorCode: Int) { onMain { if (speakingId == utteranceId) speakingId = null } }
+        override fun onStop(utteranceId: String?, interrupted: Boolean) { onMain { if (speakingId == utteranceId) speakingId = null } }
     }
 
     fun speak(text: String, langCode: String, rate: Float = 1f, id: String = "translation"): Boolean {
         com.translator.app.core.analytics.Analytics.log(com.translator.app.core.analytics.Ev.TTS_PLAYED) { lang("lang", langCode) }
         val engine = tts ?: try {
             TextToSpeech(appContext) { status ->
-                ready = status == TextToSpeech.SUCCESS
-                // Text asked for while the engine was starting is read when it is ready, unless that took so long that the
-                // screen has moved on: reading it then would be a voice from nowhere.
-                if (ready) { if (System.nanoTime() - pendingAt < 6_000_000_000L) pending?.invoke() } else onProblem(str(R.string.tts_unavailable))
-                pending = null
+                onMain {
+                    if (tts == null) return@onMain // shut down while starting
+                    ready = status == TextToSpeech.SUCCESS
+                    // Text asked for while the engine was starting is read when it is ready, unless that took so long that the
+                    // screen has moved on: reading it then would be a voice from nowhere.
+                    try {
+                        if (ready) { if (System.nanoTime() - pendingAt < 6_000_000_000L) pending?.invoke() } else onProblem(str(R.string.tts_unavailable))
+                    } catch (_: Throwable) { }
+                    pending = null
+                }
             }
         } catch (e: Exception) {
             onProblem(str(R.string.tts_unavailable)); return false
-        }.also { it.setOnUtteranceProgressListener(progress); tts = it }
+        }.also { tts = it; try { it.setOnUtteranceProgressListener(progress) } catch (_: Throwable) { } }
         val run = { say(engine, text, langCode, rate, id) }
         if (!ready) { pending = { run() }; pendingAt = System.nanoTime(); return true }
         return run()
@@ -70,8 +83,12 @@ class TtsPlayer(context: Context, private val onProblem: (String) -> Unit = {}) 
             onProblem(str(R.string.tts_language_missing, Languages.byCodeOrNull(langCode)?.name ?: langCode))
             return false
         }
-        engine.setSpeechRate(rate)
-        val ok = engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, id) == TextToSpeech.SUCCESS
+        // The engine limits one utterance's length; longer text used to fail silently on some engines.
+        val limit = try { TextToSpeech.getMaxSpeechInputLength() } catch (_: Throwable) { 4000 }
+        val ok = try {
+            engine.setSpeechRate(rate)
+            engine.speak(if (text.length > limit) text.take(limit) else text, TextToSpeech.QUEUE_FLUSH, null, id) == TextToSpeech.SUCCESS
+        } catch (_: Throwable) { false }
         if (!ok) onProblem(str(R.string.tts_unavailable))
         return ok
     }
@@ -79,8 +96,8 @@ class TtsPlayer(context: Context, private val onProblem: (String) -> Unit = {}) 
     /** Stops reading at once (for the stop button, and before the microphone opens so it does not hear the voice). */
     fun stop() {
         pending = null
-        tts?.stop()
-        speakingId = null
+        try { tts?.stop() } catch (_: Throwable) { }
+        onMain { speakingId = null }
     }
 
     companion object {
@@ -95,11 +112,13 @@ class TtsPlayer(context: Context, private val onProblem: (String) -> Unit = {}) 
 
     fun shutdown() {
         pending = null
-        tts?.stop()
-        tts?.shutdown()
+        val engine = tts
         tts = null
         ready = false
-        speakingId = null
+        // Some phones' engines throw when stopped or unbound twice ("Service not registered").
+        try { engine?.stop() } catch (_: Throwable) { }
+        try { engine?.shutdown() } catch (_: Throwable) { }
+        onMain { speakingId = null }
     }
 }
 

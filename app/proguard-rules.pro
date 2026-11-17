@@ -15,3 +15,15 @@
 # no switch to the backup model on quota/overload and the wrong message. Keep those names.
 -keepnames class com.google.firebase.ai.type.** extends java.lang.Throwable
 -keepnames class kotlinx.coroutines.TimeoutCancellationException
+
+# Ads (Next-Gen GMA SDK), consent (UMP) and their WebView bridges. Their own consumer rules cover normal builds, but some
+# phone makers' WebView builds call these bridge methods by name; if R8 renames them, ads load on one phone and stay blank on
+# another. Keeping them costs little.
+-keep class com.google.android.libraries.ads.mobile.sdk.** { *; }
+-keep class com.google.android.ump.** { *; }
+-keep class com.google.android.gms.ads.** { *; }
+-dontwarn com.google.android.libraries.ads.mobile.sdk.**
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+

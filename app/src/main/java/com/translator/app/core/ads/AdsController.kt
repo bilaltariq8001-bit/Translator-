@@ -15,6 +15,7 @@ import com.translator.app.core.util.SyncPrefs
 
 /** Everything about ads, consent and remote config in one place, created by the container. */
 class AdsController(context: Context, val prefs: SyncPrefs, isOnline: () -> Boolean) {
+    private val main = android.os.Handler(android.os.Looper.getMainLooper())
     val config = ConfigManager(
         context,
         AdIdDefaults(
@@ -46,20 +47,29 @@ class AdsController(context: Context, val prefs: SyncPrefs, isOnline: () -> Bool
 
     init {
         if (!BuildConfig.DEBUG && BuildConfig.ADS_USING_TEST_IDS) android.util.Log.w("Ads", "Release build is using Google test ad ids; set real ids in local.properties.")
-        consent.onChanged = { consentVersion++; tryPreload() }
+        // Compose state is only changed on the main thread: the network callback runs on a system thread, and changing state
+        // from there while a frame is being composed crashed some phones ("Unsupported concurrent change during composition").
+        consent.onChanged = { onMain { consentVersion++; tryPreload() } }
         try {
             context.getSystemService(android.net.ConnectivityManager::class.java)?.registerDefaultNetworkCallback(object : android.net.ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: android.net.Network) { netVersion++; tryPreload() }
-                override fun onLost(network: android.net.Network) { netVersion++ }
+                override fun onAvailable(network: android.net.Network) { onMain { netVersion++; tryPreload() } }
+                override fun onLost(network: android.net.Network) { onMain { netVersion++ } }
             })
         } catch (_: Throwable) { }
-        tryPreload()
+        onMain { tryPreload() }
+    }
+
+    private fun onMain(block: () -> Unit) {
+        if (android.os.Looper.myLooper() == android.os.Looper.getMainLooper()) block() else main.post(block)
     }
 
     private fun tryPreload() {
-        initializer.whenReady {
-            appOpen.loadAd()
-        }
+        try {
+            initializer.whenReady {
+                appOpen.loadAd()
+                interstitials.warm()
+            }
+        } catch (_: Throwable) { }
     }
 
     /** True when ads may be requested right now. Reads Compose state, so a banner appears as soon as consent or the connection arrives. */
@@ -92,9 +102,11 @@ class AdsController(context: Context, val prefs: SyncPrefs, isOnline: () -> Bool
 
     suspend fun refreshConfig() {
         if (config.refresh()) {
-            bannerModels.clear()
-            nativeModels.clear()
-            configVersion++
+            onMain {
+                bannerModels.clear()
+                nativeModels.clear()
+                configVersion++
+            }
         }
     }
 

@@ -50,7 +50,7 @@ internal fun parseBoxedLines(answer: String): List<BoxedLine> = objectPattern.fi
 
 /** The photo's own colour just above and below each box (left, top, right, bottom as fractions), as ARGB. */
 internal fun sampleBackgrounds(jpeg: ByteArray, boxes: List<FloatArray>): List<Int> {
-    val bitmap = BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size) ?: return boxes.map { Color.WHITE }
+    val bitmap = try { BitmapFactory.decodeByteArray(jpeg, 0, jpeg.size) } catch (_: Throwable) { null } ?: return boxes.map { Color.WHITE }
     return boxes.map { b ->
         val left = (b[0] * bitmap.width).toInt()
         val width = ((b[2] - b[0]) * bitmap.width).toInt().coerceAtLeast(1)

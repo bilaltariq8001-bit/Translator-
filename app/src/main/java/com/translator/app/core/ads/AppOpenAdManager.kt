@@ -133,8 +133,20 @@ class AppOpenAdManager(
         // Consume before show to prevent a second lifecycle callback racing this one.
         appOpenAd = null
         isShowing = true
+        var appeared = false
+        // If the ad neither appears nor reports a failure (seen on some Vivo phones), take the black layer away again so the
+        // app is never left covered and unresponsive.
+        val stuck = Runnable {
+            if (!appeared && isShowing) {
+                Log.w(TAG, "ad did not appear; releasing the screen")
+                AdBackdrop.hide(activity)
+                isShowing = false
+            }
+        }
         ad.adEventCallback = object : AppOpenAdEventCallback {
             override fun onAdShowedFullScreenContent() {
+                appeared = true
+                main.removeCallbacks(stuck)
                 val now = System.currentTimeMillis()
                 prefs.appOpenLastShownAtMillis = now
                 Log.d(TAG, "fullscreen content shown")
@@ -142,6 +154,7 @@ class AppOpenAdManager(
             }
 
             override fun onAdDismissedFullScreenContent() = onMain {
+                main.removeCallbacks(stuck)
                 Log.d(TAG, "fullscreen content dismissed")
                 AdBackdrop.hide(activity)
                 AdEvents.dismissed(PLACEMENT, FORMAT)
@@ -150,6 +163,7 @@ class AppOpenAdManager(
             }
 
             override fun onAdFailedToShowFullScreenContent(error: FullScreenContentError) = onMain {
+                main.removeCallbacks(stuck)
                 Log.w(TAG, "show failed: ${error.message}")
                 AdEvents.failed(PLACEMENT, FORMAT, "show_failed")
                 AdBackdrop.hide(activity)
@@ -164,10 +178,13 @@ class AppOpenAdManager(
         }
         try {
             Log.d(TAG, "showing cached ad")
+            com.translator.app.core.audio.TtsPlayer.stopAll()
             AdBackdrop.show(activity)
+            main.postDelayed(stuck, SHOW_TIMEOUT_MS)
             ad.show(activity)
         } catch (error: Throwable) {
             Log.e(TAG, "show threw", error)
+            main.removeCallbacks(stuck)
             AdBackdrop.hide(activity)
             isShowing = false
             loadAd()
@@ -188,6 +205,7 @@ class AppOpenAdManager(
         const val PLACEMENT = "app_open"
         const val FORMAT = "app_open"
         const val COOLDOWN_MS = 60_000L
+        const val SHOW_TIMEOUT_MS = 5_000L
         const val AD_VALID_FOR_MS = 4 * 60 * 60_000L
     }
 }

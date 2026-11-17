@@ -448,10 +448,12 @@ private fun KeyboardSetupScreen(onBack: () -> Unit) {
     var enabled by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf(false) }
     fun refresh() {
-        val imm = context.getSystemService(android.view.inputmethod.InputMethodManager::class.java)
-        enabled = imm?.enabledInputMethodList?.any { it.packageName == context.packageName } == true
-        val current = android.provider.Settings.Secure.getString(context.contentResolver, android.provider.Settings.Secure.DEFAULT_INPUT_METHOD).orEmpty()
-        selected = current.startsWith(context.packageName + "/")
+        try {
+            val imm = context.getSystemService(android.view.inputmethod.InputMethodManager::class.java)
+            enabled = imm?.enabledInputMethodList?.any { it.packageName == context.packageName } == true
+            val current = android.provider.Settings.Secure.getString(context.contentResolver, android.provider.Settings.Secure.DEFAULT_INPUT_METHOD).orEmpty()
+            selected = current.startsWith(context.packageName + "/")
+        } catch (_: Throwable) { }
     }
     androidx.lifecycle.compose.LifecycleResumeEffect(Unit) { refresh(); onPauseOrDispose { } }
     // The keyboard picker is a dialog, so the screen is not paused and resumed: check again while this screen is open.
@@ -463,10 +465,10 @@ private fun KeyboardSetupScreen(onBack: () -> Unit) {
             ToolHeader(str(R.string.translator_keyboard), str(R.string.type_in_your_language_send), onBack, pad)
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = pad, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 SetupStep(1, str(R.string.turn_on_the_keyboard), str(R.string.switch_on_ai_translator_keyboard), enabled, str(R.string.open_keyboard_settings), true) {
-                    context.startActivity(android.content.Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))
+                    if (!com.translator.app.core.util.SafeIntents.start(context, android.content.Intent(android.provider.Settings.ACTION_INPUT_METHOD_SETTINGS))) com.translator.app.core.util.SafeIntents.start(context, android.content.Intent(android.provider.Settings.ACTION_SETTINGS))
                 }
                 SetupStep(2, str(R.string.choose_it_for_typing), str(R.string.pick_ai_translator_keyboard_as), selected, str(R.string.choose_keyboard), enabled) {
-                    context.getSystemService(android.view.inputmethod.InputMethodManager::class.java)?.showInputMethodPicker()
+                    try { context.getSystemService(android.view.inputmethod.InputMethodManager::class.java)?.showInputMethodPicker() } catch (_: Throwable) { }
                 }
                 AppCard(Modifier.fillMaxWidth()) {
                     SectionLabel(str(R.string.try_it_here))

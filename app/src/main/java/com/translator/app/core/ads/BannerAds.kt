@@ -53,7 +53,7 @@ class BannerAdManager(
 
         /** Frees the SDK ad and view; the view is taken out of any screen first. */
         fun destroy() {
-            (view.parent as? ViewGroup)?.removeView(view)
+            try { (view.parent as? ViewGroup)?.removeView(view) } catch (_: Throwable) { }
             try { ad?.destroy() } catch (_: Throwable) { }
             try { view.destroy() } catch (_: Throwable) { }
         }
@@ -68,7 +68,7 @@ class BannerAdManager(
 
     fun viewFor(slot: String): AdView? {
         revisions[slot]
-        return shown[slot]?.takeIf { states[slot] == BannerState.Loaded }?.view
+        return shown[slot]?.takeIf { states[slot] == BannerState.Loaded && ownerOf(it.view)?.isDestroyed != true }?.view
     }
 
     fun ensureLoaded(activity: Activity, model: InScreenAdModel, size: AdSize) {
@@ -76,6 +76,12 @@ class BannerAdManager(
         if (!model.enabled || model.type != InScreenAdType.BANNER || model.adId.isEmpty()) { states[slot] = BannerState.Failed; return }
         if (!gate.canLoad()) return
         val now = SystemClock.elapsedRealtime()
+        // A banner view belongs to the screen (activity) it was made for. When the phone recreated the activity (dark mode,
+        // font size, display size, or the maker's memory manager, which Vivo phones do often), the old view must not be put
+        // into the new screen: that crashed or showed an empty space. Drop it and load a fresh one.
+        listOf(shown, loading).forEach { map ->
+            map[slot]?.let { e -> if (ownerOf(e.view) !== activity) { map.remove(slot); e.destroy(); if (map === shown) { states.remove(slot); revisions[slot] = (revisions[slot] ?: 0) + 1 } } }
+        }
         val inFlight = loading[slot]
         if (inFlight != null && now - inFlight.startedAt < LOAD_GIVE_UP_MS) return
         val current = shown[slot]
@@ -84,6 +90,15 @@ class BannerAdManager(
         if (current == null && failed != null && now - failed < RETRY_MS) return
         if (states[slot] == null || states[slot] == BannerState.Failed) states[slot] = BannerState.Loading
         initializer.whenReady(onFail = { fail(slot) }) { load(activity, model, size) }
+    }
+
+    private fun ownerOf(view: android.view.View): Activity? {
+        var c: android.content.Context? = view.context
+        while (c is android.content.ContextWrapper) {
+            if (c is Activity) return c
+            c = c.baseContext
+        }
+        return null
     }
 
     private fun fail(slot: String) {
@@ -180,7 +195,9 @@ fun BannerSlot(slot: String, modifier: Modifier = Modifier) {
     if (WindowInsets.isImeVisible) return
 
     val widthDp = LocalConfiguration.current.screenWidthDp
-    val size = remember(widthDp) { AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, widthDp) }
+    val size = remember(widthDp) {
+        try { AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(activity, widthDp) } catch (_: Throwable) { AdSize.BANNER }
+    }
     LaunchedEffect(slot, widthDp, model, ready) {
         // A failed or stuck request is tried again while the slot stays on screen (ensureLoaded spaces the retries out),
         // instead of the slot staying empty until the person leaves the screen and comes back.
@@ -193,21 +210,23 @@ fun BannerSlot(slot: String, modifier: Modifier = Modifier) {
 
     val state = ads.banners.states[slot] ?: BannerState.Loading
     if (state == BannerState.Failed) return
-    val heightDp = with(LocalDensity.current) { size.getHeightInPixels(activity).toDp() }
+    val heightDp = with(LocalDensity.current) { (try { size.getHeightInPixels(activity) } catch (_: Throwable) { 0 }).coerceAtLeast(1).toDp() }
     Box(modifier.fillMaxWidth().height(heightDp)) {
         if (state == BannerState.Loaded) {
             AndroidView(
                 modifier = Modifier.fillMaxWidth().height(heightDp),
                 factory = { FrameLayout(it) },
                 update = { container ->
-                    val view = ads.banners.viewFor(slot)
-                    if (view != null && view.parent !== container) {
-                        (view.parent as? ViewGroup)?.removeView(view)
-                        container.removeAllViews()
-                        container.addView(view)
-                    }
+                    try {
+                        val view = ads.banners.viewFor(slot)
+                        if (view != null && view.parent !== container) {
+                            (view.parent as? ViewGroup)?.removeView(view)
+                            container.removeAllViews()
+                            container.addView(view)
+                        }
+                    } catch (_: Throwable) { }
                 },
-                onRelease = { container -> container.removeAllViews() },
+                onRelease = { container -> try { container.removeAllViews() } catch (_: Throwable) { } },
             )
         }
     }

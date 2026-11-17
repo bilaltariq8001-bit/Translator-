@@ -170,9 +170,14 @@ class InterstitialManager(
     private fun present(ad: InterstitialAd, activity: Activity, placement: String, onShown: () -> Unit, onDone: () -> Unit) {
         showing = true
         var finished = false
+        var appeared = false
+        // On some phones (seen on Vivo) the ad neither appears nor reports a failure, which left the black backdrop over the
+        // app and every tap swallowed: the app looked frozen. If nothing has appeared after a few seconds, carry on.
+        var stuck: Runnable? = null
         fun finish() {
             if (finished) return
             finished = true
+            stuck?.let(main::removeCallbacks)
             AdBackdrop.hide(activity)
             showing = false
             onDone()
@@ -180,6 +185,8 @@ class InterstitialManager(
         }
         ad.adEventCallback = object : InterstitialAdEventCallback {
             override fun onAdShowedFullScreenContent() = onMain {
+                appeared = true
+                stuck?.let(main::removeCallbacks)
                 capping.onShown()
                 AdEvents.shown(placement, FORMAT)
                 onShown()
@@ -198,7 +205,10 @@ class InterstitialManager(
             override fun onAdClicked() { AdEvents.clicked(placement, FORMAT) }
         }
         try {
+            if (activity.isFinishing || activity.isDestroyed) { finish(); return }
+            com.translator.app.core.audio.TtsPlayer.stopAll()
             AdBackdrop.show(activity)
+            stuck = Runnable { if (!appeared) finish() }.also { main.postDelayed(it, SHOW_TIMEOUT_MS) }
             ad.show(activity)
         } catch (_: Throwable) {
             finish()
@@ -225,5 +235,8 @@ class InterstitialManager(
         }
     }
 
-    private companion object { const val FORMAT = "interstitial" }
+    private companion object {
+        const val FORMAT = "interstitial"
+        const val SHOW_TIMEOUT_MS = 5_000L
+    }
 }
