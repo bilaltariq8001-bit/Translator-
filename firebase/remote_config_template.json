@@ -1,0 +1,530 @@
+{
+  "conditions": [],
+  "parameters": {},
+  "parameterGroups": {
+    "Ad frequency limits": {
+      "parameters": {
+        "interstitial_cache_size": {
+          "defaultValue": {
+            "value": "2"
+          },
+          "valueType": "NUMBER"
+        },
+        "is_interstitial_time_capping_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "interstitial_cooldown_seconds": {
+          "defaultValue": {
+            "value": "60"
+          },
+          "valueType": "NUMBER"
+        },
+        "interstitial_click_cap": {
+          "defaultValue": {
+            "value": "3"
+          },
+          "valueType": "NUMBER"
+        }
+      }
+    },
+    "App Open ad": {
+      "parameters": {
+        "app_open_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9257395921"
+          },
+          "valueType": "STRING"
+        },
+        "app_open_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "app_open_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        }
+      }
+    },
+    "Native ads": {
+      "parameters": {
+        "history_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "history_native_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "tools_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "tools_native_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "text_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "voice_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "settings_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "offline_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "chat_history_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "chat_history_native_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        }
+      }
+    },
+    "Interstitial ads": {
+      "parameters": {
+        "splash_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "splash_inter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "splash_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "splash_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "history_back_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "history_back_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "history_back_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "history_back_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "offline_back_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "offline_back_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "offline_back_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "offline_back_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_back_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "voice_mode_back_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_back_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_back_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_back_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "ai_tool_back_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_back_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_back_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "photo_open_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "photo_open_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "photo_open_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "photo_open_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_open_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "ai_tool_open_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_open_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_open_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_open_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "voice_mode_open_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_open_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_open_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        }
+      }
+    },
+    "Banner ads": {
+      "parameters": {
+        "text_banner_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9214589741"
+          },
+          "valueType": "STRING"
+        },
+        "text_banner_is_collapsing": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "text_in_screen_ad_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "text_ad_position": {
+          "defaultValue": {
+            "value": "BOTTOM"
+          },
+          "valueType": "STRING"
+        },
+        "text_in_screen_ad_type": {
+          "defaultValue": {
+            "value": "BANNER"
+          },
+          "valueType": "STRING"
+        },
+        "voice_banner_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9214589741"
+          },
+          "valueType": "STRING"
+        },
+        "voice_banner_is_collapsing": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_in_screen_ad_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_ad_position": {
+          "defaultValue": {
+            "value": "BOTTOM"
+          },
+          "valueType": "STRING"
+        },
+        "voice_in_screen_ad_type": {
+          "defaultValue": {
+            "value": "BANNER"
+          },
+          "valueType": "STRING"
+        },
+        "tools_banner_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9214589741"
+          },
+          "valueType": "STRING"
+        },
+        "tools_banner_is_collapsing": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "tools_in_screen_ad_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "tools_ad_position": {
+          "defaultValue": {
+            "value": "BOTTOM"
+          },
+          "valueType": "STRING"
+        },
+        "tools_in_screen_ad_type": {
+          "defaultValue": {
+            "value": "BANNER"
+          },
+          "valueType": "STRING"
+        },
+        "settings_banner_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9214589741"
+          },
+          "valueType": "STRING"
+        },
+        "settings_banner_is_collapsing": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "settings_in_screen_ad_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "settings_ad_position": {
+          "defaultValue": {
+            "value": "BOTTOM"
+          },
+          "valueType": "STRING"
+        },
+        "settings_in_screen_ad_type": {
+          "defaultValue": {
+            "value": "BANNER"
+          },
+          "valueType": "STRING"
+        },
+        "history_banner_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9214589741"
+          },
+          "valueType": "STRING"
+        },
+        "history_banner_is_collapsing": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "history_in_screen_ad_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "history_ad_position": {
+          "defaultValue": {
+            "value": "BOTTOM"
+          },
+          "valueType": "STRING"
+        },
+        "history_in_screen_ad_type": {
+          "defaultValue": {
+            "value": "BANNER"
+          },
+          "valueType": "STRING"
+        },
+        "offline_banner_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9214589741"
+          },
+          "valueType": "STRING"
+        },
+        "offline_banner_is_collapsing": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "offline_in_screen_ad_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "offline_ad_position": {
+          "defaultValue": {
+            "value": "BOTTOM"
+          },
+          "valueType": "STRING"
+        },
+        "offline_in_screen_ad_type": {
+          "defaultValue": {
+            "value": "BANNER"
+          },
+          "valueType": "STRING"
+        },
+        "chat_history_banner_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/9214589741"
+          },
+          "valueType": "STRING"
+        },
+        "chat_history_banner_is_collapsing": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "chat_history_in_screen_ad_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "chat_history_ad_position": {
+          "defaultValue": {
+            "value": "BOTTOM"
+          },
+          "valueType": "STRING"
+        },
+        "chat_history_in_screen_ad_type": {
+          "defaultValue": {
+            "value": "BANNER"
+          },
+          "valueType": "STRING"
+        }
+      }
+    }
+  }
+}
