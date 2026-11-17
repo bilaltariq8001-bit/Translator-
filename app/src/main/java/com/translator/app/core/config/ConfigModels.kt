@@ -19,7 +19,10 @@ object RcKeys {
     /** Shown after every Nth successful text translation on the main screen; N is [TRANSLATE_EVERY]. */
     const val TRANSLATE_COUNT = "translate_count"
     const val TRANSLATE_EVERY = "translate_count_inter_every"
-    val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK, PHOTO_OPEN, AI_TOOL_OPEN, VOICE_MODE_OPEN, TRANSLATE_COUNT)
+    /** Inside a voice mode or AI tool: after every N uses of that feature, the next use shows an interstitial first. N is <placement>_inter_every. */
+    const val VOICE_MODE_USE = "voice_mode_use"
+    const val AI_TOOL_USE = "ai_tool_use"
+    val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK, PHOTO_OPEN, AI_TOOL_OPEN, VOICE_MODE_OPEN, TRANSLATE_COUNT, VOICE_MODE_USE, AI_TOOL_USE)
 
     /** Native ad slots: keys are <slot>_native_ad_id and <slot>_native_enabled. */
     const val NATIVE_HISTORY = "history"

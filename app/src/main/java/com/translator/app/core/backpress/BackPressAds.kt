@@ -113,3 +113,34 @@ fun rememberNavigationAd(placement: String): (onNavigate: () -> Unit) -> Unit {
         }
     }
 }
+
+/** Uses of each feature since the app started (voice modes and AI tools). Not saved: a restart starts every count again. */
+object FeatureUseCounter {
+    private val counts = HashMap<String, Int>()
+
+    /** Counts one more use of [feature] and returns its number (1 for the first). */
+    @Synchronized fun next(feature: String): Int = ((counts[feature] ?: 0) + 1).also { counts[feature] = it }
+}
+
+/**
+ * Returns a wrapper for one use of a feature (a mic tap in a voice mode, a Generate tap in an AI tool). The first N uses
+ * run straight away; use N+1, 2N+1, ... shows the [placement] interstitial first, then runs. N comes from Remote Config
+ * (`<placement>_inter_every`, 3 by default). Each [feature] keeps its own count. The ad is warmed on use N so it is ready.
+ */
+@Composable
+fun rememberFeatureUseAd(placement: String, feature: String): (action: () -> Unit) -> Unit {
+    val ads = com.translator.app.core.ads.LocalAds.current
+    val showAd = rememberNavigationAd(placement)
+    return remember(ads, showAd, placement, feature) {
+        { action ->
+            val every = ads?.config?.useEvery(placement) ?: 3
+            val n = FeatureUseCounter.next("$placement:$feature")
+            if (n > every && (n - 1) % every == 0) {
+                showAd(action)
+            } else {
+                if (n % every == 0) ads?.interstitials?.warm(placement)
+                action()
+            }
+        }
+    }
+}

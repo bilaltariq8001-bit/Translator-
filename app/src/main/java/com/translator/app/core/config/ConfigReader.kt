@@ -52,6 +52,9 @@ class ConfigReader(
     /** How many successful translations between two translate_count interstitials (at least 1). */
     fun translateEvery(): Int = long(RcKeys.TRANSLATE_EVERY).coerceIn(1L, 1_000L).toInt()
 
+    /** How many uses of a feature come free before the next one shows the [placement] interstitial (at least 1). */
+    fun useEvery(placement: String): Int = long("${placement}_inter_every").coerceIn(1L, 1_000L).toInt()
+
     fun banner(slot: String): InScreenAdModel = InScreenAdModel(
         slot = slot,
         adId = resolveId(string("${slot}_banner_ad_id"), ids.banner, ids.testBanner),

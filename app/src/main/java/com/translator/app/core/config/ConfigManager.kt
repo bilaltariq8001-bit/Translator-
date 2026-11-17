@@ -36,6 +36,7 @@ class ConfigManager(private val context: Context, ids: AdIdDefaults) {
     fun appOpen(): AppOpenAdModel = reader.appOpen()
     fun nativeAd(slot: String): NativeAdModel = reader.nativeAd(slot)
     fun translateEvery(): Int = reader.translateEvery()
+    fun useEvery(placement: String): Int = reader.useEvery(placement)
 
     /** Fetches and activates. Returns false when Firebase is not set up, the fetch failed or 10 s ran out. */
     suspend fun refresh(timeoutMs: Long = 10_000L): Boolean {

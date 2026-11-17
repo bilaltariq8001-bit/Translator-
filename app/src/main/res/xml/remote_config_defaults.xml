@@ -373,4 +373,44 @@
         <key>chat_favorites_native_enabled</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>voice_mode_use_inter_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>voice_mode_use_inter_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>voice_mode_use_inter_should_load</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>voice_mode_use_inter_counter_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>voice_mode_use_inter_every</key>
+        <value>3</value>
+    </entry>
+    <entry>
+        <key>ai_tool_use_inter_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>ai_tool_use_inter_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>ai_tool_use_inter_should_load</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>ai_tool_use_inter_counter_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>ai_tool_use_inter_every</key>
+        <value>3</value>
+    </entry>
 </defaultsMap>

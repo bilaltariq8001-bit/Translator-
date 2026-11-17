@@ -151,6 +151,8 @@ fun VoiceScreen(
         previousPhase = ui.phase
     }
 
+    // Every 4th mic tap (Remote Config voice_mode_use_inter_every = 3) shows an interstitial before listening starts.
+    val useAd = com.translator.app.core.backpress.rememberFeatureUseAd(com.translator.app.core.config.RcKeys.VOICE_MODE_USE, "manual")
     fun onMic() {
         if (ui.phase == VoicePhase.Listening) {
             engine.stop()
@@ -166,8 +168,10 @@ fun VoiceScreen(
             }
             return
         }
-        val granted = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
-        if (granted) begin() else showExplainer = true
+        useAd {
+            val granted = ContextCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+            if (granted) begin() else showExplainer = true
+        }
     }
 
     Column(modifier.fillMaxWidth()) {

@@ -345,6 +345,8 @@ private enum class WriterSpec(
 @Composable
 private fun WriterScreen(spec: WriterSpec, vm: AiWriterViewModel, aiAllowed: Boolean, onBack: () -> Unit, onTranslateText: (String) -> Unit) {
     val state by vm.state.collectAsStateWithLifecycle(context = kotlinx.coroutines.Dispatchers.Main.immediate)
+    // Every 4th Generate/Regenerate in this tool (Remote Config ai_tool_use_inter_every = 3) shows an interstitial first.
+    val useAd = com.translator.app.core.backpress.rememberFeatureUseAd(RcKeys.AI_TOOL_USE, spec.name)
     val clipboard = LocalClipboardManager.current
     BoxWithConstraints(Modifier.fillMaxSize().imePadding()) {
         val pad = pagePadding(maxWidth.value)
@@ -366,7 +368,7 @@ private fun WriterScreen(spec: WriterSpec, vm: AiWriterViewModel, aiAllowed: Boo
                     spec.options.forEach { o -> AppChip(optionLabel(o), o == state.option, { vm.onOption(o) }) }
                 }
                 if (!aiAllowed) Text(str(R.string.cloud_note), color = Tk.Muted, fontSize = 13.sp)
-                PrimaryButton(if (state.loading) str(R.string.working) else str(spec.action), vm::onRun, Modifier.fillMaxWidth(), enabled = aiAllowed && state.input.isNotBlank() && !state.loading)
+                PrimaryButton(if (state.loading) str(R.string.working) else str(spec.action), { useAd { vm.onRun() } }, Modifier.fillMaxWidth(), enabled = aiAllowed && state.input.isNotBlank() && !state.loading)
                 state.error?.let { Text(it.message(), color = Tk.Danger, fontSize = 14.sp) }
                 androidx.compose.animation.AnimatedVisibility(visible = state.loading, enter = androidx.compose.animation.fadeIn() + androidx.compose.animation.expandVertically()) { AiThinkingCard() }
                 state.result?.let { result ->
@@ -377,7 +379,7 @@ private fun WriterScreen(spec: WriterSpec, vm: AiWriterViewModel, aiAllowed: Boo
                         androidx.compose.runtime.LaunchedEffect(copied) { if (copied) { kotlinx.coroutines.delay(1_600); copied = false } }
                         Column(Modifier.padding(top = 14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ActionButton(str(R.string.regenerate), AppIcons.Refresh, { vm.onRun() }, Modifier.weight(1f))
+                                ActionButton(str(R.string.regenerate), AppIcons.Refresh, { useAd { vm.onRun() } }, Modifier.weight(1f))
                                 ActionButton(if (copied) str(R.string.copied) else str(R.string.copy), if (copied) AppIcons.Check else AppIcons.Copy, { clipboard.setText(AnnotatedString(result)); Analytics.copied("ai_tool"); copied = true }, Modifier.weight(1f))
                             }
                             ActionButton(str(R.string.translate_result), AppIcons.Translate, { onTranslateText(result) }, Modifier.fillMaxWidth(), style = ActionStyle.Filled)
@@ -396,6 +398,8 @@ private fun WriterScreen(spec: WriterSpec, vm: AiWriterViewModel, aiAllowed: Boo
 @Composable
 private fun TravelScreen(vm: AiTravelViewModel, aiAllowed: Boolean, speechRate: Float, lang: Language, onBack: () -> Unit) {
     val state by vm.state.collectAsStateWithLifecycle(context = kotlinx.coroutines.Dispatchers.Main.immediate)
+    // Every 4th "Get phrases" (Remote Config ai_tool_use_inter_every = 3) shows an interstitial first.
+    val useAd = com.translator.app.core.backpress.rememberFeatureUseAd(RcKeys.AI_TOOL_USE, "travel")
     val tts = rememberTtsPlayer()
     val clipboard = LocalClipboardManager.current
     BoxWithConstraints(Modifier.fillMaxSize()) {
@@ -407,7 +411,7 @@ private fun TravelScreen(vm: AiTravelViewModel, aiAllowed: Boolean, speechRate: 
                     travelCategories.forEach { c -> AppChip(categoryLabel(c), c == state.category, { vm.onCategory(c) }) }
                 }
                 if (!aiAllowed) Text(str(R.string.cloud_note), color = Tk.Muted, fontSize = 13.sp)
-                PrimaryButton(if (state.loading) str(R.string.working) else str(R.string.get_phrases, categoryLabel(state.category).lowercase()), { vm.onLoad(lang.code) }, Modifier.fillMaxWidth(), enabled = aiAllowed && !state.loading)
+                PrimaryButton(if (state.loading) str(R.string.working) else str(R.string.get_phrases, categoryLabel(state.category).lowercase()), { useAd { vm.onLoad(lang.code) } }, Modifier.fillMaxWidth(), enabled = aiAllowed && !state.loading)
                 state.error?.let { Text(it.message(), color = Tk.Danger, fontSize = 14.sp) }
                 if (state.loading) repeat(3) { PhraseSkeleton() }
                 state.phrases.forEach { p ->

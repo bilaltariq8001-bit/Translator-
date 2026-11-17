@@ -369,6 +369,70 @@
           },
           "valueType": "NUMBER",
           "description": "N: show the ad on every Nth successful translation"
+        },
+        "voice_mode_use_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "voice_mode_use_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Interstitial inside each voice mode (Conversation, Real-time, Headphone, Manual): every Nth mic start, the next one shows an interstitial first"
+        },
+        "voice_mode_use_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_use_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "voice_mode_use_inter_every": {
+          "defaultValue": {
+            "value": "3"
+          },
+          "valueType": "NUMBER",
+          "description": "Free uses per feature before the interstitial (3 = ad before the 4th, 7th, ...)"
+        },
+        "ai_tool_use_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "ai_tool_use_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Interstitial inside each AI tool (Email, Grammar, Slang, Travel): after every N generate taps, the next one shows an interstitial first"
+        },
+        "ai_tool_use_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_use_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "ai_tool_use_inter_every": {
+          "defaultValue": {
+            "value": "3"
+          },
+          "valueType": "NUMBER",
+          "description": "Free uses per feature before the interstitial (3 = ad before the 4th, 7th, ...)"
         }
       }
     },

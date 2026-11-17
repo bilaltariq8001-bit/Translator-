@@ -167,6 +167,9 @@ fun LiveVoiceScreen(
 
     fun logStart() = Analytics.log(Ev.VOICE_SESSION_STARTED) { token("mode", mode.name.lowercase()); lang("from", current.source.code); lang("to", current.target.code) }
 
+    // Every 4th start in this mode (Remote Config voice_mode_use_inter_every = 3) shows an interstitial before listening starts.
+    val useAd = com.translator.app.core.backpress.rememberFeatureUseAd(com.translator.app.core.config.RcKeys.VOICE_MODE_USE, mode.name)
+
     // Conversation: tap a mic to speak one turn (tap again to finish it).
     fun onTurn(side: Int) {
         if (listeningSide == side) {
@@ -186,13 +189,13 @@ fun LiveVoiceScreen(
             }
             return
         }
-        withMic(side) { logStart(); listen(side) }
+        useAd { withMic(side) { logStart(); listen(side) } }
     }
 
     // Real-time and Headphone: start or stop continuous listening.
     fun onToggle() {
         if (auto) { auto = false; engine.stop(); engine.destroy(); listeningSide = -1; liveVm.onPartial("", 0); return }
-        withMic(0) { auto = true; logStart(); listen(0) }
+        useAd { withMic(0) { auto = true; logStart(); listen(0) } }
     }
 
     val speak = mode == LiveMode.Headphone || (conversation && settings.speakAloud)
