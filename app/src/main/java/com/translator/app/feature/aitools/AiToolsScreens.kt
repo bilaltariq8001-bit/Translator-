@@ -514,6 +514,9 @@ private fun ChatHistoryScreen(vm: AiChatViewModel, onBack: () -> Unit, onOpen: (
     var query by rememberSaveable { mutableStateOf("") }
     val q = query.trim()
     val shown = sessions.filter { (!favoritesOnly || it.favorite) && (q.isEmpty() || it.title.contains(q, true) || it.preview.contains(q, true)) }
+    // All and Favorites each have their own native ad, shown only while that tab has chats in it. An empty tab shows no ad.
+    val nativeSlot = if (favoritesOnly) RcKeys.NATIVE_CHAT_FAVORITES else RcKeys.NATIVE_CHAT_HISTORY
+    val tabHasItems = if (favoritesOnly) sessions.any { it.favorite } else sessions.isNotEmpty()
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val pad = pagePadding(maxWidth.value)
         Column(Modifier.fillMaxSize()) {
@@ -561,8 +564,8 @@ private fun ChatHistoryScreen(vm: AiChatViewModel, onBack: () -> Unit, onOpen: (
                         color = Tk.Muted, fontSize = 14.sp, lineHeight = 20.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.padding(top = 6.dp),
                     )
                 }
-                // Native card below the empty state, not above it.
-                com.translator.app.core.ads.NativeAdCard("chat_history")
+                // Search found nothing, but the tab itself has chats: its ad stays. An empty tab shows no ad.
+                if (tabHasItems) com.translator.app.core.ads.NativeAdCard(nativeSlot)
             } else {
                 LazyColumn(
                     Modifier.weight(1f).fillMaxWidth(),
@@ -603,7 +606,7 @@ private fun ChatHistoryScreen(vm: AiChatViewModel, onBack: () -> Unit, onOpen: (
                         }
                     }
                     // Native card below the chat list, not above it.
-                    item { com.translator.app.core.ads.NativeAdCard("chat_history") }
+                    item(key = nativeSlot) { com.translator.app.core.ads.NativeAdCard(nativeSlot) }
                 }
             }
             PrimaryButton(str(R.string.new_chat), onNew, Modifier.fillMaxWidth().padding(start = pad, end = pad, bottom = pad, top = 4.dp), icon = AppIcons.Plus, height = 56.dp)

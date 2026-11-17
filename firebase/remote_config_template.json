@@ -112,7 +112,8 @@
           "defaultValue": {
             "value": "true"
           },
-          "valueType": "BOOLEAN"
+          "valueType": "BOOLEAN",
+          "description": "Native ad on AI chat history (All tab), shown only when there is at least one chat"
         },
         "favorites_native_ad_id": {
           "defaultValue": {
@@ -126,6 +127,19 @@
           },
           "valueType": "BOOLEAN",
           "description": "Native ad on the Favorites tab, shown only when there is at least one favorite"
+        },
+        "chat_favorites_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "chat_favorites_native_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Native ad on AI chat history Favorites tab, shown only when there is at least one favorite chat"
         }
       }
     },

@@ -24,6 +24,8 @@ object RcKeys {
     /** Native ad slots: keys are <slot>_native_ad_id and <slot>_native_enabled. */
     const val NATIVE_HISTORY = "history"
     const val NATIVE_FAVORITES = "favorites"
+    const val NATIVE_CHAT_HISTORY = "chat_history"
+    const val NATIVE_CHAT_FAVORITES = "chat_favorites"
 
     /** Banner slots: keys are <slot>_banner_ad_id, _banner_is_collapsing, _in_screen_ad_enabled, _ad_position, _in_screen_ad_type. */
     const val SLOT_TEXT = "text"

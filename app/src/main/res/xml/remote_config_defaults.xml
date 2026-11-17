@@ -365,4 +365,12 @@
         <key>chat_history_native_enabled</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>chat_favorites_native_ad_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>chat_favorites_native_enabled</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>
