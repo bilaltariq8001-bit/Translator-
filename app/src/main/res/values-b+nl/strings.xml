@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">Feedback van AI-vertalers</string>
     <string name="feedback_no_email">Geen e-mailapp gevonden. Schrijf ons op %1$s</string>
+    <string name="history_sub">Uw vertalingen blijven op deze telefoon staan</string>
 </resources>

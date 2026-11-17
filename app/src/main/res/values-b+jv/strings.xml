@@ -366,4 +366,5 @@
     <string name="feedback_title">Umpan balik</string>
     <string name="feedback_subject">Umpan balik AI Translator</string>
     <string name="feedback_no_email">Ora ana aplikasi email sing ditemokake. Tulis kanggo kita ing %1$s</string>
+    <string name="history_sub">Terjemahan sampeyan tetep ana ing telpon iki</string>
 </resources>

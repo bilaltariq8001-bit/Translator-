@@ -366,4 +366,5 @@
     <string name="feedback_title">ข้อเสนอแนะ</string>
     <string name="feedback_subject">ความคิดเห็นของนักแปล AI</string>
     <string name="feedback_no_email">ไม่พบแอปอีเมล เขียนถึงเราที่ %1$s</string>
+    <string name="history_sub">คำแปลของคุณยังคงอยู่ในโทรศัพท์เครื่องนี้</string>
 </resources>

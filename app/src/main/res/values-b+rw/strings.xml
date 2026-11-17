@@ -366,4 +366,5 @@
     <string name="feedback_title">Igitekerezo</string>
     <string name="feedback_subject">Ibitekerezo byabasemuzi</string>
     <string name="feedback_no_email">Nta porogaramu imeri yabonetse. Twandikire kuri %1$s</string>
+    <string name="history_sub">Ubuhinduzi bwawe bugume kuri terefone</string>
 </resources>

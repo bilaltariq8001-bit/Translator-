@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">Bersiva Wergêrê AI</string>
     <string name="feedback_no_email">Sepana e-nameyê nehat dîtin. Ji me re li %1$s binivîsin</string>
+    <string name="history_sub">Wergerên we li ser vê têlefonê dimînin</string>
 </resources>

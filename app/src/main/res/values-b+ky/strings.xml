@@ -366,4 +366,5 @@
     <string name="feedback_title">Пикир</string>
     <string name="feedback_subject">AI Translator пикири</string>
     <string name="feedback_no_email">Эч кандай электрондук почта колдонмосу табылган жок. Бизге %1$s дарегине жазыңыз</string>
+    <string name="history_sub">Котормоңуз ушул телефондо калат</string>
 </resources>

@@ -366,4 +366,5 @@
     <string name="feedback_title">מָשׁוֹב</string>
     <string name="feedback_subject">משוב מתרגם AI</string>
     <string name="feedback_no_email">לא נמצאה אפליקציית אימייל. כתוב לנו ב-%1$s</string>
+    <string name="history_sub">התרגומים שלך נשארים בטלפון הזה</string>
 </resources>

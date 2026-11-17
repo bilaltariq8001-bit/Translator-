@@ -366,4 +366,5 @@
     <string name="feedback_title">ਫੀਡਬੈਕ</string>
     <string name="feedback_subject">AI ਅਨੁਵਾਦਕ ਫੀਡਬੈਕ</string>
     <string name="feedback_no_email">ਕੋਈ ਈਮੇਲ ਐਪ ਨਹੀਂ ਮਿਲੀ। ਸਾਨੂੰ %1$s \'ਤੇ ਲਿਖੋ</string>
+    <string name="history_sub">ਤੁਹਾਡੇ ਅਨੁਵਾਦ ਇਸ ਫ਼ੋਨ \'ਤੇ ਰਹਿੰਦੇ ਹਨ</string>
 </resources>

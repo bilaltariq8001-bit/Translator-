@@ -366,4 +366,5 @@
     <string name="feedback_title">فیډبیک</string>
     <string name="feedback_subject">د AI ژباړونکي فیډبیک</string>
     <string name="feedback_no_email">هیڅ بریښنالیک ایپ ونه موندل شو. موږ ته په %1$s کې ولیکئ</string>
+    <string name="history_sub">ستاسو ژباړې په دې تلیفون کې پاتې کیږي</string>
 </resources>

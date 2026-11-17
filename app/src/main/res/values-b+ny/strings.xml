@@ -366,4 +366,5 @@
     <string name="feedback_title">Ndemanga</string>
     <string name="feedback_subject">Ndemanga za Womasulira wa AI</string>
     <string name="feedback_no_email">Palibe pulogalamu ya imelo yomwe yapezeka. Tilembereni pa %1$s</string>
+    <string name="history_sub">Zomasulira zanu zimakhalabe pafoni iyi</string>
 </resources>

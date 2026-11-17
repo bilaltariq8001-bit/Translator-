@@ -366,4 +366,5 @@
     <string name="feedback_title">Zpětná vazba</string>
     <string name="feedback_subject">Zpětná vazba AI Translator</string>
     <string name="feedback_no_email">Nebyla nalezena žádná e-mailová aplikace. Napište nám na adresu %1$s</string>
+    <string name="history_sub">Vaše překlady zůstanou v tomto telefonu</string>
 </resources>

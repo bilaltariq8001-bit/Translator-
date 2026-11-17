@@ -360,4 +360,5 @@
     <string name="feedback_title">Povratne informacije</string>
     <string name="feedback_subject">Povratne informacije prevajalca AI</string>
     <string name="feedback_no_email">E-poštna aplikacija ni bila najdena. Pišite nam na %1$s</string>
+    <string name="history_sub">Vaši prevodi ostanejo na tem telefonu</string>
 </resources>

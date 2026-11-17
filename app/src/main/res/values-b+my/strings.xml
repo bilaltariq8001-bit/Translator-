@@ -366,4 +366,5 @@
     <string name="feedback_title">တုံ့ပြန်ချက်</string>
     <string name="feedback_subject">AI ဘာသာပြန်ဆိုချက် တုံ့ပြန်ချက်</string>
     <string name="feedback_no_email">အီးမေးလ်အက်ပ်ကို ရှာမတွေ့ပါ။ %1$s တွင် ကျွန်ုပ်တို့ထံ စာရေးပါ</string>
+    <string name="history_sub">သင့်ဘာသာပြန်ဆိုချက်များသည် ဤဖုန်းတွင်ရှိနေပါသည်။</string>
 </resources>

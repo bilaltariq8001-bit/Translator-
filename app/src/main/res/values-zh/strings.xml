@@ -366,4 +366,5 @@
     <string name="feedback_title">反馈</string>
     <string name="feedback_subject">人工智能翻译反馈</string>
     <string name="feedback_no_email">找不到电子邮件应用程序。请写信给我们：%1$s</string>
+    <string name="history_sub">您的翻译保留在这部手机上</string>
 </resources>

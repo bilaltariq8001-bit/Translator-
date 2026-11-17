@@ -366,4 +366,5 @@
     <string name="feedback_title">피드백</string>
     <string name="feedback_subject">AI 번역기 피드백</string>
     <string name="feedback_no_email">이메일 앱을 찾을 수 없습니다. %1$s번으로 우리에게 편지를 보내주세요</string>
+    <string name="history_sub">번역은 이 휴대전화에 보관됩니다.</string>
 </resources>

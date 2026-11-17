@@ -366,4 +366,5 @@
     <string name="feedback_title">Visszacsatolás</string>
     <string name="feedback_subject">AI fordítói visszajelzés</string>
     <string name="feedback_no_email">Nem található e-mail alkalmazás. Írjon nekünk a következő címre: %1$s</string>
+    <string name="history_sub">A fordításai ezen a telefonon maradnak</string>
 </resources>

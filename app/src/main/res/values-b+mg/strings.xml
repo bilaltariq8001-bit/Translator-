@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">Tamberin\'ny AI Translator</string>
     <string name="feedback_no_email">Tsy hita ny fampiharana mailaka. Manorata aminay amin\'ny %1$s</string>
+    <string name="history_sub">Mijanona amin\'ity telefaona ity ny dikanteninao</string>
 </resources>

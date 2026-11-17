@@ -366,4 +366,5 @@
     <string name="feedback_title">Eupan balik</string>
     <string name="feedback_subject">Eupan balik AI Panarjamah</string>
     <string name="feedback_no_email">Teu aya aplikasi email anu kapendak. Tulis ka kami di %1$s</string>
+    <string name="history_sub">Tarjamahan anjeun tetep dina telepon ieu</string>
 </resources>

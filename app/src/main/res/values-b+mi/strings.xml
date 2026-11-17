@@ -366,4 +366,5 @@
     <string name="feedback_title">Urupare</string>
     <string name="feedback_subject">He urupare a te Kaiwhakamaori AI</string>
     <string name="feedback_no_email">Karekau he taupānga imeera i kitea. Tuhia mai ki a matou i %1$s</string>
+    <string name="history_sub">Ka noho tonu o whakamaoritanga ki tenei waea</string>
 </resources>

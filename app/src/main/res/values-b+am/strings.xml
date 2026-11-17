@@ -366,4 +366,5 @@
     <string name="feedback_title">ግብረ መልስ</string>
     <string name="feedback_subject">AI ተርጓሚ ግብረ መልስ</string>
     <string name="feedback_no_email">ምንም የኢሜይል መተግበሪያ አልተገኘም። %1$s ላይ ይፃፉልን</string>
+    <string name="history_sub">የእርስዎ ትርጉሞች በዚህ ስልክ ላይ ይቆያሉ።</string>
 </resources>

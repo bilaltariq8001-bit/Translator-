@@ -366,4 +366,5 @@
     <string name="feedback_title">Maklum balas</string>
     <string name="feedback_subject">Maklum balas Penterjemah AI</string>
     <string name="feedback_no_email">Tiada apl e-mel ditemui. Tulis kepada kami di %1$s</string>
+    <string name="history_sub">Terjemahan anda kekal pada telefon ini</string>
 </resources>

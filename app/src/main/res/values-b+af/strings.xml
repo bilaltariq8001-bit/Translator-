@@ -366,4 +366,5 @@
     <string name="feedback_title">Terugvoer</string>
     <string name="feedback_subject">AI Translator terugvoer</string>
     <string name="feedback_no_email">Geen e-posprogram gevind nie. Skryf vir ons by %1$s</string>
+    <string name="history_sub">Jou vertalings bly op hierdie foon</string>
 </resources>

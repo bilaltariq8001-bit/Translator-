@@ -366,4 +366,5 @@
     <string name="feedback_title">Санал хүсэлт</string>
     <string name="feedback_subject">AI Орчуулагчийн санал хүсэлт</string>
     <string name="feedback_no_email">Имэйл програм олдсонгүй. Бидэн рүү %1$s хаягаар бичээрэй</string>
+    <string name="history_sub">Таны орчуулгууд энэ утсан дээр үлдэнэ</string>
 </resources>

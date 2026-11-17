@@ -366,4 +366,5 @@
     <string name="feedback_title">Manaʻo manaʻo</string>
     <string name="feedback_subject">Manaʻo unuhi AI</string>
     <string name="feedback_no_email">ʻAʻohe polokalamu leka uila i loaʻa. Kākau iā mākou ma %1$s</string>
+    <string name="history_sub">Aia kāu mau unuhi ma kēia kelepona</string>
 </resources>

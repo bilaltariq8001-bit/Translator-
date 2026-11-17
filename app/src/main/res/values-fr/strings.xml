@@ -366,4 +366,5 @@
     <string name="feedback_title">Retour</string>
     <string name="feedback_subject">Commentaires du traducteur AI</string>
     <string name="feedback_no_email">Aucune application de messagerie trouvée. Écrivez-nous à %1$s</string>
+    <string name="history_sub">Vos traductions restent sur ce téléphone</string>
 </resources>

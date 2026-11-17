@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">Mhinduro yeMushanduri weAI</string>
     <string name="feedback_no_email">Hapana email app yawanikwa. Tinyorere pa%1$s</string>
+    <string name="history_sub">Shanduro dzako dzinogara parunhare urwu</string>
 </resources>

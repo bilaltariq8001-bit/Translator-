@@ -366,4 +366,5 @@
     <string name="feedback_title">ಪ್ರತಿಕ್ರಿಯೆ</string>
     <string name="feedback_subject">AI ಅನುವಾದಕ ಪ್ರತಿಕ್ರಿಯೆ</string>
     <string name="feedback_no_email">ಯಾವುದೇ ಇಮೇಲ್ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ. %1$s ನಲ್ಲಿ ನಮಗೆ ಬರೆಯಿರಿ</string>
+    <string name="history_sub">ನಿಮ್ಮ ಅನುವಾದಗಳು ಈ ಫೋನ್‌ನಲ್ಲಿ ಉಳಿಯುತ್ತವೆ</string>
 </resources>

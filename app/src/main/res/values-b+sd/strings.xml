@@ -366,4 +366,5 @@
     <string name="feedback_title">راءِ</string>
     <string name="feedback_subject">AI ترجمو ڪندڙ موٽ</string>
     <string name="feedback_no_email">ڪابه اي ميل ايپ نه ملي. اسان ڏانهن لکو %1$s</string>
+    <string name="history_sub">توھان جا ترجما ھن فون تي رھندا آھن</string>
 </resources>

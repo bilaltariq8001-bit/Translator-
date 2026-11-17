@@ -366,4 +366,5 @@
     <string name="feedback_title">Jawabin</string>
     <string name="feedback_subject">Bayanin Mai Fassara AI</string>
     <string name="feedback_no_email">Ba a sami app ɗin imel ba. Rubuta mana a %1$s</string>
+    <string name="history_sub">Fassarar ku ta tsaya akan wannan wayar</string>
 </resources>

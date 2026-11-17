@@ -22,6 +22,8 @@ object RcKeys {
     /** Inside a voice mode or AI tool: after every N uses of that feature, the next use shows an interstitial first. N is <placement>_inter_every. */
     const val VOICE_MODE_USE = "voice_mode_use"
     const val AI_TOOL_USE = "ai_tool_use"
+    /** Shown once, to a first-time user, right after onboarding ends and before the app opens. Later starts get App Open only. */
+    const val ONBOARDING_DONE = "onboarding_done"
     val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK, PHOTO_OPEN, AI_TOOL_OPEN, VOICE_MODE_OPEN, TRANSLATE_COUNT, VOICE_MODE_USE, AI_TOOL_USE)
 
     /** Native ad slots: keys are <slot>_native_ad_id and <slot>_native_enabled. */
@@ -29,6 +31,8 @@ object RcKeys {
     const val NATIVE_FAVORITES = "favorites"
     const val NATIVE_CHAT_HISTORY = "chat_history"
     const val NATIVE_CHAT_FAVORITES = "chat_favorites"
+    /** Compact native card at the bottom of the onboarding screens (language, guide, privacy). */
+    const val NATIVE_ONBOARDING = "onboarding"
 
     /** Banner slots: keys are <slot>_banner_ad_id, _banner_is_collapsing, _in_screen_ad_enabled, _ad_position, _in_screen_ad_type. */
     const val SLOT_TEXT = "text"

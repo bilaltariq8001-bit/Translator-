@@ -366,4 +366,5 @@
     <string name="feedback_title">Feed-back</string>
     <string name="feedback_subject">AI Translator feedback</string>
     <string name="feedback_no_email">Ingen e-postapp hittades. Skriv till oss på %1$s</string>
+    <string name="history_sub">Dina översättningar finns kvar på den här telefonen</string>
 </resources>

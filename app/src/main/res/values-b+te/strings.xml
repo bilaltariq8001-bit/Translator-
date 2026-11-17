@@ -366,4 +366,5 @@
     <string name="feedback_title">అభిప్రాయం</string>
     <string name="feedback_subject">AI అనువాదకుని అభిప్రాయం</string>
     <string name="feedback_no_email">ఇమెయిల్ యాప్ ఏదీ కనుగొనబడలేదు. %1$sలో మాకు వ్రాయండి</string>
+    <string name="history_sub">మీ అనువాదాలు ఈ ఫోన్‌లో ఉంటాయి</string>
 </resources>

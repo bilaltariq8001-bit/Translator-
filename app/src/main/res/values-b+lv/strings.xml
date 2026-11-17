@@ -366,4 +366,5 @@
     <string name="feedback_title">Atsauksmes</string>
     <string name="feedback_subject">AI tulkotāja atsauksmes</string>
     <string name="feedback_no_email">Netika atrasta e-pasta lietotne. Rakstiet mums uz %1$s</string>
+    <string name="history_sub">Jūsu tulkojumi paliek šajā tālrunī</string>
 </resources>

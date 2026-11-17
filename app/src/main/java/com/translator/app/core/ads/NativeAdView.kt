@@ -7,7 +7,6 @@ import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -132,13 +131,13 @@ class NativeAdManager(
  * NATIVE ([NativeAdSlot]). Draws nothing until the ad has loaded.
  */
 @Composable
-fun NativeAdCard(slot: String, modifier: Modifier = Modifier) {
+fun NativeAdCard(slot: String, modifier: Modifier = Modifier, compact: Boolean = false) {
     val ads = LocalAds.current ?: return
     if (!ads.adsReady()) return
     // A slot configured as NATIVE is rendered by BannerFrame; drawing the inline card too would attach the same ad twice.
     if (ads.bannerModel(slot).type == InScreenAdType.NATIVE) return
     val model = ads.nativeModel(slot)
-    NativeAdContent(ads, model, modifier)
+    NativeAdContent(ads, model, modifier, compact)
 }
 
 @Composable
@@ -148,7 +147,7 @@ fun NativeAdSlot(slot: String, model: InScreenAdModel, modifier: Modifier = Modi
 }
 
 @Composable
-private fun NativeAdContent(ads: AdsController, model: NativeAdModel, modifier: Modifier) {
+private fun NativeAdContent(ads: AdsController, model: NativeAdModel, modifier: Modifier, compact: Boolean = false) {
     val activity = LocalContext.current as? Activity ?: return
     Log.d("AdsDebug", "NativeAdCard: slot=${model.slot}, enabled=${model.enabled}, adId=${model.adId}, adsReady=${ads.adsReady()}")
     if (!model.enabled || model.adId.isEmpty() || !ads.adsReady()) return
@@ -165,16 +164,17 @@ private fun NativeAdContent(ads: AdsController, model: NativeAdModel, modifier: 
     AndroidView(
         // Keep the full native-ad view visible so attribution, registered assets, and the SDK's
         // AdChoices overlay are not clipped by a fixed maximum height.
-        modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+        // The compact card is placed by its caller, which already pads it to the page edges.
+        modifier = if (compact) modifier.fillMaxWidth() else modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
         factory = { ctx ->
-            LayoutInflater.from(ctx).inflate(R.layout.native_ad_layout, null) as NativeAdView
+            LayoutInflater.from(ctx).inflate(if (compact) R.layout.native_ad_compact else R.layout.native_ad_layout, null) as NativeAdView
         },
         update = { adView ->
             if (adView.getTag(R.id.ad_media) === nativeAd) return@AndroidView
             try {
                 val headlineView = adView.findViewById<TextView>(R.id.ad_headline)
                 val bodyView = adView.findViewById<TextView>(R.id.ad_body)
-                val callToActionView = adView.findViewById<Button>(R.id.ad_call_to_action)
+                val callToActionView = adView.findViewById<TextView>(R.id.ad_call_to_action)
                 val iconView = adView.findViewById<ImageView>(R.id.ad_app_icon)
                 val advertiserView = adView.findViewById<TextView>(R.id.ad_advertiser)
                 val mediaView = adView.findViewById<MediaView>(R.id.ad_media)
@@ -189,6 +189,10 @@ private fun NativeAdContent(ads: AdsController, model: NativeAdModel, modifier: 
                 bodyView?.text = nativeAd.body
                 callToActionView?.text = nativeAd.callToAction
                 advertiserView?.text = nativeAd.advertiser
+                // Empty assets take no room (most matter on the compact card, where space is short).
+                bodyView?.visibility = if (nativeAd.body.isNullOrBlank()) View.GONE else View.VISIBLE
+                advertiserView?.visibility = if (nativeAd.advertiser.isNullOrBlank()) View.INVISIBLE else View.VISIBLE
+                callToActionView?.visibility = if (nativeAd.callToAction.isNullOrBlank()) View.GONE else View.VISIBLE
                 if (nativeAd.icon != null) {
                     iconView?.setImageDrawable(nativeAd.icon?.drawable)
                     iconView?.visibility = View.VISIBLE

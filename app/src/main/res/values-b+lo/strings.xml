@@ -366,4 +366,5 @@
     <string name="feedback_title">ຄໍາຕິຊົມ</string>
     <string name="feedback_subject">ຄວາມຄິດເຫັນຂອງຜູ້ແປພາສາ AI</string>
     <string name="feedback_no_email">ບໍ່ພົບແອັບຯອີເມວ. ຂຽນຫາພວກເຮົາທີ່ %1$s</string>
+    <string name="history_sub">ການແປຂອງທ່ານຢູ່ໃນໂທລະສັບນີ້</string>
 </resources>

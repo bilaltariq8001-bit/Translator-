@@ -5,6 +5,11 @@ import com.translator.app.core.analytics.Analytics
 import com.translator.app.core.i18n.str
 import com.translator.app.R
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -46,7 +51,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import com.translator.app.core.data.HistoryItem
 import com.translator.app.core.data.HistoryRepository
-import com.translator.app.core.designsystem.AppCard
 import com.translator.app.core.designsystem.AppDialog
 import com.translator.app.core.designsystem.AppIcon
 import com.translator.app.core.designsystem.AppIcons
@@ -119,35 +123,34 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val pad = pagePadding(maxWidth.value)
             Column(Modifier.fillMaxSize()) {
-                Box(Modifier.fillMaxWidth().height(60.dp).padding(horizontal = pad - 8.dp)) {
-                    IconAction(AppIcons.Back, str(R.string.back), onBack, Modifier.align(Alignment.CenterStart))
-                    Row(Modifier.align(Alignment.Center), horizontalArrangement = Arrangement.spacedBy(28.dp), verticalAlignment = Alignment.CenterVertically) {
+                // Same look as the AI chat history: a soft gradient header with the title, a line about privacy, the
+                // History / Favorites pill switch and a rounded search field.
+                Column(Modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(Tk.PrimaryContainer, Tk.Bg)))) {
+                    Row(Modifier.fillMaxWidth().padding(start = pad - 8.dp, end = pad - 8.dp, top = pad), verticalAlignment = Alignment.CenterVertically) {
+                        IconAction(AppIcons.Back, str(R.string.back), onBack)
+                        Column(Modifier.weight(1f)) {
+                            Text(str(R.string.history), style = Type.Headline, color = Tk.Text)
+                            Text(str(R.string.history_sub), color = Tk.Muted, fontSize = 13.sp)
+                        }
+                        if (state.all.isNotEmpty()) IconAction(AppIcons.Trash, str(R.string.clear_all_history), { confirmClear = true }, tint = Tk.Text)
+                    }
+                    Row(
+                        Modifier.fillMaxWidth().padding(start = pad, end = pad, top = 14.dp, bottom = 10.dp).clip(Radius.Pill).background(Tk.Surface).border(1.dp, Tk.Line, Radius.Pill).padding(4.dp),
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    ) {
                         listOf(false to str(R.string.history), true to str(R.string.favorites)).forEach { (fav, label) ->
                             val on = state.favoritesOnly == fav
-                            Column(Modifier.clickable(role = Role.Tab) { vm.onFavoritesOnly(fav) }.padding(vertical = 6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(label, color = if (on) Tk.Primary else Tk.Muted, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                                Box(Modifier.padding(top = 4.dp).size(width = 28.dp, height = 3.dp).clip(RoundedCornerShape(2.dp)).background(if (on) Tk.Primary else androidx.compose.ui.graphics.Color.Transparent))
-                            }
+                            Box(
+                                Modifier.weight(1f).height(40.dp).clip(Radius.Pill)
+                                    .background(if (on) Brush.linearGradient(listOf(Tk.Primary, Color(0xFF4C86F0))) else Brush.linearGradient(listOf(Color.Transparent, Color.Transparent)))
+                                    .clickable(role = Role.Tab) { vm.onFavoritesOnly(fav) },
+                                contentAlignment = Alignment.Center,
+                            ) { Text(label, color = if (on) Color.White else Tk.Soft, fontSize = 14.sp, fontWeight = FontWeight.SemiBold) }
                         }
                     }
-                    if (state.all.isNotEmpty()) IconAction(AppIcons.Trash, str(R.string.clear_all_history), { confirmClear = true }, Modifier.align(Alignment.CenterEnd), tint = Tk.Text)
-                }
-                if (state.all.isEmpty()) {
-                    // Keep the native card in a reserved slot below the empty state. Only the empty
-                    // state scrolls on short screens, so the ad cannot cover its action button.
-                    Column(
-                        Modifier.weight(1f).fillMaxWidth(),
-                    ) {
-                        Box(
-                            Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()),
-                            contentAlignment = Alignment.Center,
-                        ) {
-                            EmptyState(onStartTranslating, Modifier)
-                        }
-                    }
-                } else {
-                    Row(
-                        Modifier.fillMaxWidth().padding(start = pad, end = pad, top = 12.dp).clip(Radius.Pill).background(Tk.Surface2).padding(horizontal = 14.dp).defaultMinSize(minHeight = 48.dp),
+                    if (state.all.isNotEmpty()) Row(
+                        Modifier.fillMaxWidth().padding(start = pad, end = pad, bottom = 10.dp).clip(Radius.Pill).background(Tk.Surface).border(1.dp, Tk.Line, Radius.Pill)
+                            .padding(horizontal = 14.dp).defaultMinSize(minHeight = 44.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                     ) {
@@ -159,43 +162,39 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
                             decorationBox = { inner -> Box { if (query.isEmpty()) Text(str(R.string.search_history), color = Tk.Muted, style = Type.Body); inner() } },
                         )
                     }
-                    if (state.visible.isEmpty()) {
-                        Column(
-                            Modifier.weight(1f).fillMaxWidth(),
-                        ) {
-                            Box(
-                                Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()),
-                                contentAlignment = Alignment.Center,
-                            ) {
-                                Column(
-                                    Modifier.fillMaxWidth().padding(pad),
-                                    verticalArrangement = Arrangement.Center,
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                ) {
-                                    Text(
-                                        if (state.favoritesOnly && state.query.isBlank()) str(R.string.no_favorites_yet_tap_the) else str(R.string.nothing_matches_your_search),
-                                        color = Tk.Muted,
-                                        fontSize = 14.sp,
-                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                                    )
-                                }
-                            }
-                            // Search found nothing, but the tab itself has items: its ad stays.
-                            if (tabHasItems) com.translator.app.core.ads.NativeAdCard(nativeSlot)
-                        }
-                    } else {
-                        LazyColumn(
-                            Modifier.weight(1f).fillMaxWidth(),
-                            contentPadding = androidx.compose.foundation.layout.PaddingValues(start = pad, end = pad, top = 12.dp, bottom = pad),
-                            verticalArrangement = Arrangement.spacedBy(10.dp),
-                        ) {
-                            items(state.visible, key = { it.id }) { item ->
-                                HistoryRow(item, onFavorite = { vm.onToggleFavorite(item) }, onCopy = { clipboard.setText(AnnotatedString(item.translation)); Analytics.copied("history") }, onDelete = { vm.onDelete(item) })
-                            }
-                            item(key = nativeSlot) {
-                                com.translator.app.core.ads.NativeAdCard(nativeSlot)
+                }
+                if (state.all.isEmpty()) {
+                    // Only the empty state scrolls on short screens, so nothing can cover its button. No ad on an empty tab.
+                    Box(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
+                        EmptyState(onStartTranslating, Modifier)
+                    }
+                } else if (state.visible.isEmpty()) {
+                    Column(Modifier.weight(1f).fillMaxWidth()) {
+                        Box(Modifier.weight(1f).fillMaxWidth().verticalScroll(rememberScrollState()), contentAlignment = Alignment.Center) {
+                            val noFavs = state.favoritesOnly && state.query.isBlank()
+                            Column(Modifier.fillMaxWidth().padding(horizontal = pad + 12.dp, vertical = pad), horizontalAlignment = Alignment.CenterHorizontally) {
+                                EmptyBadge(if (noFavs) AppIcons.Star else AppIcons.Search)
+                                Text(
+                                    if (noFavs) str(R.string.no_favorites_yet_tap_the) else str(R.string.nothing_matches_your_search),
+                                    color = Tk.Text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, lineHeight = 22.sp,
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.padding(top = 18.dp),
+                                )
                             }
                         }
+                        // Search found nothing, but the tab itself has items: its ad stays.
+                        if (tabHasItems) com.translator.app.core.ads.NativeAdCard(nativeSlot)
+                    }
+                } else {
+                    LazyColumn(
+                        Modifier.weight(1f).fillMaxWidth(),
+                        contentPadding = androidx.compose.foundation.layout.PaddingValues(start = pad, end = pad, top = 6.dp, bottom = pad),
+                        verticalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        items(state.visible, key = { it.id }) { item ->
+                            HistoryRow(item, onFavorite = { vm.onToggleFavorite(item) }, onCopy = { clipboard.setText(AnnotatedString(item.translation)); Analytics.copied("history") }, onDelete = { vm.onDelete(item) })
+                        }
+                        // Native card below the list, not above it.
+                        item(key = nativeSlot) { com.translator.app.core.ads.NativeAdCard(nativeSlot) }
                     }
                 }
             }
@@ -212,35 +211,67 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
     }
 }
 
-private val RoundedCornerShape10 = androidx.compose.foundation.shape.RoundedCornerShape(10.dp)
+private val CardShape = RoundedCornerShape(24.dp)
 
+/** One saved translation, drawn like a chat in the AI chat history: a rounded card, a gradient tile, a time pill. */
 @Composable
 private fun HistoryRow(item: HistoryItem, onFavorite: () -> Unit, onCopy: () -> Unit, onDelete: () -> Unit) {
     val src = Languages.byCodeOrNull(item.sourceLang)
     val tgt = Languages.byCodeOrNull(item.targetLang)
-    AppCard(Modifier.fillMaxWidth(), leftEdge = Tk.Primary) {
-        Text(str(R.string.s, item.sourceLang.uppercase(), item.targetLang.uppercase(), relativeTime(item.timeMillis)), color = Tk.Muted, fontSize = 13.sp)
-        Text(item.sourceText, color = Tk.Text, fontSize = 14.sp, maxLines = 3, modifier = Modifier.padding(top = 2.dp), style = TextStyle(textDirection = if (src?.rtl == true) TextDirection.Rtl else TextDirection.Ltr))
-        Text(item.translation, color = Tk.Text, fontSize = 16.sp, fontWeight = FontWeight.SemiBold, maxLines = 4, modifier = Modifier.padding(top = 2.dp), style = TextStyle(textDirection = if (tgt?.rtl == true) TextDirection.Rtl else TextDirection.Ltr))
-        Row(Modifier.padding(top = 4.dp), verticalAlignment = Alignment.CenterVertically) {
-            IconAction(if (item.favorite) AppIcons.StarFilled else AppIcons.Star, if (item.favorite) str(R.string.remove_favorite) else str(R.string.favorite), onFavorite, tint = Tk.Sand)
-            IconAction(AppIcons.Copy, str(R.string.copy_translation), onCopy)
-            Box(Modifier.weight(1f))
-            Box(
-                Modifier.defaultMinSize(minHeight = 48.dp).clip(Radius.Pill).clickable(role = Role.Button, onClick = onDelete).padding(horizontal = 12.dp),
-                contentAlignment = Alignment.Center,
-            ) { Text(str(R.string.delete), color = Tk.Danger, fontWeight = FontWeight.SemiBold, fontSize = 14.sp) }
+    Row(
+        Modifier.fillMaxWidth().clip(CardShape).background(Tk.Surface).border(1.dp, if (item.favorite) Tk.Sand.copy(alpha = 0.7f) else Tk.Line, CardShape)
+            .padding(start = 14.dp, top = 14.dp, bottom = 12.dp, end = 6.dp),
+        verticalAlignment = Alignment.Top,
+    ) {
+        // The language pair in a gradient tile, where the chat list shows its sparkle.
+        Column(
+            Modifier.size(46.dp).clip(RoundedCornerShape(16.dp)).background(Brush.linearGradient(listOf(Tk.Primary, Color(0xFF7B5CF0)))),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center,
+        ) {
+            Text(item.sourceLang.uppercase().take(3), color = Color.White.copy(alpha = 0.85f), fontSize = 10.sp, fontWeight = FontWeight.Bold, lineHeight = 12.sp, maxLines = 1)
+            Text(item.targetLang.uppercase().take(3), color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold, lineHeight = 15.sp, maxLines = 1)
+        }
+        Column(Modifier.weight(1f).padding(horizontal = 12.dp)) {
+            Text(
+                item.sourceText, color = Tk.Soft, fontSize = 13.sp, lineHeight = 18.sp, maxLines = 2, overflow = TextOverflow.Ellipsis,
+                style = TextStyle(textDirection = if (src?.rtl == true) TextDirection.Rtl else TextDirection.Ltr),
+            )
+            Text(
+                item.translation, color = Tk.Text, fontSize = 16.sp, fontWeight = FontWeight.Bold, lineHeight = 22.sp, maxLines = 4, overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(top = 3.dp), style = TextStyle(textDirection = if (tgt?.rtl == true) TextDirection.Rtl else TextDirection.Ltr),
+            )
+            Row(Modifier.padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    relativeTime(item.timeMillis), color = Tk.Primary, fontSize = 12.sp, fontWeight = FontWeight.SemiBold, maxLines = 1,
+                    modifier = Modifier.clip(Radius.Pill).background(Tk.PrimaryContainer).padding(horizontal = 10.dp, vertical = 3.dp),
+                )
+                Text(
+                    listOfNotNull(src?.name ?: item.sourceLang.uppercase(), tgt?.name ?: item.targetLang.uppercase()).joinToString(" \u2192 "),
+                    color = Tk.Muted, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis,
+                )
+            }
+        }
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            IconAction(if (item.favorite) AppIcons.StarFilled else AppIcons.Star, if (item.favorite) str(R.string.remove_favorite) else str(R.string.favorite), onFavorite, tint = Tk.Sand, size = 22.dp)
+            IconAction(AppIcons.Copy, str(R.string.copy_translation), onCopy, tint = Tk.Muted, size = 20.dp)
+            IconAction(AppIcons.Trash, str(R.string.delete), onDelete, tint = Tk.Muted, size = 20.dp)
         }
     }
 }
 
 @Composable
+private fun EmptyBadge(icon: androidx.compose.ui.graphics.vector.ImageVector) {
+    Box(
+        Modifier.size(84.dp).clip(CircleShape).background(Brush.linearGradient(listOf(Tk.PrimaryContainer, Color.White))).border(1.dp, Tk.Line, CircleShape),
+        contentAlignment = Alignment.Center,
+    ) { AppIcon(icon, Tk.Primary, size = 38.dp) }
+}
+
+@Composable
 private fun EmptyState(onStart: () -> Unit, modifier: Modifier) {
     Column(modifier.fillMaxWidth().padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-        Box(Modifier.defaultMinSize(minWidth = 64.dp, minHeight = 64.dp).clip(Radius.Card).background(Tk.PrimaryContainer), contentAlignment = Alignment.Center) {
-            AppIcon(AppIcons.Clock, Tk.Primary, size = 30.dp)
-        }
-        Text(str(R.string.no_translations_yet), style = Type.Headline, color = Tk.Text, modifier = Modifier.padding(top = 16.dp))
+        EmptyBadge(AppIcons.Clock)
+        Text(str(R.string.no_translations_yet), color = Tk.Text, fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 18.dp))
         Text(str(R.string.your_translations_stay_on_this), color = Tk.Muted, fontSize = 14.sp, lineHeight = 20.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.padding(top = 6.dp))
         PrimaryButton(str(R.string.start_translating), onStart, Modifier.padding(top = 20.dp))
     }

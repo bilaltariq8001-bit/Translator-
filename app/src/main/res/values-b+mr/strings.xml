@@ -366,4 +366,5 @@
     <string name="feedback_title">अभिप्राय</string>
     <string name="feedback_subject">AI अनुवादक अभिप्राय</string>
     <string name="feedback_no_email">कोणतेही ईमेल ॲप आढळले नाही. आम्हाला %1$s वर लिहा</string>
+    <string name="history_sub">तुमची भाषांतरे या फोनवर राहतात</string>
 </resources>

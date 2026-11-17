@@ -366,4 +366,5 @@
     <string name="feedback_title">પ્રતિસાદ</string>
     <string name="feedback_subject">AI અનુવાદક પ્રતિસાદ</string>
     <string name="feedback_no_email">કોઈ ઇમેઇલ એપ્લિકેશન મળી નથી. અમને %1$s પર લખો</string>
+    <string name="history_sub">તમારા અનુવાદો આ ફોન પર રહે છે</string>
 </resources>

@@ -362,4 +362,5 @@
     <string name="feedback_title">Commentarium</string>
     <string name="feedback_subject">AI Translator feedback</string>
     <string name="feedback_no_email">Nulla inscriptio app invenitur. Scribe ad nos in %1$s 1 .</string>
+    <string name="history_sub">Translationes tuae in hoc telephonum mane</string>
 </resources>

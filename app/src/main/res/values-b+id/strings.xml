@@ -366,4 +366,5 @@
     <string name="feedback_title">Masukan</string>
     <string name="feedback_subject">Umpan balik Penerjemah AI</string>
     <string name="feedback_no_email">Tidak ada aplikasi email yang ditemukan. Kirimkan surat kepada kami di %1$s</string>
+    <string name="history_sub">Terjemahan Anda tetap ada di ponsel ini</string>
 </resources>

@@ -366,4 +366,5 @@
     <string name="feedback_title">Հետադարձ կապ</string>
     <string name="feedback_subject">AI թարգմանչի հետադարձ կապ</string>
     <string name="feedback_no_email">Էլփոստի հավելված չի գտնվել: Գրեք մեզ %1$s հասցեով</string>
+    <string name="history_sub">Ձեր թարգմանությունները մնում են այս հեռախոսում</string>
 </resources>

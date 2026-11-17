@@ -366,4 +366,5 @@
     <string name="feedback_title">പ്രതികരണം</string>
     <string name="feedback_subject">AI വിവർത്തകൻ്റെ ഫീഡ്‌ബാക്ക്</string>
     <string name="feedback_no_email">ഇമെയിൽ ആപ്പൊന്നും കണ്ടെത്തിയില്ല. %1$s-ൽ ഞങ്ങൾക്ക് എഴുതുക</string>
+    <string name="history_sub">നിങ്ങളുടെ വിവർത്തനങ്ങൾ ഈ ഫോണിൽ നിലനിൽക്കും</string>
 </resources>

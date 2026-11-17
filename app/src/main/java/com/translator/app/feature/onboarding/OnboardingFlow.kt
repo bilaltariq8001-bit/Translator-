@@ -2,6 +2,7 @@ package com.translator.app.feature.onboarding
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -101,6 +102,19 @@ fun OnboardingFlow(
     // Off until the person switches it on: outside the regions where the consent form applies this is the only analytics consent.
     var analytics by rememberSaveable { mutableStateOf(false) }
     androidx.compose.runtime.LaunchedEffect(Unit) { com.translator.app.core.analytics.Analytics.log(com.translator.app.core.analytics.Ev.ONBOARDING_STARTED) }
+    // Start loading the onboarding native card (during the splash, so it is usually ready on the first real screen) and the
+    // interstitial shown when onboarding ends. Runs again once ads become allowed, if they were not at first.
+    val ads = com.translator.app.core.ads.LocalAds.current
+    val activity = androidx.compose.ui.platform.LocalContext.current as? android.app.Activity
+    val adsReady = ads?.adsReady() == true
+    LaunchedEffect(adsReady) {
+        if (ads != null && activity != null && adsReady) {
+            try {
+                ads.nativeAds.ensureLoaded(activity, ads.nativeModel(com.translator.app.core.config.RcKeys.NATIVE_ONBOARDING))
+                ads.interstitials.warm(com.translator.app.core.config.RcKeys.ONBOARDING_DONE)
+            } catch (_: Throwable) { }
+        }
+    }
     androidx.compose.runtime.LaunchedEffect(step) {
         com.translator.app.core.analytics.Analytics.log(com.translator.app.core.analytics.Ev.ONBOARDING_STEP) { token("step", step.name.lowercase()) }
     }
@@ -115,26 +129,36 @@ fun OnboardingFlow(
         }
     }
 
-    AnimatedContent(
-        targetState = step,
-        transitionSpec = { (fadeIn(tween(320, easing = LinearEasing)) + slideInHorizontally(tween(320)) { it / 12 }).togetherWith(fadeOut(tween(140))) },
-        label = "onboarding",
-    ) { s ->
-        when (s) {
-            Step.Splash -> SplashScreen { step = Step.AppLanguage }
-            Step.AppLanguage -> AppLanguageScreen(appLanguage, onAppLanguage) { guidePage = 0; step = Step.Guide }
-            Step.Guide -> GuideScreen(
-                startPage = guidePage,
-                onPage = { guidePage = it },
-                onBack = { step = Step.AppLanguage },
-                onSkip = { step = Step.Consent },
-                onFinishGuide = { step = Step.Consent },
-            )
-            // The cloud features are always on and there is no crash-report option, so the two settings are fixed values.
-            Step.Consent -> ConsentScreen(
-                askAnalytics = askAnalytics, analytics = analytics, onAnalytics = { analytics = it },
-                onBack = { guidePage = GUIDE_PAGES - 1; step = Step.Guide },
-            ) { onFinish(true, false, analytics) }
+    Column(Modifier.fillMaxSize().background(Tk.Bg)) {
+        AnimatedContent(
+            modifier = Modifier.weight(1f).fillMaxWidth(),
+            targetState = step,
+            transitionSpec = { (fadeIn(tween(320, easing = LinearEasing)) + slideInHorizontally(tween(320)) { it / 12 }).togetherWith(fadeOut(tween(140))) },
+            label = "onboarding",
+        ) { s ->
+            when (s) {
+                Step.Splash -> SplashScreen { step = Step.AppLanguage }
+                Step.AppLanguage -> AppLanguageScreen(appLanguage, onAppLanguage) { guidePage = 0; step = Step.Guide }
+                Step.Guide -> GuideScreen(
+                    startPage = guidePage,
+                    onPage = { guidePage = it },
+                    onBack = { step = Step.AppLanguage },
+                    onSkip = { step = Step.Consent },
+                    onFinishGuide = { step = Step.Consent },
+                )
+                // The cloud features are always on and there is no crash-report option, so the two settings are fixed values.
+                Step.Consent -> ConsentScreen(
+                    askAnalytics = askAnalytics, analytics = analytics, onAnalytics = { analytics = it },
+                    onBack = { guidePage = GUIDE_PAGES - 1; step = Step.Guide },
+                ) { onFinish(true, false, analytics) }
+            }
+        }
+        // A compact native card under every onboarding screen except the splash. It sits outside the animated content, so
+        // the same ad stays put while the screens change above it, and it takes no room until an ad has loaded.
+        if (step != Step.Splash) {
+            Box(Modifier.fillMaxWidth().animateContentSize().padding(horizontal = 16.dp).padding(bottom = 10.dp)) {
+                com.translator.app.core.ads.NativeAdCard(com.translator.app.core.config.RcKeys.NATIVE_ONBOARDING, compact = true)
+            }
         }
     }
 }

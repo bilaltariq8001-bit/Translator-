@@ -366,4 +366,5 @@
     <string name="feedback_title">Manatu faaalia</string>
     <string name="feedback_subject">AI faaliliu manatu</string>
     <string name="feedback_no_email">Leai se imeli app na maua. Tusi mai ia i matou i %1$s</string>
+    <string name="history_sub">E tumau au fa\'aliliuga ile telefoni lenei</string>
 </resources>

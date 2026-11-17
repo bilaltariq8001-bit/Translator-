@@ -122,6 +122,9 @@ fun AppRoot(container: AppContainer) {
                 // Where consent rules apply the analytics answer comes from the consent form; elsewhere it is asked here.
                 // Reads Compose state, so it follows the consent result when that arrives.
                 val askAnalytics = container.ads.askAnalytics()
+                // A first-time user sees one interstitial as onboarding ends, then the app. Every later start gets App Open
+                // only (StartupFlow skips App Open on the very first start). Without an ad the app opens at once.
+                val onboardingDoneAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.ONBOARDING_DONE)
                 OnboardingFlow(
                     appLanguage = settings.appLanguage,
                     onAppLanguage = { scope.launch { container.settings.setAppLanguage(it) } },
@@ -131,7 +134,7 @@ fun AppRoot(container: AppContainer) {
                         container.syncPrefs.analyticsChoice = if (ask) (if (analytics) 1 else 0) else -1
                         applyAnalytics(container.syncPrefs)
                         Analytics.log(Ev.ONBOARDING_COMPLETED) { flag("analytics_opt_in", analytics && ask) }
-                        scope.launch { container.settings.completeOnboarding(cloud, crash) }
+                        onboardingDoneAd { scope.launch { container.settings.completeOnboarding(cloud, crash) } }
                     },
                 )
             } else {

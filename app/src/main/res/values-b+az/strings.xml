@@ -366,4 +366,5 @@
     <string name="feedback_title">Əlaqə</string>
     <string name="feedback_subject">AI Tərcüməçi ilə bağlı rəy</string>
     <string name="feedback_no_email">Heç bir e-poçt proqramı tapılmadı. Bizə %1$s ünvanına yazın</string>
+    <string name="history_sub">Tərcümələriniz bu telefonda qalır</string>
 </resources>

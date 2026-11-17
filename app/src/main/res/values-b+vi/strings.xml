@@ -366,4 +366,5 @@
     <string name="feedback_title">Nhận xét</string>
     <string name="feedback_subject">Phản hồi của AI Translator</string>
     <string name="feedback_no_email">Không tìm thấy ứng dụng email nào. Viết thư cho chúng tôi theo địa chỉ %1$s</string>
+    <string name="history_sub">Bản dịch của bạn vẫn còn trên điện thoại này</string>
 </resources>

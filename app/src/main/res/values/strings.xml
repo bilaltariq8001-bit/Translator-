@@ -314,6 +314,7 @@
     <string name="intro_tagline">Every language, one tap</string>
     <string name="tab_me">Me</string>
     <string name="chat_history">Chat history</string>
+    <string name="history_sub">Your translations stay on this phone</string>
     <string name="chats_sub">Your AI conversations stay on this phone</string>
     <string name="chats_empty_title">No saved chats yet</string>
     <string name="chats_empty_body">Start a chat and it is saved here automatically.</string>

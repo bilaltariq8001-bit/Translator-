@@ -140,6 +140,19 @@
           },
           "valueType": "BOOLEAN",
           "description": "Native ad on AI chat history Favorites tab, shown only when there is at least one favorite chat"
+        },
+        "onboarding_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "onboarding_native_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Compact native card at the bottom of the onboarding screens (app language, guide, privacy)"
         }
       }
     },
@@ -433,6 +446,31 @@
           },
           "valueType": "NUMBER",
           "description": "Free uses per feature before the interstitial (3 = ad before the 4th, 7th, ...)"
+        },
+        "onboarding_done_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "onboarding_done_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Interstitial shown once, to a first-time user, right after onboarding; later app starts get App Open only"
+        },
+        "onboarding_done_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "onboarding_done_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN"
         }
       }
     },

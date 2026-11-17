@@ -366,4 +366,5 @@
     <string name="feedback_title">Aiseolas</string>
     <string name="feedback_subject">AI Aiseolas aistritheoir</string>
     <string name="feedback_no_email">Níor aimsíodh aon aip ríomhphoist. Scríobh chugainn ag %1$s</string>
+    <string name="history_sub">Fanann d\'aistriúcháin ar an nguthán seo</string>
 </resources>

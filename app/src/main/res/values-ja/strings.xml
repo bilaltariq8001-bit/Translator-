@@ -366,4 +366,5 @@
     <string name="feedback_title">フィードバック</string>
     <string name="feedback_subject">AI 翻訳者のフィードバック</string>
     <string name="feedback_no_email">メールアプリが見つかりませんでした。 %1$s までご連絡ください。</string>
+    <string name="history_sub">翻訳はこの携帯電話に残ります</string>
 </resources>

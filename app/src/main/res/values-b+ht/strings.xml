@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">AI tradiktè fidbak</string>
     <string name="feedback_no_email">Pa gen okenn aplikasyon imel jwenn. Ekri nou nan %1$s</string>
+    <string name="history_sub">Tradiksyon ou yo rete sou telefòn sa a</string>
 </resources>

@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">Feedback al traducătorului AI</string>
     <string name="feedback_no_email">Nu a fost găsită nicio aplicație de e-mail. Scrie-ne la %1$s</string>
+    <string name="history_sub">Traducerile tale rămân pe acest telefon</string>
 </resources>

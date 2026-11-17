@@ -366,4 +366,5 @@
     <string name="feedback_title">प्रतिक्रिया</string>
     <string name="feedback_subject">एआई अनुवादक प्रतिक्रिया</string>
     <string name="feedback_no_email">कुनै इमेल एप फेला परेन। हामीलाई %1$s मा लेख्नुहोस्</string>
+    <string name="history_sub">तपाईंका अनुवादहरू यो फोनमा रहन्छन्</string>
 </resources>

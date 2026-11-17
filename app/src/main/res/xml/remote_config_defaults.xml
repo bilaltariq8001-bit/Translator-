@@ -413,4 +413,28 @@
         <key>ai_tool_use_inter_every</key>
         <value>3</value>
     </entry>
+    <entry>
+        <key>onboarding_done_inter_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>onboarding_done_inter_enabled</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>onboarding_done_inter_should_load</key>
+        <value>true</value>
+    </entry>
+    <entry>
+        <key>onboarding_done_inter_counter_enabled</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>onboarding_native_ad_id</key>
+        <value></value>
+    </entry>
+    <entry>
+        <key>onboarding_native_enabled</key>
+        <value>true</value>
+    </entry>
 </defaultsMap>

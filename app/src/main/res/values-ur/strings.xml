@@ -366,4 +366,5 @@
     <string name="feedback_title">تاثرات</string>
     <string name="feedback_subject">AI مترجم کی رائے</string>
     <string name="feedback_no_email">کوئی ای میل ایپ نہیں ملی۔ ہمیں %1$s پر لکھیں</string>
+    <string name="history_sub">آپ کے ترجمے اس فون پر رہتے ہیں۔</string>
 </resources>

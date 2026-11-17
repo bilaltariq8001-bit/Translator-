@@ -366,4 +366,5 @@
     <string name="feedback_title">பின்னூட்டம்</string>
     <string name="feedback_subject">AI மொழிபெயர்ப்பாளர் கருத்து</string>
     <string name="feedback_no_email">மின்னஞ்சல் பயன்பாடு எதுவும் இல்லை. %1$s இல் எங்களுக்கு எழுதவும்</string>
+    <string name="history_sub">உங்கள் மொழிபெயர்ப்புகள் இந்த மொபைலில் இருக்கும்</string>
 </resources>

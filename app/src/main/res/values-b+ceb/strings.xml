@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">Feedback sa AI Translator</string>
     <string name="feedback_no_email">Walay email app nga nakit-an. Pagsulat kanamo sa %1$s</string>
+    <string name="history_sub">Ang imong mga hubad magpabilin sa kini nga telepono</string>
 </resources>

@@ -366,4 +366,5 @@
     <string name="feedback_title">Feedback</string>
     <string name="feedback_subject">Comentaris de AI Translator</string>
     <string name="feedback_no_email">No s\'ha trobat cap aplicació de correu electrònic. Escriu-nos a %1$s</string>
+    <string name="history_sub">Les teves traduccions es mantenen en aquest telèfon</string>
 </resources>

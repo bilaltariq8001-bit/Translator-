@@ -361,4 +361,5 @@
     <string name="feedback_title">Endurgjöf</string>
     <string name="feedback_subject">Viðbrögð AI þýðanda</string>
     <string name="feedback_no_email">Ekkert tölvupóstforrit fannst. Skrifaðu okkur á %1$s</string>
+    <string name="history_sub">Þýðingar þínar verða áfram í þessum síma</string>
 </resources>

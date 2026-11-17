@@ -366,4 +366,5 @@
     <string name="feedback_title">Fios air ais</string>
     <string name="feedback_subject">AI Fios air ais bhon eadar-theangair</string>
     <string name="feedback_no_email">Cha deach aplacaid post-d a lorg. Sgrìobh thugainn aig %1$s</string>
+    <string name="history_sub">Fuirichidh na h-eadar-theangachaidhean agad air a’ fòn seo</string>
 </resources>

@@ -366,4 +366,5 @@
     <string name="feedback_title">Повратни информации</string>
     <string name="feedback_subject">Повратни информации од AI преведувач</string>
     <string name="feedback_no_email">Не е пронајдена апликација за е-пошта. Пишете ни на %1$s</string>
+    <string name="history_sub">Вашите преводи остануваат на овој телефон</string>
 </resources>
