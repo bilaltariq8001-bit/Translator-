@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Névtelen használati statisztikák megosztása</string>
     <string name="analytics_share_body">Segít javítani az alkalmazást. Soha nem tartalmazza a szöveget, a hangot vagy a fotókat. Ezt bármikor módosíthatja a Beállításokban.</string>
     <string name="ad_privacy_choices">Hirdetések adatvédelmi beállításai</string>
+    <string name="feedback_title">Visszacsatolás</string>
+    <string name="feedback_subject">AI fordítói visszajelzés</string>
+    <string name="feedback_no_email">Nem található e-mail alkalmazás. Írjon nekünk a következő címre: %1$s</string>
 </resources>

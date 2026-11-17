@@ -363,4 +363,7 @@
     <string name="analytics_share_title">बेनामी उपयोग तथ्याङ्क साझेदारी गर्नुहोस्</string>
     <string name="analytics_share_body">एप सुधार गर्न मद्दत गर्छ। तपाईंको पाठ, आवाज वा फोटोहरू कहिल्यै समावेश नगर्नुहोस्। तपाईं सेटिङहरूमा गई जुनसुकै बेला यसलाई परिवर्तन गर्न सक्नुहुन्छ।</string>
     <string name="ad_privacy_choices">विज्ञापन गोपनीयता विकल्पहरू</string>
+    <string name="feedback_title">प्रतिक्रिया</string>
+    <string name="feedback_subject">एआई अनुवादक प्रतिक्रिया</string>
+    <string name="feedback_no_email">कुनै इमेल एप फेला परेन। हामीलाई %1$s मा लेख्नुहोस्</string>
 </resources>

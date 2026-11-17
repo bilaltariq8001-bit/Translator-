@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Fa\'asoa fa\'amaumauga fa\'aoga le ta\'ua</string>
     <string name="analytics_share_body">Fesoasoani e fa\'aleleia le app. Aua le aofia ai lau tusitusiga, leo poʻo ata. E mafai ona e suia lenei mea i soʻo se taimi ile Faʻatonu.</string>
     <string name="ad_privacy_choices">Filifiliga fa\'alilolilo fa\'asalalauga</string>
+    <string name="feedback_title">Manatu faaalia</string>
+    <string name="feedback_subject">AI faaliliu manatu</string>
+    <string name="feedback_no_email">Leai se imeli app na maua. Tusi mai ia i matou i %1$s</string>
 </resources>

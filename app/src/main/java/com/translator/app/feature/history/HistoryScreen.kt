@@ -112,6 +112,10 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
         // The search box keeps its own text, so typing never waits for the filtered list.
         var query by rememberSaveable { mutableStateOf(vm.currentQuery) }
         val clipboard = LocalClipboardManager.current
+        // History and Favorites each have their own native ad, shown only while that tab has something in it. Starring a
+        // translation makes the Favorites ad appear; un-starring the last one takes it away. The two never depend on each other.
+        val nativeSlot = if (state.favoritesOnly) com.translator.app.core.config.RcKeys.NATIVE_FAVORITES else com.translator.app.core.config.RcKeys.NATIVE_HISTORY
+        val tabHasItems = if (state.favoritesOnly) state.all.any { it.favorite } else state.all.isNotEmpty()
         BoxWithConstraints(Modifier.fillMaxSize()) {
             val pad = pagePadding(maxWidth.value)
             Column(Modifier.fillMaxSize()) {
@@ -140,7 +144,6 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
                         ) {
                             EmptyState(onStartTranslating, Modifier)
                         }
-                        com.translator.app.core.ads.NativeAdCard("history")
                     }
                 } else {
                     Row(
@@ -177,7 +180,8 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
                                     )
                                 }
                             }
-                            com.translator.app.core.ads.NativeAdCard("history")
+                            // Search found nothing, but the tab itself has items: its ad stays.
+                            if (tabHasItems) com.translator.app.core.ads.NativeAdCard(nativeSlot)
                         }
                     } else {
                         LazyColumn(
@@ -188,8 +192,8 @@ fun HistoryScreen(vm: HistoryViewModel, onBack: () -> Unit, onStartTranslating: 
                             items(state.visible, key = { it.id }) { item ->
                                 HistoryRow(item, onFavorite = { vm.onToggleFavorite(item) }, onCopy = { clipboard.setText(AnnotatedString(item.translation)); Analytics.copied("history") }, onDelete = { vm.onDelete(item) })
                             }
-                            item {
-                                com.translator.app.core.ads.NativeAdCard("history")
+                            item(key = nativeSlot) {
+                                com.translator.app.core.ads.NativeAdCard(nativeSlot)
                             }
                         }
                     }

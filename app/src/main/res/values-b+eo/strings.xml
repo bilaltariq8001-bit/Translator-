@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Kunhavigi anonimajn uzstatistikojn</string>
     <string name="analytics_share_body">Helpas plibonigi la apon. Neniam inkluzivas vian tekston, voĉon aŭ fotojn. Vi povas ŝanĝi ĉi tion iam ajn en Agordoj.</string>
     <string name="ad_privacy_choices">Reklamoj pri privateco</string>
+    <string name="feedback_title">Reago</string>
+    <string name="feedback_subject">Sugestoj de AI Tradukisto</string>
+    <string name="feedback_no_email">Neniu retpoŝta aplikaĵo trovita. Skribu al ni ĉe %1$s</string>
 </resources>

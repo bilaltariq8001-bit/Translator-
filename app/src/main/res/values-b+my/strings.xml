@@ -363,4 +363,7 @@
     <string name="analytics_share_title">အမည်မသိအသုံးပြုမှုစာရင်းဇယားများကို မျှဝေပါ။</string>
     <string name="analytics_share_body">အက်ပ်ကို တိုးတက်အောင် ကူညီပေးသည်။ သင့်စာသား၊ အသံ သို့မဟုတ် ဓာတ်ပုံများ မပါဝင်ပါ။ ၎င်းကို ဆက်တင်များတွင် အချိန်မရွေး ပြောင်းလဲနိုင်သည်။</string>
     <string name="ad_privacy_choices">ကြော်ငြာကိုယ်ရေးကိုယ်တာ ရွေးချယ်မှုများ</string>
+    <string name="feedback_title">တုံ့ပြန်ချက်</string>
+    <string name="feedback_subject">AI ဘာသာပြန်ဆိုချက် တုံ့ပြန်ချက်</string>
+    <string name="feedback_no_email">အီးမေးလ်အက်ပ်ကို ရှာမတွေ့ပါ။ %1$s တွင် ကျွန်ုပ်တို့ထံ စာရေးပါ</string>
 </resources>

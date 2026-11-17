@@ -16,7 +16,14 @@ object RcKeys {
     const val PHOTO_OPEN = "photo_open"
     const val AI_TOOL_OPEN = "ai_tool_open"
     const val VOICE_MODE_OPEN = "voice_mode_open"
-    val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK, PHOTO_OPEN, AI_TOOL_OPEN, VOICE_MODE_OPEN)
+    /** Shown after every Nth successful text translation on the main screen; N is [TRANSLATE_EVERY]. */
+    const val TRANSLATE_COUNT = "translate_count"
+    const val TRANSLATE_EVERY = "translate_count_inter_every"
+    val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK, PHOTO_OPEN, AI_TOOL_OPEN, VOICE_MODE_OPEN, TRANSLATE_COUNT)
+
+    /** Native ad slots: keys are <slot>_native_ad_id and <slot>_native_enabled. */
+    const val NATIVE_HISTORY = "history"
+    const val NATIVE_FAVORITES = "favorites"
 
     /** Banner slots: keys are <slot>_banner_ad_id, _banner_is_collapsing, _in_screen_ad_enabled, _ad_position, _in_screen_ad_type. */
     const val SLOT_TEXT = "text"

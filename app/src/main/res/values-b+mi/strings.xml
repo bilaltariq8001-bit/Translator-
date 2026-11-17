@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Tiria nga tatauranga whakamahinga ingoamuna</string>
     <string name="analytics_share_body">Ka awhina i te whakapai ake i te taupānga. Kaua rawa e whakauru i to tuhinga, reo, whakaahua ranei. Ka taea e koe te huri i tenei wa i roto i nga Tautuhinga.</string>
     <string name="ad_privacy_choices">Kōwhiringa tūmataiti pānuitanga</string>
+    <string name="feedback_title">Urupare</string>
+    <string name="feedback_subject">He urupare a te Kaiwhakamaori AI</string>
+    <string name="feedback_no_email">Karekau he taupānga imeera i kitea. Tuhia mai ki a matou i %1$s</string>
 </resources>

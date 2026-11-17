@@ -363,4 +363,7 @@
     <string name="analytics_share_title">ਅਗਿਆਤ ਵਰਤੋਂ ਦੇ ਅੰਕੜੇ ਸਾਂਝੇ ਕਰੋ</string>
     <string name="analytics_share_body">ਐਪ ਨੂੰ ਬਿਹਤਰ ਬਣਾਉਣ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ। ਕਦੇ ਵੀ ਤੁਹਾਡੀ ਲਿਖਤ, ਆਵਾਜ਼ ਜਾਂ ਫ਼ੋਟੋਆਂ ਸ਼ਾਮਲ ਨਾ ਕਰੋ। ਤੁਸੀਂ ਇਸਨੂੰ ਸੈਟਿੰਗਾਂ ਵਿੱਚ ਕਿਸੇ ਵੀ ਸਮੇਂ ਬਦਲ ਸਕਦੇ ਹੋ।</string>
     <string name="ad_privacy_choices">ਵਿਗਿਆਪਨ ਗੋਪਨੀਯਤਾ ਵਿਕਲਪ</string>
+    <string name="feedback_title">ਫੀਡਬੈਕ</string>
+    <string name="feedback_subject">AI ਅਨੁਵਾਦਕ ਫੀਡਬੈਕ</string>
+    <string name="feedback_no_email">ਕੋਈ ਈਮੇਲ ਐਪ ਨਹੀਂ ਮਿਲੀ। ਸਾਨੂੰ %1$s \'ਤੇ ਲਿਖੋ</string>
 </resources>

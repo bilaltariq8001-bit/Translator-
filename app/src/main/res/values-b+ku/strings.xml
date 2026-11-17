@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Statîstîkên karanîna nenas parve bikin</string>
     <string name="analytics_share_body">Alîkariya çêtirkirina sepanê dike. Tu carî nivîs, deng an wêneyên xwe nagire. Hûn dikarin vê yekê her dem di Mîhengan de biguherînin.</string>
     <string name="ad_privacy_choices">Vebijarkên nepenîtiya reklamê</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">Bersiva Wergêrê AI</string>
+    <string name="feedback_no_email">Sepana e-nameyê nehat dîtin. Ji me re li %1$s binivîsin</string>
 </resources>

@@ -346,6 +346,10 @@
     <string name="tts_language_missing">This phone has no voice for %1$s. Install it in the phone\'s text-to-speech settings.</string>
     <string name="diag_title">Diagnostics</string>
     <string name="diag_body">Copy technical details to send with a problem report</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">AI Translator feedback</string>
+    <string name="feedback_no_email">No email app found. Write to us at %1$s</string>
+    <string name="feedback_email" translatable="false">bilal.tariq8001@gmail.com</string>
     <string name="diag_copied">Copied. Paste it into your message. It contains no translated text.</string>
     <string name="stop_reading">Stop reading</string>
     <string name="ai_still_working">Still working… this is taking longer than usual.</string>

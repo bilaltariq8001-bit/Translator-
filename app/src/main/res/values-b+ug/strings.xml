@@ -355,4 +355,6 @@
     <string name="analytics_share_title">نامسىز ئىشلىتىش ستاتىستىكىسىنى ھەمبەھىرلەڭ</string>
     <string name="analytics_share_body">ئەپنى ياخشىلاشقا ياردەم بېرىدۇ. تېكىست ، ئاۋاز ياكى رەسىملىرىڭىزنى ھەرگىز ئۆز ئىچىگە ئالمايدۇ. تەڭشەكتە بۇنى خالىغان ۋاقىتتا ئۆزگەرتەلەيسىز.</string>
     <string name="ad_privacy_choices">ئېلان مەخپىيەتلىكى</string>
+    <string name="feedback_title">تەكلىپ</string>
+    <string name="feedback_subject">AI تەرجىماننىڭ ئىنكاسى</string>
 </resources>

@@ -363,4 +363,7 @@
     <string name="analytics_share_body">Hilft, die App zu verbessern. Enthält nie Ihren Text, Ihre Stimme oder Fotos. Jederzeit in den Einstellungen änderbar.</string>
     <string name="ad_privacy_choices">Datenschutzoptionen für Werbung</string>
     <string name="ad_attribution">Anzeige</string>
+    <string name="feedback_title">Rückmeldung</string>
+    <string name="feedback_subject">Feedback zum KI-Übersetzer</string>
+    <string name="feedback_no_email">Keine E-Mail-App gefunden. Schreiben Sie uns an %1$s</string>
 </resources>

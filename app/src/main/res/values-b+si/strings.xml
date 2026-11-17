@@ -363,4 +363,7 @@
     <string name="analytics_share_title">නිර්නාමික භාවිත සංඛ්‍යාලේඛන බෙදා ගන්න</string>
     <string name="analytics_share_body">යෙදුම වැඩිදියුණු කිරීමට උපකාරී වේ. කිසිවිටෙක ඔබේ පෙළ, හඬ හෝ ඡායාරූප ඇතුළත් නොකරන්න. ඔබට මෙය ඕනෑම වේලාවක සැකසීම් තුළ වෙනස් කළ හැක.</string>
     <string name="ad_privacy_choices">දැන්වීම් රහස්‍යතා තේරීම්</string>
+    <string name="feedback_title">ප්රතිපෝෂණ</string>
+    <string name="feedback_subject">AI පරිවර්තක ප්‍රතිපෝෂණය</string>
+    <string name="feedback_no_email">ඊමේල් යෙදුමක් හමු නොවීය. %1$s හිදී අපට ලියන්න</string>
 </resources>

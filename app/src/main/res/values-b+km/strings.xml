@@ -363,4 +363,7 @@
     <string name="analytics_share_title">ចែករំលែកស្ថិតិការប្រើប្រាស់អនាមិក</string>
     <string name="analytics_share_body">ជួយកែលម្អកម្មវិធី។ កុំរួមបញ្ចូលអត្ថបទ សំឡេង ឬរូបថតរបស់អ្នក។ អ្នកអាចផ្លាស់ប្តូរវាបានគ្រប់ពេលនៅក្នុងការកំណត់។</string>
     <string name="ad_privacy_choices">ជម្រើសឯកជនភាពនៃការផ្សាយពាណិជ្ជកម្ម</string>
+    <string name="feedback_title">មតិកែលម្អ</string>
+    <string name="feedback_subject">មតិអ្នកបកប្រែ AI</string>
+    <string name="feedback_no_email">រកមិនឃើញកម្មវិធីអ៊ីមែលទេ។ សរសេរមកយើងនៅ %1$s</string>
 </resources>

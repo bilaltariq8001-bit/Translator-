@@ -358,4 +358,7 @@
     <string name="analytics_share_title">Deildu nafnlausri notkunartölfræði</string>
     <string name="analytics_share_body">Hjálpar til við að bæta appið. Inniheldur aldrei texta, rödd eða myndir. Þú getur breytt þessu hvenær sem er í stillingum.</string>
     <string name="ad_privacy_choices">Persónuverndarvalkostir auglýsinga</string>
+    <string name="feedback_title">Endurgjöf</string>
+    <string name="feedback_subject">Viðbrögð AI þýðanda</string>
+    <string name="feedback_no_email">Ekkert tölvupóstforrit fannst. Skrifaðu okkur á %1$s</string>
 </resources>

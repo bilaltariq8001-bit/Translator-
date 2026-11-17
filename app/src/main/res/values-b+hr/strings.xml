@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Dijelite anonimnu statistiku korištenja</string>
     <string name="analytics_share_body">Pomaže poboljšati aplikaciju. Nikada ne uključuje vaš tekst, glas ili fotografije. To možete promijeniti bilo kada u Postavkama.</string>
     <string name="ad_privacy_choices">Izbori privatnosti oglasa</string>
+    <string name="feedback_title">Povratne informacije</string>
+    <string name="feedback_subject">Povratne informacije AI prevoditelja</string>
+    <string name="feedback_no_email">Nije pronađena aplikacija za e-poštu. Pišite nam na %1$s</string>
 </resources>

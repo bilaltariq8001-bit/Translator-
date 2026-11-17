@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Jagage anonüümset kasutusstatistikat</string>
     <string name="analytics_share_body">Aitab rakendust täiustada. Ei sisalda kunagi teie teksti, häält ega fotosid. Saate seda seadetes igal ajal muuta.</string>
     <string name="ad_privacy_choices">Reklaami privaatsusvalikud</string>
+    <string name="feedback_title">Tagasiside</string>
+    <string name="feedback_subject">AI tõlkija tagasiside</string>
+    <string name="feedback_no_email">Meilirakendust ei leitud. Kirjutage meile aadressil %1$s</string>
 </resources>

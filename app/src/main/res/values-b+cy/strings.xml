@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Rhannu ystadegau defnydd dienw</string>
     <string name="analytics_share_body">Yn helpu i wella\'r app. Peidiwch byth â chynnwys eich testun, llais neu luniau. Gallwch newid hyn unrhyw bryd yn y Gosodiadau.</string>
     <string name="ad_privacy_choices">Dewisiadau preifatrwydd hysbysebion</string>
+    <string name="feedback_title">Adborth</string>
+    <string name="feedback_subject">AI Adborth y cyfieithydd</string>
+    <string name="feedback_no_email">Ni chanfuwyd ap e-bost. Ysgrifennwch atom yn %1$s</string>
 </resources>

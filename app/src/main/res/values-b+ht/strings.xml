@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Pataje estatistik itilizasyon anonim</string>
     <string name="analytics_share_body">Ede amelyore aplikasyon an. Pa janm enkli tèks ou, vwa oswa foto ou. Ou ka chanje sa nenpòt ki lè nan Anviwònman.</string>
     <string name="ad_privacy_choices">Chwa vi prive piblisite</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">AI tradiktè fidbak</string>
+    <string name="feedback_no_email">Pa gen okenn aplikasyon imel jwenn. Ekri nou nan %1$s</string>
 </resources>

@@ -49,6 +49,9 @@ class ConfigReader(
         counterEnabled = bool("${placement}_inter_counter_enabled"),
     )
 
+    /** How many successful translations between two translate_count interstitials (at least 1). */
+    fun translateEvery(): Int = long(RcKeys.TRANSLATE_EVERY).coerceIn(1L, 1_000L).toInt()
+
     fun banner(slot: String): InScreenAdModel = InScreenAdModel(
         slot = slot,
         adId = resolveId(string("${slot}_banner_ad_id"), ids.banner, ids.testBanner),

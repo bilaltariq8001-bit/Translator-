@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Kongsi statistik penggunaan tanpa nama</string>
     <string name="analytics_share_body">Membantu menambah baik apl. Jangan sekali-kali memasukkan teks, suara atau foto anda. Anda boleh menukar ini pada bila-bila masa dalam Tetapan.</string>
     <string name="ad_privacy_choices">Pilihan privasi iklan</string>
+    <string name="feedback_title">Maklum balas</string>
+    <string name="feedback_subject">Maklum balas Penterjemah AI</string>
+    <string name="feedback_no_email">Tiada apl e-mel ditemui. Tulis kepada kami di %1$s</string>
 </resources>

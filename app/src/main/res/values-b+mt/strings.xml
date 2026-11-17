@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Aqsam statistika anonima dwar l-użu</string>
     <string name="analytics_share_body">Jgħin biex ittejjeb l-app. Qatt ma tinkludi t-test, il-vuċi jew ir-ritratti tiegħek. Tista\' tibdel dan kwalunkwe ħin fis-Settings.</string>
     <string name="ad_privacy_choices">Għażliet tal-privatezza tar-reklami</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">Feedback tat-Traduttur AI</string>
+    <string name="feedback_no_email">Ma nstabet l-ebda app tal-email. Iktbilna fuq %1$s</string>
 </resources>

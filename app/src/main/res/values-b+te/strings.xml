@@ -363,4 +363,7 @@
     <string name="analytics_share_title">అనామక వినియోగ గణాంకాలను భాగస్వామ్యం చేయండి</string>
     <string name="analytics_share_body">యాప్‌ను మెరుగుపరచడంలో సహాయపడుతుంది. మీ వచనం, వాయిస్ లేదా ఫోటోలను ఎప్పుడూ చేర్చవద్దు. మీరు దీన్ని ఎప్పుడైనా సెట్టింగ్‌లలో మార్చవచ్చు.</string>
     <string name="ad_privacy_choices">ప్రకటన గోప్యతా ఎంపికలు</string>
+    <string name="feedback_title">అభిప్రాయం</string>
+    <string name="feedback_subject">AI అనువాదకుని అభిప్రాయం</string>
+    <string name="feedback_no_email">ఇమెయిల్ యాప్ ఏదీ కనుగొనబడలేదు. %1$sలో మాకు వ్రాయండి</string>
 </resources>

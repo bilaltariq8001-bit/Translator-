@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Bagikan statistik penggunaan anonim</string>
     <string name="analytics_share_body">Membantu meningkatkan aplikasi. Jangan pernah menyertakan teks, suara, atau foto Anda. Anda dapat mengubahnya kapan saja di Setelan.</string>
     <string name="ad_privacy_choices">Pilihan privasi iklan</string>
+    <string name="feedback_title">Masukan</string>
+    <string name="feedback_subject">Umpan balik Penerjemah AI</string>
+    <string name="feedback_no_email">Tidak ada aplikasi email yang ditemukan. Kirimkan surat kepada kami di %1$s</string>
 </resources>

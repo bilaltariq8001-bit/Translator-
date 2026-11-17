@@ -363,4 +363,7 @@
     <string name="analytics_share_title">แบ่งปันสถิติการใช้งานที่ไม่ระบุชื่อ</string>
     <string name="analytics_share_body">ช่วยปรับปรุงแอป ไม่ต้องใส่ข้อความ เสียง หรือรูปถ่ายของคุณ คุณสามารถเปลี่ยนแปลงได้ตลอดเวลาในการตั้งค่า</string>
     <string name="ad_privacy_choices">ตัวเลือกความเป็นส่วนตัวของโฆษณา</string>
+    <string name="feedback_title">ข้อเสนอแนะ</string>
+    <string name="feedback_subject">ความคิดเห็นของนักแปล AI</string>
+    <string name="feedback_no_email">ไม่พบแอปอีเมล เขียนถึงเราที่ %1$s</string>
 </resources>

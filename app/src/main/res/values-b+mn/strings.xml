@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Нэргүй хэрэглээний статистик мэдээллийг хуваалцах</string>
     <string name="analytics_share_body">Програмыг сайжруулахад тусалдаг. Таны текст, дуу хоолой, зургийг хэзээ ч оруулахгүй. Та үүнийг хүссэн үедээ Тохиргоо хэсэгт өөрчлөх боломжтой.</string>
     <string name="ad_privacy_choices">Зар сурталчилгааны нууцлалын сонголтууд</string>
+    <string name="feedback_title">Санал хүсэлт</string>
+    <string name="feedback_subject">AI Орчуулагчийн санал хүсэлт</string>
+    <string name="feedback_no_email">Имэйл програм олдсонгүй. Бидэн рүү %1$s хаягаар бичээрэй</string>
 </resources>

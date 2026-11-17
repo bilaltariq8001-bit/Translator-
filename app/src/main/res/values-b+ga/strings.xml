@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Comhroinn staitisticí úsáide gan ainm</string>
     <string name="analytics_share_body">Cuidíonn sé leis an app a fheabhsú. Ná cuir do théacs, do ghuth ná do ghrianghraif san áireamh riamh. Is féidir leat é seo a athrú am ar bith sna Socruithe.</string>
     <string name="ad_privacy_choices">Roghanna príobháideachais fógraí</string>
+    <string name="feedback_title">Aiseolas</string>
+    <string name="feedback_subject">AI Aiseolas aistritheoir</string>
+    <string name="feedback_no_email">Níor aimsíodh aon aip ríomhphoist. Scríobh chugainn ag %1$s</string>
 </resources>

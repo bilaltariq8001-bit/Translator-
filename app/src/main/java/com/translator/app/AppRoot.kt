@@ -178,6 +178,21 @@ private fun MainNav(container: AppContainer) {
     val tabBar = remember { com.translator.app.core.designsystem.TabBarController() }
     androidx.compose.runtime.LaunchedEffect(Unit) { container.ads.interstitials.warm(com.translator.app.core.config.RcKeys.PHOTO_OPEN) }
     val openPhotoAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.PHOTO_OPEN)
+    // Every Nth successful text translation (N from Remote Config, 3 by default) shows an interstitial over the result.
+    val translateAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.TRANSLATE_COUNT)
+    androidx.compose.runtime.LaunchedEffect(vm) {
+        vm.effectFlow.collect { effect ->
+            if (effect is com.translator.app.feature.translate.TranslateEffect.Translated) {
+                val every = container.ads.config.translateEvery()
+                if (effect.count % every == 0) {
+                    // Let the result draw and the "translating" busy flag clear first, so the ad opens over the finished result.
+                    kotlinx.coroutines.delay(500)
+                    translateAd { }
+                }
+                else if (effect.count % every == every - 1) container.ads.interstitials.warm(com.translator.app.core.config.RcKeys.TRANSLATE_COUNT)
+            }
+        }
+    }
     val goTo: (Tab) -> Unit = { t ->
         if (t == Tab.Photo) {
             openPhotoAd { tab = t.ordinal }

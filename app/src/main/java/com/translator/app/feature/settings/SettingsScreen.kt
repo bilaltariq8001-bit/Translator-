@@ -128,11 +128,7 @@ fun SettingsScreen(
                 NavRow(AppIcons.Info, str(R.string.app_version), "0.1.0", chevron = false) {}
                 Divider()
                 val appContext = androidx.compose.ui.platform.LocalContext.current
-                NavRow(AppIcons.Sliders, str(R.string.diag_title), str(R.string.diag_body)) {
-                    val clip = appContext.getSystemService(android.content.ClipboardManager::class.java)
-                    clip?.setPrimaryClip(android.content.ClipData.newPlainText("diagnostics", com.translator.app.core.util.CrashLog.report(appContext)))
-                    android.widget.Toast.makeText(appContext, str(R.string.diag_copied), android.widget.Toast.LENGTH_LONG).show()
-                }
+                NavRow(AppIcons.Mail, str(R.string.feedback_title), null) { sendFeedback(appContext) }
             }
         }
     }
@@ -164,6 +160,22 @@ fun SettingsScreen(
             primaryLabel = str(R.string.delete_everything), onPrimary = { onDeleteAll(); confirmDelete = false },
             secondaryLabel = str(R.string.cancel), onSecondary = { confirmDelete = false }, icon = AppIcons.Close, danger = true,
         )
+    }
+}
+
+/** Opens the email app with the feedback address and subject filled in, plus device details at the end of the message. */
+private fun sendFeedback(context: android.content.Context) {
+    val body = "\n\n\n----\n" + com.translator.app.core.util.CrashLog.report(context)
+    val intent = android.content.Intent(android.content.Intent.ACTION_SENDTO, android.net.Uri.parse("mailto:")).apply {
+        putExtra(android.content.Intent.EXTRA_EMAIL, arrayOf(context.getString(R.string.feedback_email)))
+        putExtra(android.content.Intent.EXTRA_SUBJECT, str(R.string.feedback_subject))
+        putExtra(android.content.Intent.EXTRA_TEXT, body)
+        addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+    try {
+        context.startActivity(android.content.Intent.createChooser(intent, str(R.string.feedback_title)).addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK))
+    } catch (_: Exception) {
+        android.widget.Toast.makeText(context, str(R.string.feedback_no_email, context.getString(R.string.feedback_email)), android.widget.Toast.LENGTH_LONG).show()
     }
 }
 

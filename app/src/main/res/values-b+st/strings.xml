@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Arolelana lipalo-palo tse sa tsejoeng tsa tšebeliso</string>
     <string name="analytics_share_body">E thusa ho ntlafatsa app. Ha e kenyeletse mongolo, lentsoe kapa linepe tsa hau. U ka fetola sena neng kapa neng ho Litlhophiso.</string>
     <string name="ad_privacy_choices">Likhetho tsa lekunutu tsa lipapatso</string>
+    <string name="feedback_title">Maikutlo</string>
+    <string name="feedback_subject">Maikutlo a Mofetoleli oa AI</string>
+    <string name="feedback_no_email">Ha ho sesebelisoa sa lengolo-tsoibila se fumanoeng. Re ngolle ho %1$s</string>
 </resources>

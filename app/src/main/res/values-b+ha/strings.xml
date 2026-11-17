@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Raba ƙididdigar amfani da ba a san su ba</string>
     <string name="analytics_share_body">Yana taimakawa inganta app. Kada a haɗa da rubutunku, muryarku ko hotunanku. Kuna iya canza wannan kowane lokaci a cikin Saituna.</string>
     <string name="ad_privacy_choices">Zaɓuɓɓukan keɓaɓɓen talla</string>
+    <string name="feedback_title">Jawabin</string>
+    <string name="feedback_subject">Bayanin Mai Fassara AI</string>
+    <string name="feedback_no_email">Ba a sami app ɗin imel ba. Rubuta mana a %1$s</string>
 </resources>

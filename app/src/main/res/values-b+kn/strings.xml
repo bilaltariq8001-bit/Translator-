@@ -363,4 +363,7 @@
     <string name="analytics_share_title">ಅನಾಮಧೇಯ ಬಳಕೆಯ ಅಂಕಿಅಂಶಗಳನ್ನು ಹಂಚಿಕೊಳ್ಳಿ</string>
     <string name="analytics_share_body">ಅಪ್ಲಿಕೇಶನ್ ಸುಧಾರಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ. ನಿಮ್ಮ ಪಠ್ಯ, ಧ್ವನಿ ಅಥವಾ ಫೋಟೋಗಳನ್ನು ಎಂದಿಗೂ ಸೇರಿಸಬೇಡಿ. ನೀವು ಇದನ್ನು ಯಾವುದೇ ಸಮಯದಲ್ಲಿ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಬದಲಾಯಿಸಬಹುದು.</string>
     <string name="ad_privacy_choices">ಜಾಹೀರಾತು ಗೌಪ್ಯತೆ ಆಯ್ಕೆಗಳು</string>
+    <string name="feedback_title">ಪ್ರತಿಕ್ರಿಯೆ</string>
+    <string name="feedback_subject">AI ಅನುವಾದಕ ಪ್ರತಿಕ್ರಿಯೆ</string>
+    <string name="feedback_no_email">ಯಾವುದೇ ಇಮೇಲ್ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ. %1$s ನಲ್ಲಿ ನಮಗೆ ಬರೆಯಿರಿ</string>
 </resources>

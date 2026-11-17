@@ -143,6 +143,7 @@ class AppOpenAdManager(
 
             override fun onAdDismissedFullScreenContent() = onMain {
                 Log.d(TAG, "fullscreen content dismissed")
+                AdBackdrop.hide(activity)
                 AdEvents.dismissed(PLACEMENT, FORMAT)
                 isShowing = false
                 loadAd()
@@ -151,6 +152,7 @@ class AppOpenAdManager(
             override fun onAdFailedToShowFullScreenContent(error: FullScreenContentError) = onMain {
                 Log.w(TAG, "show failed: ${error.message}")
                 AdEvents.failed(PLACEMENT, FORMAT, "show_failed")
+                AdBackdrop.hide(activity)
                 isShowing = false
                 loadAd()
             }
@@ -162,9 +164,11 @@ class AppOpenAdManager(
         }
         try {
             Log.d(TAG, "showing cached ad")
+            AdBackdrop.show(activity)
             ad.show(activity)
         } catch (error: Throwable) {
             Log.e(TAG, "show threw", error)
+            AdBackdrop.hide(activity)
             isShowing = false
             loadAd()
         }

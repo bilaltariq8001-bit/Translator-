@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Comparteix estadístiques d\'ús anònimes</string>
     <string name="analytics_share_body">Ajuda a millorar l\'aplicació. Mai inclou el teu text, veu o fotos. Pots canviar-ho en qualsevol moment a Configuració.</string>
     <string name="ad_privacy_choices">Opcions de privadesa dels anuncis</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">Comentaris de AI Translator</string>
+    <string name="feedback_no_email">No s\'ha trobat cap aplicació de correu electrònic. Escriu-nos a %1$s</string>
 </resources>

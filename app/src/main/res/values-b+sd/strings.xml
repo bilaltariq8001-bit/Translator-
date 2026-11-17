@@ -363,4 +363,7 @@
     <string name="analytics_share_title">حصيداري ڪريو گمنام استعمال جا انگ اکر</string>
     <string name="analytics_share_body">ايپ کي بهتر بنائڻ ۾ مدد ڪري ٿي. ڪڏهن به توهان جو متن، آواز يا تصويرون شامل نه ڪريو. توھان ھي تبديل ڪري سگھو ٿا ڪنھن به وقت سيٽنگون ۾.</string>
     <string name="ad_privacy_choices">اشتهار رازداري جون چونڊون</string>
+    <string name="feedback_title">راءِ</string>
+    <string name="feedback_subject">AI ترجمو ڪندڙ موٽ</string>
+    <string name="feedback_no_email">ڪابه اي ميل ايپ نه ملي. اسان ڏانهن لکو %1$s</string>
 </resources>

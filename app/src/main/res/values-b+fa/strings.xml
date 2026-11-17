@@ -363,4 +363,7 @@
     <string name="analytics_share_title">آمار استفاده ناشناس را به اشتراک بگذارید</string>
     <string name="analytics_share_body">به بهبود برنامه کمک می کند. هرگز متن، صدا یا عکس شما را شامل نمی شود. هر زمان که بخواهید می توانید این مورد را در تنظیمات تغییر دهید.</string>
     <string name="ad_privacy_choices">انتخاب های حریم خصوصی تبلیغات</string>
+    <string name="feedback_title">بازخورد</string>
+    <string name="feedback_subject">بازخورد مترجم هوش مصنوعی</string>
+    <string name="feedback_no_email">هیچ برنامه ایمیلی پیدا نشد برای ما در %1$s بنویسید</string>
 </resources>

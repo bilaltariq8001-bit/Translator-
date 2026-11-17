@@ -363,4 +363,7 @@
     <string name="analytics_share_title">ແບ່ງປັນສະຖິຕິການໃຊ້ທີ່ບໍ່ເປີດເຜີຍຊື່</string>
     <string name="analytics_share_body">ຊ່ວຍປັບປຸງແອັບ. ຢ່າໃສ່ຂໍ້ຄວາມ, ສຽງ ຫຼືຮູບພາບຂອງເຈົ້າ. ທ່ານສາມາດປ່ຽນສິ່ງນີ້ໄດ້ທຸກເວລາໃນການຕັ້ງຄ່າ.</string>
     <string name="ad_privacy_choices">ການເລືອກຄວາມເປັນສ່ວນຕົວຂອງໂຄສະນາ</string>
+    <string name="feedback_title">ຄໍາຕິຊົມ</string>
+    <string name="feedback_subject">ຄວາມຄິດເຫັນຂອງຜູ້ແປພາສາ AI</string>
+    <string name="feedback_no_email">ບໍ່ພົບແອັບຯອີເມວ. ຂຽນຫາພວກເຮົາທີ່ %1$s</string>
 </resources>

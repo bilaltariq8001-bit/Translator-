@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Udostępniaj anonimowe statystyki użytkowania</string>
     <string name="analytics_share_body">Pomaga ulepszyć aplikację. Nigdy nie zawiera Twojego tekstu, głosu ani zdjęć. Możesz to zmienić w dowolnym momencie w Ustawieniach.</string>
     <string name="ad_privacy_choices">Opcje prywatności reklam</string>
+    <string name="feedback_title">Informacja zwrotna</string>
+    <string name="feedback_subject">Opinia tłumacza AI</string>
+    <string name="feedback_no_email">Nie znaleziono aplikacji e-mail. Napisz do nas na adres %1$s</string>
 </resources>

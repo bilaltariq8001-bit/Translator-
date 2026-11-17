@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Bendrinkite anoniminę naudojimo statistiką</string>
     <string name="analytics_share_body">Padeda tobulinti programą. Niekada neįtraukia jūsų teksto, balso ar nuotraukų. Tai galite bet kada pakeisti nustatymuose.</string>
     <string name="ad_privacy_choices">Skelbimų privatumo pasirinkimai</string>
+    <string name="feedback_title">Atsiliepimai</string>
+    <string name="feedback_subject">AI vertėjo atsiliepimai</string>
+    <string name="feedback_no_email">El. pašto programa nerasta. Parašykite mums adresu %1$s</string>
 </resources>

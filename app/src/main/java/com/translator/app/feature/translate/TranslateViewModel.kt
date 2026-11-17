@@ -57,6 +57,8 @@ sealed interface InsightsUiState {
 
 sealed interface TranslateEffect {
     data object ShowResult : TranslateEffect
+    /** A text translation succeeded; [count] is how many have succeeded since the app started. */
+    data class Translated(val count: Int) : TranslateEffect
 }
 
 class TranslateViewModel(
@@ -74,6 +76,7 @@ class TranslateViewModel(
 
     private var job: Job? = null
     private var insightsJob: Job? = null
+    private var successCount = 0
 
     init {
         viewModelScope.launch {
@@ -155,6 +158,8 @@ class TranslateViewModel(
                             result = TranslateResult(0, s.source, s.target, s.text, outcome.value.text, favorite = false, viaAi = outcome.value.viaAi),
                         )
                     }
+                    successCount++
+                    effects.trySend(TranslateEffect.Translated(successCount))
                     com.translator.app.core.util.Perf.log("translate.total", tap, "${s.text.length} chars")
                     Analytics.log(Ev.TEXT_TRANSLATE_SUCCESS) { lang("from", s.source.code); lang("to", s.target.code); duration("t", com.translator.app.core.util.Perf.now() - tap); flag("ai", outcome.value.viaAi) }
                     val id = translateText.save(request, outcome.value.text)

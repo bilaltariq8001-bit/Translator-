@@ -363,4 +363,7 @@
     <string name="analytics_share_title">د نامعلوم کارونې احصایې شریک کړئ</string>
     <string name="analytics_share_body">د ایپ ښه کولو کې مرسته کوي. هیڅکله ستاسو متن، غږ یا عکسونه شامل نه کړئ. تاسو کولی شئ دا هر وخت په ترتیباتو کې بدل کړئ.</string>
     <string name="ad_privacy_choices">د اعلان محرمیت انتخابونه</string>
+    <string name="feedback_title">فیډبیک</string>
+    <string name="feedback_subject">د AI ژباړونکي فیډبیک</string>
+    <string name="feedback_no_email">هیڅ بریښنالیک ایپ ونه موندل شو. موږ ته په %1$s کې ولیکئ</string>
 </resources>

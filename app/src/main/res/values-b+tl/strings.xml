@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Ibahagi ang hindi kilalang mga istatistika ng paggamit</string>
     <string name="analytics_share_body">Tumutulong na mapabuti ang app. Huwag kailanman isama ang iyong text, boses o mga larawan. Maaari mo itong baguhin anumang oras sa Mga Setting.</string>
     <string name="ad_privacy_choices">Mga pagpipilian sa privacy ng ad</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">Feedback ng AI Translator</string>
+    <string name="feedback_no_email">Walang nakitang email app. Sumulat sa amin sa %1$s</string>
 </resources>

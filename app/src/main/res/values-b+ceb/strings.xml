@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Ipaambit ang dili mailhan nga estadistika sa paggamit</string>
     <string name="analytics_share_body">Nagtabang sa pagpalambo sa app. Ayaw gayud iapil ang imong text, tingog o mga litrato. Mahimo nimong usbon kini bisan unsang oras sa Mga Setting.</string>
     <string name="ad_privacy_choices">Mga kapilian sa pagkapribado sa ad</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">Feedback sa AI Translator</string>
+    <string name="feedback_no_email">Walay email app nga nakit-an. Pagsulat kanamo sa %1$s</string>
 </resources>

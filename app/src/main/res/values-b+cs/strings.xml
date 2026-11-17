@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Sdílejte anonymní statistiky používání</string>
     <string name="analytics_share_body">Pomáhá zlepšovat aplikaci. Nikdy nezahrnuje váš text, hlas nebo fotografie. Toto můžete kdykoli změnit v Nastavení.</string>
     <string name="ad_privacy_choices">Možnosti ochrany soukromí reklam</string>
+    <string name="feedback_title">Zpětná vazba</string>
+    <string name="feedback_subject">Zpětná vazba AI Translator</string>
+    <string name="feedback_no_email">Nebyla nalezena žádná e-mailová aplikace. Napište nám na adresu %1$s</string>
 </resources>

@@ -113,6 +113,19 @@
             "value": "true"
           },
           "valueType": "BOOLEAN"
+        },
+        "favorites_native_ad_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/2247696110"
+          },
+          "valueType": "STRING"
+        },
+        "favorites_native_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Native ad on the Favorites tab, shown only when there is at least one favorite"
         }
       }
     },
@@ -309,6 +322,39 @@
             "value": "false"
           },
           "valueType": "BOOLEAN"
+        },
+        "translate_count_inter_id": {
+          "defaultValue": {
+            "value": "ca-app-pub-3940256099942544/1033173712"
+          },
+          "valueType": "STRING"
+        },
+        "translate_count_inter_enabled": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN",
+          "description": "Interstitial after every Nth text translation"
+        },
+        "translate_count_inter_should_load": {
+          "defaultValue": {
+            "value": "true"
+          },
+          "valueType": "BOOLEAN"
+        },
+        "translate_count_inter_counter_enabled": {
+          "defaultValue": {
+            "value": "false"
+          },
+          "valueType": "BOOLEAN",
+          "description": "true = also obey the global time/click capping"
+        },
+        "translate_count_inter_every": {
+          "defaultValue": {
+            "value": "3"
+          },
+          "valueType": "NUMBER",
+          "description": "N: show the ad on every Nth successful translation"
         }
       }
     },

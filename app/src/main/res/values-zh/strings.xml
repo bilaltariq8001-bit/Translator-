@@ -363,4 +363,7 @@
     <string name="analytics_share_body">有助于改进应用。绝不包含您的文字、语音或照片。您可随时在设置中更改。</string>
     <string name="ad_privacy_choices">广告隐私选项</string>
     <string name="ad_attribution">广告</string>
+    <string name="feedback_title">反馈</string>
+    <string name="feedback_subject">人工智能翻译反馈</string>
+    <string name="feedback_no_email">找不到电子邮件应用程序。请写信给我们：%1$s</string>
 </resources>

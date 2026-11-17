@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Bagikeun statistik pamakean anonim</string>
     <string name="analytics_share_body">Ngabantosan ningkatkeun aplikasi. Henteu pernah kalebet téks, sora atanapi poto anjeun. Anjeun tiasa ngarobih ieu iraha waé dina Setélan.</string>
     <string name="ad_privacy_choices">Pilihan privasi iklan</string>
+    <string name="feedback_title">Eupan balik</string>
+    <string name="feedback_subject">Eupan balik AI Panarjamah</string>
+    <string name="feedback_no_email">Teu aya aplikasi email anu kapendak. Tulis ka kami di %1$s</string>
 </resources>

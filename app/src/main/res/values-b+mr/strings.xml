@@ -363,4 +363,7 @@
     <string name="analytics_share_title">निनावी वापर आकडेवारी सामायिक करा</string>
     <string name="analytics_share_body">ॲप सुधारण्यास मदत करते. तुमचा मजकूर, आवाज किंवा फोटो कधीही समाविष्ट करू नका. तुम्ही सेटिंग्जमध्ये हे कधीही बदलू शकता.</string>
     <string name="ad_privacy_choices">जाहिरात गोपनीयता निवडी</string>
+    <string name="feedback_title">अभिप्राय</string>
+    <string name="feedback_subject">AI अनुवादक अभिप्राय</string>
+    <string name="feedback_no_email">कोणतेही ईमेल ॲप आढळले नाही. आम्हाला %1$s वर लिहा</string>
 </resources>

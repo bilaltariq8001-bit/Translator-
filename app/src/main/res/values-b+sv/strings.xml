@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Dela anonym användningsstatistik</string>
     <string name="analytics_share_body">Hjälper till att förbättra appen. Inkluderar aldrig din text, röst eller foton. Du kan ändra detta när som helst i Inställningar.</string>
     <string name="ad_privacy_choices">Annonssekretessval</string>
+    <string name="feedback_title">Feed-back</string>
+    <string name="feedback_subject">AI Translator feedback</string>
+    <string name="feedback_no_email">Ingen e-postapp hittades. Skriv till oss på %1$s</string>
 </resources>

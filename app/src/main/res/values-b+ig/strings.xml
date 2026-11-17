@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Kekọrịta ọnụ ọgụgụ ojiji na-amaghị aha</string>
     <string name="analytics_share_body">Na-enyere aka melite ngwa. Agụnyela ederede, olu ma ọ bụ foto gị. Ị nwere ike ịgbanwe nke a oge ọ bụla na Ntọala.</string>
     <string name="ad_privacy_choices">Nhọrọ nzuzo mgbasa ozi</string>
+    <string name="feedback_title">Nzaghachi</string>
+    <string name="feedback_subject">Nzaghachi AI Ntụgharị</string>
+    <string name="feedback_no_email">Enweghị ngwa email ahụrụ. Dee anyị akwụkwọ na %1$s</string>
 </resources>

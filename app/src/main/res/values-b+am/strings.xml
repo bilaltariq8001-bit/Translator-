@@ -363,4 +363,7 @@
     <string name="analytics_share_title">ስም-አልባ የአጠቃቀም ስታቲስቲክስን ያጋሩ</string>
     <string name="analytics_share_body">መተግበሪያውን ለማሻሻል ይረዳል። የእርስዎን ጽሑፍ፣ ድምጽ ወይም ፎቶዎች በጭራሽ አያካትቱ። ይህንን በማንኛውም ጊዜ በቅንብሮች ውስጥ መቀየር ይችላሉ።</string>
     <string name="ad_privacy_choices">የማስታወቂያ ግላዊነት ምርጫዎች</string>
+    <string name="feedback_title">ግብረ መልስ</string>
+    <string name="feedback_subject">AI ተርጓሚ ግብረ መልስ</string>
+    <string name="feedback_no_email">ምንም የኢሜይል መተግበሪያ አልተገኘም። %1$s ላይ ይፃፉልን</string>
 </resources>

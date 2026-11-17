@@ -363,4 +363,7 @@
     <string name="analytics_share_title">ייַנטיילן אַנאָנימע באַנוצערס סטאַטיסטיק</string>
     <string name="analytics_share_body">העלפּס פֿאַרבעסערן די אַפּ. קיינמאָל ינקלודז דיין טעקסט, קול אָדער פאָטאָס. איר קענען טוישן דעם אין קיין צייט אין סעטטינגס.</string>
     <string name="ad_privacy_choices">אַד פּריוואַטקייט ברירות</string>
+    <string name="feedback_title">באַמערקונגען</string>
+    <string name="feedback_subject">AI Translator באַמערקונגען</string>
+    <string name="feedback_no_email">קיין E- בריוו אַפּ געפֿונען. שרייב צו אונדז אין %1$s</string>
 </resources>

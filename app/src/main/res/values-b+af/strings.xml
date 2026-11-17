@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Deel anonieme gebruikstatistieke</string>
     <string name="analytics_share_body">Help om die toepassing te verbeter. Moet nooit jou teks, stem of foto\'s insluit nie. Jy kan dit enige tyd in Instellings verander.</string>
     <string name="ad_privacy_choices">Advertensie privaatheid keuses</string>
+    <string name="feedback_title">Terugvoer</string>
+    <string name="feedback_subject">AI Translator terugvoer</string>
+    <string name="feedback_no_email">Geen e-posprogram gevind nie. Skryf vir ons by %1$s</string>
 </resources>

@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Goverana nhamba dzemashandisirwo dzisingazivikanwe</string>
     <string name="analytics_share_body">Inobatsira kuvandudza app. Usambosanganise mashoko ako, izwi kana mapikicha. Unogona kushandura izvi chero nguva mumaSettings.</string>
     <string name="ad_privacy_choices">Sarudzo dzekuvanzika kweAd</string>
+    <string name="feedback_title">Feedback</string>
+    <string name="feedback_subject">Mhinduro yeMushanduri weAI</string>
+    <string name="feedback_no_email">Hapana email app yawanikwa. Tinyorere pa%1$s</string>
 </resources>

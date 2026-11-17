@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Μοιραστείτε ανώνυμα στατιστικά στοιχεία χρήσης</string>
     <string name="analytics_share_body">Βοηθά στη βελτίωση της εφαρμογής. Δεν περιλαμβάνει ποτέ το κείμενο, τη φωνή ή τις φωτογραφίες σας. Μπορείτε να το αλλάξετε ανά πάσα στιγμή στις Ρυθμίσεις.</string>
     <string name="ad_privacy_choices">Επιλογές απορρήτου διαφημίσεων</string>
+    <string name="feedback_title">Ανατροφοδότηση</string>
+    <string name="feedback_subject">Σχόλια μεταφραστή AI</string>
+    <string name="feedback_no_email">Δεν βρέθηκε εφαρμογή email. Γράψτε μας στο %1$s</string>
 </resources>

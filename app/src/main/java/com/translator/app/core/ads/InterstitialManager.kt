@@ -173,6 +173,7 @@ class InterstitialManager(
         fun finish() {
             if (finished) return
             finished = true
+            AdBackdrop.hide(activity)
             showing = false
             onDone()
             warm()
@@ -197,6 +198,7 @@ class InterstitialManager(
             override fun onAdClicked() { AdEvents.clicked(placement, FORMAT) }
         }
         try {
+            AdBackdrop.show(activity)
             ad.show(activity)
         } catch (_: Throwable) {
             finish()

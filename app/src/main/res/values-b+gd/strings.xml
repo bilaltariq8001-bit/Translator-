@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Roinn staitistig cleachdaidh gun urra</string>
     <string name="analytics_share_body">A \'cuideachadh an aplacaid a leasachadh. Na cuir a-steach do theacsa, guth no dealbhan a-riamh. Faodaidh tu seo atharrachadh uair sam bith ann an Settings.</string>
     <string name="ad_privacy_choices">Roghainnean prìobhaideachd sanasachd</string>
+    <string name="feedback_title">Fios air ais</string>
+    <string name="feedback_subject">AI Fios air ais bhon eadar-theangair</string>
+    <string name="feedback_no_email">Cha deach aplacaid post-d a lorg. Sgrìobh thugainn aig %1$s</string>
 </resources>

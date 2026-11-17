@@ -363,4 +363,7 @@
     <string name="analytics_share_title">Pin awọn iṣiro lilo ailorukọ</string>
     <string name="analytics_share_body">Ṣe iranlọwọ mu ohun elo naa dara. Maṣe pẹlu ọrọ rẹ, ohun tabi awọn fọto rẹ. O le yi eyi pada nigbakugba ni Eto.</string>
     <string name="ad_privacy_choices">Awọn yiyan asiri ipolowo</string>
+    <string name="feedback_title">Esi</string>
+    <string name="feedback_subject">AI onitumo esi</string>
+    <string name="feedback_no_email">Ko si ohun elo imeeli ti a rii. Kọ si wa ni %1$s</string>
 </resources>

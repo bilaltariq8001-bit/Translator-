@@ -351,4 +351,6 @@
     <string name="analytics_share_title">ଅଜ୍ଞାତ ବ୍ୟବହାର ପରିସଂଖ୍ୟାନ ଅଂଶୀଦାର କରନ୍ତୁ |</string>
     <string name="analytics_share_body">ଆପକୁ ଉନ୍ନତ କରିବାରେ ସାହାଯ୍ୟ କରେ | କଦାପି ତୁମର ପାଠ, ସ୍ୱର କିମ୍ବା ଫଟୋ ଅନ୍ତର୍ଭୂକ୍ତ କରେ ନାହିଁ | ଆପଣ ଏହାକୁ ଯେକ time ଣସି ସମୟରେ ସେଟିଂସମୂହରେ ପରିବର୍ତ୍ତନ କରିପାରିବେ |</string>
     <string name="ad_privacy_choices">ବିଜ୍ଞାପନ ଗୋପନୀୟତା ପସନ୍ଦ |</string>
+    <string name="feedback_title">ମତାମତ</string>
+    <string name="feedback_subject">AI ଅନୁବାଦକ ମତାମତ |</string>
 </resources>
