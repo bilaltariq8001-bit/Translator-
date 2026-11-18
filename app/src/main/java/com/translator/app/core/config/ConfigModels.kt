@@ -7,12 +7,7 @@ object RcKeys {
     const val COOLDOWN_SECONDS = "interstitial_cooldown_seconds"
     const val CLICK_CAP = "interstitial_click_cap"
 
-    /** One ad unit id per format, shared by every screen and placement (each placement keeps its own on/off switches). */
-    const val BANNER_AD_ID = "banner_ad_id"
-    const val INTERSTITIAL_AD_ID = "interstitial_ad_id"
-    const val NATIVE_AD_ID = "native_ad_id"
-
-    /** Interstitial placements: keys are <placement>_inter_{enabled,should_load,counter_enabled}; the id is [INTERSTITIAL_AD_ID]. */
+    /** Interstitial placements: keys are <placement>_inter_{id,enabled,should_load,counter_enabled}. */
     const val SPLASH = "splash"
     const val HISTORY_BACK = "history_back"
     const val OFFLINE_BACK = "offline_back"
@@ -31,7 +26,7 @@ object RcKeys {
     const val ONBOARDING_DONE = "onboarding_done"
     val BACK_PLACEMENTS = listOf(HISTORY_BACK, OFFLINE_BACK, VOICE_MODE_BACK, AI_TOOL_BACK, PHOTO_OPEN, AI_TOOL_OPEN, VOICE_MODE_OPEN, TRANSLATE_COUNT, VOICE_MODE_USE, AI_TOOL_USE)
 
-    /** Native ad slots: key is <slot>_native_enabled; the id is [NATIVE_AD_ID]. */
+    /** Native ad slots: keys are <slot>_native_ad_id and <slot>_native_enabled. */
     const val NATIVE_HISTORY = "history"
     const val NATIVE_FAVORITES = "favorites"
     const val NATIVE_CHAT_HISTORY = "chat_history"
@@ -39,7 +34,7 @@ object RcKeys {
     /** Compact native card at the bottom of the onboarding screens (language, guide, privacy). */
     const val NATIVE_ONBOARDING = "onboarding"
 
-    /** Banner slots ([BANNER_AD_ID], or [NATIVE_AD_ID] for NATIVE): keys are <slot>_banner_is_collapsing, _in_screen_ad_enabled, _ad_position, _in_screen_ad_type. */
+    /** Banner slots: keys are <slot>_banner_ad_id, _banner_is_collapsing, _in_screen_ad_enabled, _ad_position, _in_screen_ad_type. */
     const val SLOT_TEXT = "text"
     const val SLOT_VOICE = "voice"
     const val SLOT_TOOLS = "tools"

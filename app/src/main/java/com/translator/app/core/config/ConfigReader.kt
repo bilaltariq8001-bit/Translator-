@@ -43,7 +43,7 @@ class ConfigReader(
 
     fun interstitial(placement: String): InterstitialAdModel = InterstitialAdModel(
         placement = placement,
-        adId = resolveId(string(RcKeys.INTERSTITIAL_AD_ID), ids.interstitial, ids.testInterstitial),
+        adId = resolveId(string("${placement}_inter_id"), ids.interstitial, ids.testInterstitial),
         enabled = bool("${placement}_inter_enabled"),
         shouldLoad = bool("${placement}_inter_should_load"),
         counterEnabled = bool("${placement}_inter_counter_enabled"),
@@ -57,8 +57,8 @@ class ConfigReader(
 
     fun banner(slot: String): InScreenAdModel = InScreenAdModel(
         slot = slot,
-        adId = resolveId(string(RcKeys.BANNER_AD_ID), ids.banner, ids.testBanner),
-        nativeAdId = resolveId(string(RcKeys.NATIVE_AD_ID), ids.native, ids.testNative),
+        adId = resolveId(string("${slot}_banner_ad_id"), ids.banner, ids.testBanner),
+        nativeAdId = resolveId(string("${slot}_native_ad_id"), ids.native, ids.testNative),
         collapsing = bool("${slot}_banner_is_collapsing"),
         enabled = bool("${slot}_in_screen_ad_enabled"),
         position = if (string("${slot}_ad_position").equals("TOP", ignoreCase = true)) AdPosition.TOP else AdPosition.BOTTOM,
@@ -74,7 +74,7 @@ class ConfigReader(
 
     fun nativeAd(slot: String): NativeAdModel = NativeAdModel(
         slot = slot,
-        adId = resolveId(string(RcKeys.NATIVE_AD_ID), ids.native, ids.testNative),
+        adId = resolveId(string("${slot}_native_ad_id"), ids.native, ids.testNative),
         enabled = bool("${slot}_native_enabled"),
     )
 
