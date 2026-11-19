@@ -1,5 +1,7 @@
 package com.translator.app
 
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.runtime.mutableStateOf
 import com.translator.app.core.i18n.str
 import com.translator.app.R
@@ -327,17 +329,48 @@ private fun MainNav(container: AppContainer) {
 }
 
 /**
- * Shows one tab. Only the new tab is built when you switch (the old one is dropped at once) and it fades in quickly. A
- * cross-fade keeps both tabs alive for the whole change, which made switching to a heavy tab stutter.
+ * Shows one tab. Only the new tab is built when you switch (the old one is dropped at once), and it slides in a little from the
+ * side it came from while it fades in. A cross-fade or a pager keeps both tabs alive, which made switching to a heavy tab stutter
+ * (and would keep the camera running off screen).
  */
 @Composable
-private fun TabContent(current: Tab, content: @Composable (Tab) -> Unit) {
+private fun TabContent(current: Tab, direction: Int, content: @Composable (Tab) -> Unit) {
+    val shift = with(LocalDensity.current) { 36.dp.toPx() }
     androidx.compose.runtime.key(current) {
-        val alpha = remember { androidx.compose.animation.core.Animatable(0f) }
-        androidx.compose.runtime.LaunchedEffect(Unit) { alpha.animateTo(1f, androidx.compose.animation.core.tween(120)) }
-        Box(Modifier.fillMaxSize().graphicsLayer { this.alpha = alpha.value }) { content(current) }
+        val progress = remember { androidx.compose.animation.core.Animatable(0f) }
+        androidx.compose.runtime.LaunchedEffect(Unit) { progress.animateTo(1f, androidx.compose.animation.core.tween(180)) }
+        Box(
+            Modifier.fillMaxSize().graphicsLayer {
+                alpha = progress.value
+                translationX = direction * shift * (1f - progress.value)
+            },
+        ) { content(current) }
     }
 }
+
+/**
+ * Swipe left or right on a main tab to go to the next or previous tab. Lists, sliders, text selection and the camera's pinch
+ * handle their own drags first; only a clear horizontal swipe nobody else took changes the tab. Mirrors under RTL.
+ */
+private fun Modifier.tabSwipe(enabled: Boolean, rtl: Boolean, thresholdPx: Float, onSwipe: (forward: Boolean) -> Unit): Modifier =
+    if (!enabled) this else pointerInput(rtl, thresholdPx) {
+        var total = 0f
+        var taken = false
+        detectHorizontalDragGestures(
+            onDragStart = { total = 0f; taken = false },
+            onDragCancel = { total = 0f },
+            onDragEnd = {
+                if (!taken && kotlin.math.abs(total) > thresholdPx) {
+                    val left = total < 0
+                    onSwipe(if (rtl) !left else left)
+                }
+                total = 0f
+            },
+        ) { change, dx ->
+            if (change.isConsumed) taken = true
+            total += dx
+        }
+    }
 
 /** Bottom bar on phones; a left rail when the window is wider than 560dp (landscape, tablets). */
 @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
@@ -345,6 +378,24 @@ private fun TabContent(current: Tab, content: @Composable (Tab) -> Unit) {
 private fun MainScaffold(selected: Int, onSelect: (Int) -> Unit, barHidden: Boolean, content: @Composable (Tab) -> Unit) {
     val current = Tab.entries[selected]
     val openPhotoAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.PHOTO_OPEN)
+    // Which side the new tab slides in from: +1 when moving to a tab further along the bar, -1 when moving back.
+    // Plain holder (not state): [last selected, direction], updated in place while composing the new selection.
+    val dir = remember { intArrayOf(selected, 0) }
+    if (selected != dir[0]) {
+        dir[1] = if (selected > dir[0]) 1 else -1
+        dir[0] = selected
+    }
+    val direction = dir[1]
+    val rtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+    val slideDir = if (rtl) -direction else direction
+    val select: (Int) -> Unit = { i -> if (Tab.entries[i] == Tab.Photo) openPhotoAd { onSelect(i) } else onSelect(i) }
+    val swipeThreshold = with(LocalDensity.current) { 72.dp.toPx() }
+    // No swiping while a voice mode or an AI tool is open over the tab (the bar is hidden then) or while typing.
+    val swipeOn = !barHidden && !androidx.compose.foundation.layout.WindowInsets.Companion.isImeVisible
+    val swipe = Modifier.tabSwipe(swipeOn, rtl, swipeThreshold) { forward ->
+        val next = selected + if (forward) 1 else -1
+        if (next in Tab.entries.indices) select(next)
+    }
     BoxWithConstraints(Modifier.fillMaxSize()) {
         if (maxWidth > 560.dp) {
             Row(Modifier.fillMaxSize()) {
@@ -352,17 +403,17 @@ private fun MainScaffold(selected: Int, onSelect: (Int) -> Unit, barHidden: Bool
                     Modifier.fillMaxHeight().width(88.dp).background(Tk.Surface).padding(vertical = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                ) { Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected) { if (t == Tab.Photo) openPhotoAd { onSelect(i) } else onSelect(i) } } }
-                Box(Modifier.weight(1f).fillMaxHeight()) { BannerFrame(bannerSlotFor(current), show = !barHidden) { TabContent(current, content) } }
+                ) { Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected) { select(i) } } }
+                Box(Modifier.weight(1f).fillMaxHeight().then(swipe)) { BannerFrame(bannerSlotFor(current), show = !barHidden) { TabContent(current, slideDir, content) } }
             }
         } else {
             Column(Modifier.fillMaxSize()) {
-                Box(Modifier.weight(1f).fillMaxWidth()) { BannerFrame(bannerSlotFor(current), show = !barHidden) { TabContent(current, content) } }
+                Box(Modifier.weight(1f).fillMaxWidth().then(swipe)) { BannerFrame(bannerSlotFor(current), show = !barHidden) { TabContent(current, slideDir, content) } }
                 // With the keyboard open the tab bar would sit between the text box and the keys, leaving a wide gap.
                 if (!androidx.compose.foundation.layout.WindowInsets.Companion.isImeVisible && !barHidden) {
                     HorizontalDivider(color = Tk.Line)
                     Row(Modifier.fillMaxWidth().background(Tk.Surface).padding(start = 6.dp, end = 6.dp, top = 6.dp, bottom = 6.dp)) {
-                        Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected, Modifier.weight(1f)) { if (t == Tab.Photo) openPhotoAd { onSelect(i) } else onSelect(i) } }
+                        Tab.entries.forEachIndexed { i, t -> NavItem(t, i == selected, Modifier.weight(1f)) { select(i) } }
                     }
                 }
             }
