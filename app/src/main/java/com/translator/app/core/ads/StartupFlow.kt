@@ -96,6 +96,9 @@ class StartupFlow(private val container: AppContainer, private val scope: Corout
                                     when {
                                         !cont.isActive -> Unit
                                         ads.appOpen.appOpenAd != null -> cont.resume(true)
+                                        // The request already failed (no fill, network): don't hold the intro any longer.
+                                        !ads.appOpen.loadInFlight && android.os.SystemClock.elapsedRealtime() - loadStarted >= 600 ->
+                                            cont.resume(false)
                                         android.os.SystemClock.elapsedRealtime() - loadStarted >= AD_LOAD_WAIT_MS ->
                                             cont.resume(false)
                                         else -> handler.postDelayed(this, 200)
@@ -108,11 +111,13 @@ class StartupFlow(private val container: AppContainer, private val scope: Corout
                 }
 
                 val firstLaunch = withTimeoutOrNull(remaining().coerceIn(1, 500)) { firstLaunchCheck?.await() } ?: true
-                // Wait for the ad (or for time to run out) before deciding what to show.
-                withTimeoutOrNull(remaining().coerceAtLeast(1)) { adReadyDeferred.await() }
 
                 if (!firstLaunch) {
-                    if (remaining() > 0 && canShowNow(activity, updateActive)) {
+                    // Wait for the ad (or for time to run out) before deciding what to show. A first start never shows App
+                    // Open, so it does not wait for it either.
+                    val ready = withTimeoutOrNull(remaining().coerceAtLeast(1)) { adReadyDeferred.await() } == true
+                    Log.d(TAG, "App Open at start: ready=$ready, remaining=${remaining()}ms")
+                    if (ready && canShowNow(activity, updateActive)) {
                         ads.appOpen.showAdIfAvailable(activity) { canShowNow(activity, updateActive) }
                     }
                 } else {
@@ -135,9 +140,9 @@ class StartupFlow(private val container: AppContainer, private val scope: Corout
     private companion object {
         const val TAG = "StartupFlow"
         const val CHECK_WAIT_MS = 2_500L
-        const val BUDGET_MS = 4_000L
+        const val BUDGET_MS = 7_000L
         /** Max milliseconds to wait for the app open ad to load before proceeding. */
-        const val AD_LOAD_WAIT_MS = 3_000L
+        const val AD_LOAD_WAIT_MS = 6_000L
 
         /** Process-wide: true once the splash ad was tried in this process. */
         @Volatile var splashAttempted = false

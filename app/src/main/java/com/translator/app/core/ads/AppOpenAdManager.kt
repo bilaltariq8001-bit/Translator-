@@ -27,6 +27,9 @@ class AppOpenAdManager(
     var appOpenAd: AppOpenAd? = null
         private set
     private var isLoading = false
+
+    /** True while a request is in flight (main thread). The startup wait stops early when a request has already failed. */
+    val loadInFlight: Boolean get() = isLoading
     private var loadTimeElapsed = 0L
 
     @Volatile

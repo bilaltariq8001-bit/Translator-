@@ -122,7 +122,7 @@ class NativeAdManager(
 
     private companion object {
         const val FORMAT = "native"
-        const val RETRY_MS = 45_000L
+        const val RETRY_MS = 12_000L
     }
 }
 
@@ -152,8 +152,13 @@ private fun NativeAdContent(ads: AdsController, model: NativeAdModel, modifier: 
     Log.d("AdsDebug", "NativeAdCard: slot=${model.slot}, enabled=${model.enabled}, adId=${model.adId}, adsReady=${ads.adsReady()}")
     if (!model.enabled || model.adId.isEmpty() || !ads.adsReady()) return
 
+    // Keep asking while the card is on screen and has no ad: a no-fill or a slow SDK start used to leave the slot empty for
+    // the whole screen (onboarding is shorter than the old 45 s retry), so the card never appeared.
     LaunchedEffect(model.slot, model.adId, activity) {
-        ads.nativeAds.ensureLoaded(activity, model)
+        while (ads.nativeAds.getAd(model.slot) == null) {
+            ads.nativeAds.ensureLoaded(activity, model)
+            kotlinx.coroutines.delay(NATIVE_RETRY_POLL_MS)
+        }
     }
 
     // Subscribe to adState so this composable recomposes when the ad finishes loading.
@@ -213,3 +218,5 @@ private fun NativeAdContent(ads: AdsController, model: NativeAdModel, modifier: 
         },
     )
 }
+
+private const val NATIVE_RETRY_POLL_MS = 4_000L
