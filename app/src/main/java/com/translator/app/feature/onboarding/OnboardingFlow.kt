@@ -153,10 +153,11 @@ fun OnboardingFlow(
                 ) { onFinish(true, false, analytics) }
             }
         }
-        // A compact native card under every onboarding screen except the splash. It sits outside the animated content, so
-        // the same ad stays put while the screens change above it, and it takes no room until an ad has loaded.
-        if (step != Step.Splash) {
-            Box(Modifier.fillMaxWidth().animateContentSize().padding(horizontal = 16.dp).padding(bottom = 10.dp)) {
+        // A slim native card under the guide and consent screens. None on the splash, and none on the app-language screen,
+        // where it squeezed the language list down to two rows. It sits outside the animated content, so the same ad stays put
+        // while the pages change above it, and it takes no room until an ad has loaded.
+        if (step == Step.Guide || step == Step.Consent) {
+            Box(Modifier.fillMaxWidth().animateContentSize().padding(horizontal = 16.dp).padding(top = 4.dp, bottom = 8.dp)) {
                 com.translator.app.core.ads.NativeAdCard(com.translator.app.core.config.RcKeys.NATIVE_ONBOARDING, compact = true)
             }
         }
