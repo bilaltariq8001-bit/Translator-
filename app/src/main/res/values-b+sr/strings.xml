@@ -363,4 +363,8 @@
     <string name="feedback_subject">Повратне информације АИ преводиоца</string>
     <string name="feedback_no_email">Није пронађена ниједна апликација за е-пошту. Пишите нам на %1$s</string>
     <string name="history_sub">Ваши преводи остају на овом телефону</string>
+    <string name="this_text_is_already_in">Овај текст је већ на језику %1$s, па нема шта да се преведе. Промените језик на врху ако сте мислили на други.</string>
+    <string name="translations_will_be_removed_from">%1$s превода биће уклоњено са овог телефона, укључујући омиљене.</string>
+    <string name="menus_signs_and_documents_in">Менији, знакови и документи на више од 100 језика, укључујући јапански, арапски и урду.</string>
+    <string name="ob_tile_photo">Уперите камеру у знакове, меније и документе</string>
 </resources>

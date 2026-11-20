@@ -355,4 +355,16 @@
     <string name="feedback_title">Фикер алышу</string>
     <string name="feedback_subject">ЯИ тәрҗемәчесе</string>
     <string name="history_sub">Сезнең тәрҗемәләр бу телефонда кала</string>
+    <string name="translate_from">%1$s теленнән тәрҗемә итү</string>
+    <string name="translate_to">%1$s теленә тәрҗемә итү</string>
+    <string name="for_your_trip">%1$s · сәяхәтегез өчен</string>
+    <string name="this_text_is_already_in">Бу текст инде %1$s телендә, шуңа күрә тәрҗемә итәргә әйбер юк. Башка телне күздә тотсагыз, өстә телне алыштырыгыз.</string>
+    <string name="translations_will_be_removed_from">%1$s тәрҗемә, сайланмалар да кертеп, бу телефоннан бетереләчәк.</string>
+    <string name="could_not_download_check_your">%1$s йөкләп булмады. Интернет тоташуын һәм буш урынны тикшерегез, аннары яңадан тырышып карагыз.</string>
+    <string name="too_many_requests_you_can">Сораулар бик күп. %1$s секундтан соң яңадан җибәрә аласыз</string>
+    <string name="something_went_wrong_on_our">Безнең якта нәрсәдер дөрес эшләмәде (код %1$s)</string>
+    <string name="translated_to">%1$s теленә тәрҗемә ителде</string>
+    <string name="ob_step_of">%2$s адымның %1$s адымы</string>
+    <string name="tts_language_missing">Бу телефонда %1$s өчен тавыш юк. Аны телефонның тексттан-сөйләмгә көйләүләрендә урнаштырыгыз.</string>
+    <string name="feedback_no_email">Электрон почта кушымтасы табылмады. Безгә %1$s адресына языгыз</string>
 </resources>

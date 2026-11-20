@@ -355,4 +355,16 @@
     <string name="feedback_title">Seslenme</string>
     <string name="feedback_subject">AI terjimeçiniň seslenmesi</string>
     <string name="history_sub">Terjimeleriňiz şu telefonda galýar</string>
+    <string name="translate_from">%1$s dilinden terjime et</string>
+    <string name="translate_to">%1$s diline terjime et</string>
+    <string name="for_your_trip">%1$s · syýahatyňyz üçin</string>
+    <string name="this_text_is_already_in">Bu tekst eýýäm %1$s dilinde, şonuň üçin terjime etmäge zat ýok. Başga dili göz öňünde tutan bolsaňyz, ýokarda dili üýtgediň.</string>
+    <string name="translations_will_be_removed_from">%1$s terjime, halanlaryňyz hem goşulyp, bu telefondan aýrylar.</string>
+    <string name="could_not_download_check_your">%1$s ýüklenip alynmady. Internet baglanyşygyňyzy we boş ýeri barlaň, soňra täzeden synanyşyň.</string>
+    <string name="too_many_requests_you_can">Haýyşlar örän köp. %1$s sekuntdan soň täzeden iberip bilersiňiz</string>
+    <string name="speak">%1$s gürle</string>
+    <string name="translated_to">%1$s diline terjime edildi</string>
+    <string name="ob_step_of">%2$s ädimden %1$s</string>
+    <string name="tts_language_missing">Bu telefonda %1$s üçin ses ýok. Ony telefonyň tekstden-sese sazlamalarynda guruň.</string>
+    <string name="feedback_no_email">E-poçta programmasy tapylmady. Bize %1$s salgysyna ýazyň</string>
 </resources>

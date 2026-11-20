@@ -358,4 +358,13 @@
     <string name="feedback_title">تەكلىپ</string>
     <string name="feedback_subject">AI تەرجىماننىڭ ئىنكاسى</string>
     <string name="history_sub">تەرجىمىلىرىڭىز بۇ تېلېفوندا تۇرىدۇ</string>
+    <string name="translate_from">%1$s تىلىدىن تەرجىمە قىلىش</string>
+    <string name="translate_to">%1$s تىلىغا تەرجىمە قىلىش</string>
+    <string name="allow_the_camera_to_point">كامېرانى بەلگە، تىزىملىك ياكى ھۆججەتكە قارىتىپ، ئۇنىڭ %1$s تىلىغا تەرجىمىسىنى دەل مۇشۇ يەردە كۆرۈشكە رۇخسەت قىلىڭ. كامېرا پەقەت مۇشۇ ئېكراندا ئىشلىتىلىدۇ.</string>
+    <string name="this_text_is_already_in">بۇ تېكىست ئاللىبۇرۇن %1$s تىلىدا، شۇڭا تەرجىمە قىلىدىغان نەرسە يوق. باشقا تىلنى دېمەكچى بولسىڭىز، ئۈستىدىكى تىلنى ئۆزگەرتىڭ.</string>
+    <string name="could_not_download_check_your">%1$s نى چۈشۈرگىلى بولمىدى. تور ئۇلىنىشى ۋە بوش ئورۇننى تەكشۈرۈپ، قايتا سىناڭ.</string>
+    <string name="download_for_offline_use">تورسىز ئىشلىتىش ئۈچۈن %1$s نى چۈشۈرۈش</string>
+    <string name="translated_to">%1$s تىلىغا تەرجىمە قىلىندى</string>
+    <string name="tts_language_missing">بۇ تېلېفوندا %1$s ئۈچۈن ئاۋاز يوق. ئۇنى تېلېفوننىڭ تېكىستتىن ئاۋازغا تەڭشىكىدە ئورنىتىڭ.</string>
+    <string name="feedback_no_email">ئېلخەت ئەپى تېپىلمىدى. بىزگە %1$s غا يېزىڭ</string>
 </resources>

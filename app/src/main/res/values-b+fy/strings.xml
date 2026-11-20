@@ -358,4 +358,13 @@
     <string name="feedback_subject">AI Translator feedback</string>
     <string name="feedback_no_email">Gjin e-postapp fûn. Skriuw nei ús op %1$s</string>
     <string name="history_sub">Jo oersettingen bliuwe op dizze telefoan</string>
+    <string name="makes_text_in_this_app">Makket tekst yn dizze app grutter boppe op jo Android-lettergrutte.</string>
+    <string name="your_translations_and_favorites_on">Jo oersettingen en favoriten op dizze telefoan wurde fuortsmiten.</string>
+    <string name="we_delete_your_history_favorites">Wy wiskje jo skiednis, favoriten en ynstellingen op dizze telefoan. In abonnemint bliuwt by jo Google Play-akkount.</string>
+    <string name="speech_typing_needs_an_internet">Spraaktypjen hat foar dizze taal in ynternetferbining nedich.</string>
+    <string name="audio_goes_to_your_device">Audio giet nei de spraaktsjinst fan jo apparaat om yn tekst omset te wurden en wurdt net bewarre troch dizze app</string>
+    <string name="turn_on_cloud_voice_and_2">Set \"Cloud-stim en kamera\" oan yn Ynstellingen om AI-ynsjoggen te brûken.</string>
+    <string name="the_style_changes_how_the">De styl feroaret hoe\'t de oersetting formulearre wurdt as AI-oersetting oan stiet.</string>
+    <string name="speech_recognition_is_not_available">Spraakherkenning is net beskikber op dit apparaat.</string>
+    <string name="speech_recognition_needs_an_internet">Spraakherkenning hat foar dizze taal in ynternetferbining nedich.</string>
 </resources>

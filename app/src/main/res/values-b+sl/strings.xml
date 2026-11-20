@@ -361,4 +361,10 @@
     <string name="feedback_subject">Povratne informacije prevajalca AI</string>
     <string name="feedback_no_email">E-poštna aplikacija ni bila najdena. Pišite nam na %1$s</string>
     <string name="history_sub">Vaši prevodi ostanejo na tem telefonu</string>
+    <string name="written_by_ai_so_double">Napisala umetna inteligenca, zato preverite vse pomembno.</string>
+    <string name="translated_automatically_so_double_check">Prevedeno samodejno, zato preverite vse pomembno.</string>
+    <string name="switch_on_ai_translator_keyboard">Na seznamu tipkovnic vklopite \"Tipkovnica AI Translator\".</string>
+    <string name="tap_here_type_something_then">Tapnite tukaj, nekaj natipkajte in nato na tipkovnici tapnite Prevedi</string>
+    <string name="pick_the_language_you_type">1. Na vrhu tipkovnice izberite jezik, v katerem tipkate, in jezik, ki ga želite.</string>
+    <string name="privacy_nothing_leaves_your_phone">Zasebnost: nič ne zapusti vašega telefona, dokler ne tapnete Prevedi, tipkovnica pa nikoli ne prevaja v poljih za gesla. Preneseni jeziki brez povezave delujejo brez interneta.</string>
 </resources>

@@ -354,4 +354,17 @@
     <string name="feedback_title">ମତାମତ</string>
     <string name="feedback_subject">AI ଅନୁବାଦକ ମତାମତ |</string>
     <string name="history_sub">ତୁମର ଅନୁବାଦ ଏହି ଫୋନରେ ରୁହ |</string>
+    <string name="translate_from">%1$s ରୁ ଅନୁବାଦ କରନ୍ତୁ</string>
+    <string name="translate_to">%1$s କୁ ଅନୁବାଦ କରନ୍ତୁ</string>
+    <string name="allow_the_camera_to_point">କ୍ୟାମେରାକୁ ଏକ ସଙ୍କେତ, ମେନୁ କିମ୍ବା ଦଲିଲ ଆଡକୁ ଦେଖାଇ ଏଠାରେ ହିଁ %1$s ରେ ଅନୁବାଦ ଦେଖିବାକୁ ଅନୁମତି ଦିଅନ୍ତୁ। କ୍ୟାମେରା କେବଳ ଏହି ସ୍କ୍ରିନରେ ବ୍ୟବହୃତ ହୁଏ।</string>
+    <string name="this_text_is_already_in">ଏହି ଲେଖା ପୂର୍ବରୁ %1$s ରେ ଅଛି, ତେଣୁ ଅନୁବାଦ କରିବାକୁ କିଛି ନାହିଁ। ଯଦି ଆପଣ ଅନ୍ୟ ଭାଷା ଚାହୁଁଥିଲେ ଉପରେ ଭାଷା ବଦଳାନ୍ତୁ।</string>
+    <string name="could_not_download_check_your">%1$s ଡାଉନଲୋଡ୍ କରିହେଲା ନାହିଁ। ଆପଣଙ୍କ ଇଣ୍ଟରନେଟ୍ ସଂଯୋଗ ଏବଂ ଖାଲି ସ୍ଥାନ ଯାଞ୍ଚ କରି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।</string>
+    <string name="remove">%1$s ହଟାନ୍ତୁ</string>
+    <string name="download">%1$s ଡାଉନଲୋଡ୍ କରନ୍ତୁ</string>
+    <string name="download_for_offline_use">ଅଫଲାଇନ୍ ବ୍ୟବହାର ପାଇଁ %1$s ଡାଉନଲୋଡ୍ କରନ୍ତୁ</string>
+    <string name="speak">%1$s କୁହନ୍ତୁ</string>
+    <string name="translating_to">%1$s କୁ ଅନୁବାଦ ହେଉଛି…</string>
+    <string name="translated_to">%1$s କୁ ଅନୁବାଦିତ</string>
+    <string name="tts_language_missing">ଏହି ଫୋନରେ %1$s ପାଇଁ କୌଣସି ସ୍ୱର ନାହିଁ। ଫୋନର ଟେକ୍ସଟ-ଟୁ-ସ୍ପିଚ୍ ସେଟିଂସରେ ଏହାକୁ ଇନଷ୍ଟଲ୍ କରନ୍ତୁ।</string>
+    <string name="feedback_no_email">କୌଣସି ଇମେଲ୍ ଆପ୍ ମିଳିଲା ନାହିଁ। %1$s ରେ ଆମକୁ ଲେଖନ୍ତୁ</string>
 </resources>

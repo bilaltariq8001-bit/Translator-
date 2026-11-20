@@ -362,4 +362,9 @@
     <string name="feedback_subject">Viðbrögð AI þýðanda</string>
     <string name="feedback_no_email">Ekkert tölvupóstforrit fannst. Skrifaðu okkur á %1$s</string>
     <string name="history_sub">Þýðingar þínar verða áfram í þessum síma</string>
+    <string name="tap_here_type_something_then">Ýttu hér, skrifaðu eitthvað og ýttu svo á Þýða á lyklaborðinu</string>
+    <string name="pick_the_language_you_type">1. Veldu tungumálið sem þú skrifar á og tungumálið sem þú vilt, efst á lyklaborðinu.</string>
+    <string name="turn_on_cloud_voice_and">Kveiktu á \"Skýjarödd og myndavél\" í Ég til að þýða myndir.</string>
+    <string name="scan_another_photo">Skanna aðra mynd</string>
+    <string name="your_photo">Myndin þín</string>
 </resources>
