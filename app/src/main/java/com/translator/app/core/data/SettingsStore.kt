@@ -80,7 +80,8 @@ class DataStoreSettingsStore(context: Context) : SettingsStore {
             syncPrefs.onboardingDone = true
         }
         AppSettings(
-            appLanguage = p[K.appLanguage] ?: d.appLanguage,
+            // Until the person picks one, the app speaks the phone's language when it has it (English otherwise).
+            appLanguage = p[K.appLanguage] ?: com.translator.app.core.i18n.AppLocale.deviceLanguage(),
             onboardingDone = isDone,
             // The cloud features (AI, voice and camera reading) are always available now; there is no switch for them any more,
             // and the first-run privacy screen tells the person what is sent before they agree. A value saved by an older

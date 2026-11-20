@@ -32,6 +32,11 @@ class MainActivity : ComponentActivity() {
     private var updateCoordinator: ImmediateUpdateCoordinator? = null
     private var criticalUpdateDialog: AlertDialog? = null
 
+    // The Activity's own resources follow the app language too (the app's own text already does, through AppLocale).
+    override fun attachBaseContext(newBase: android.content.Context) {
+        super.attachBaseContext(com.translator.app.core.i18n.AppLocale.wrap(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // The system splash (brand blue with the logo) stays up until the saved settings have loaded, so the first thing
         // drawn after it is the real screen and not a blank one. It never waits longer than a second and a half.

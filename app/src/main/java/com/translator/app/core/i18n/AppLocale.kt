@@ -83,13 +83,74 @@ object AppLocale {
 
     fun set(languageCode: String) {
         val context = base ?: return
-        val locale = pickLocale(context, languageCode) ?: Locale.forLanguageTag(languageCode)
-        val wanted = languageCode
+        val wanted = languageCode.ifBlank { "en" }
         if (wanted == code && resources != null) return
+        val locale = pickLocale(context, wanted) ?: Locale.forLanguageTag(wanted)
         resources = resourcesFor(context, locale)
         code = wanted
+        // Remember it where it can be read at once, before anything has loaded (MainActivity.attachBaseContext).
+        try { prefs(context).edit().putString(PREF_KEY, wanted).apply() } catch (_: Throwable) { }
+        // Tell Android itself (13 and later), so the whole app, system dialogs and the phone's own per-app language setting
+        // agree with the choice. Android re-creates the screen once when the language really changes; the next call here then
+        // finds it already set and does nothing, so this never loops.
+        applyToSystem(context, wanted)
         version++
     }
+
+    /** The app language saved by the last [set], readable synchronously; null before the first choice. */
+    fun saved(context: Context): String? = try { prefs(context).getString(PREF_KEY, null) } catch (_: Throwable) { null }
+
+    /**
+     * [newBase] with the saved app language applied, for Activity.attachBaseContext. Then everything that reads the Activity's
+     * own resources (stringResource, system pickers and dialogs) is in the app language too, on every Android version.
+     */
+    fun wrap(newBase: Context): Context {
+        val wanted = saved(newBase) ?: return newBase
+        return try {
+            val locale = pickLocale(newBase, wanted) ?: Locale.forLanguageTag(wanted)
+            val config = Configuration(newBase.resources.configuration).apply { setLocale(locale); setLayoutDirection(locale) }
+            newBase.createConfigurationContext(config)
+        } catch (_: Throwable) { newBase }
+    }
+
+    /**
+     * The phone's own language, when the app has it (otherwise English): the app language before the person has chosen one,
+     * so someone whose phone is in Urdu or Spanish sees the app in Urdu or Spanish from the first screen.
+     */
+    fun deviceLanguage(): String {
+        val system = try {
+            android.content.res.Resources.getSystem().configuration.locales.get(0)
+        } catch (_: Throwable) { null } ?: return "en"
+        val lang = when (val l = system.language.lowercase()) {
+            "iw" -> "he"
+            "in" -> "id"
+            "ji" -> "yi"
+            "nb", "nn" -> "no"
+            "fil" -> "tl"
+            else -> l
+        }
+        if (lang == "zh") {
+            val traditional = system.script.equals("Hant", true) || system.country.uppercase() in setOf("TW", "HK", "MO")
+            return if (traditional && "zh-TW" in supported) "zh-TW" else "zh"
+        }
+        return if (lang in supported) lang else "en"
+    }
+
+    private fun applyToSystem(context: Context, wanted: String) {
+        if (android.os.Build.VERSION.SDK_INT < 33) return
+        try {
+            val manager = context.getSystemService(android.app.LocaleManager::class.java) ?: return
+            val current = manager.applicationLocales
+            val currentTag = if (current.isEmpty) "" else current.get(0).toLanguageTag()
+            if (currentTag.equals(wanted, ignoreCase = true)) return
+            manager.applicationLocales = android.os.LocaleList.forLanguageTags(wanted)
+        } catch (_: Throwable) { }
+    }
+
+    private fun prefs(context: Context) =
+        context.applicationContext.getSharedPreferences("app_locale", Context.MODE_PRIVATE)
+
+    private const val PREF_KEY = "app_language"
 
     fun string(@StringRes id: Int, vararg args: Any): String {
         version // registers a read, so composables that show this string redraw when the language changes
