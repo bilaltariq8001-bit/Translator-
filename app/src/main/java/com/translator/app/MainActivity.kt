@@ -37,6 +37,13 @@ class MainActivity : ComponentActivity() {
         super.attachBaseContext(com.translator.app.core.i18n.AppLocale.wrap(newBase))
     }
 
+    // Android 13+: the app's language changed in the phone's Settings while the app was open (the screen is kept, not rebuilt,
+    // since the manifest handles locale changes). Every string redraws in the new language through AppLocale.
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        com.translator.app.core.i18n.AppLocale.syncFromSystem(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         // The system splash (brand blue with the logo) stays up until the saved settings have loaded, so the first thing
         // drawn after it is the real screen and not a blank one. It never waits longer than a second and a half.
@@ -64,7 +71,8 @@ class MainActivity : ComponentActivity() {
         )
         val container = (application as TranslatorApp).container
         lifecycleScope.launch {
-            withTimeoutOrNull(1_500) { container.settings.settings.first() }?.let { com.translator.app.core.i18n.AppLocale.set(it.appLanguage) }
+            // The app language is already applied (TranslatorApp.onCreate); this only waits for the rest of the settings.
+            withTimeoutOrNull(1_500) { container.settings.settings.first() }
             settingsLoaded = true
         }
         val startup = StartupFlow(container, lifecycleScope)

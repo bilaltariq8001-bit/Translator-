@@ -41,6 +41,6 @@ fun toneLabel(tone: Tone): String = when (tone) {
 fun Language.localName(): String {
     val app = AppLocale.locale
     if (app.language == "en") return name
-    val shown = Locale(code).getDisplayLanguage(app)
+    val shown = Locale.forLanguageTag(code).getDisplayLanguage(app)
     return if (shown.isBlank() || shown.equals(code, ignoreCase = true)) name else shown.replaceFirstChar { it.titlecase(app) }
 }

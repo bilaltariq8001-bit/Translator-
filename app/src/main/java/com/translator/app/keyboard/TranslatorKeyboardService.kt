@@ -42,9 +42,7 @@ class TranslatorKeyboardService : InputMethodService(), KeyboardListener {
     private val container get() = (application as TranslatorApp).container
 
     override fun onCreateInputView(): View {
-        // The keyboard's own labels follow the app language too; read it before the view is built.
-        kotlinx.coroutines.runBlocking { kotlinx.coroutines.withTimeoutOrNull(400) { container.settings.settings.first().appLanguage } }
-            ?.let { com.translator.app.core.i18n.AppLocale.set(it) }
+        // The keyboard's own labels follow the app language too (AppLocale, applied when the app process started).
         keyboard = TranslatorKeyboardView(this, this)
         scope.launch {
             val s = container.settings.settings.first()

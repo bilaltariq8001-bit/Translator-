@@ -81,7 +81,13 @@ class DataStoreSettingsStore(context: Context) : SettingsStore {
         }
         AppSettings(
             // Until the person picks one, the app speaks the phone's language when it has it (English otherwise).
-            appLanguage = p[K.appLanguage] ?: com.translator.app.core.i18n.AppLocale.deviceLanguage(),
+            // The app language itself lives in AppLocale (saved synchronously, applied before the first screen). A choice saved
+            // here by an older version of the app is taken over once.
+            appLanguage = run {
+                val older = p[K.appLanguage]
+                if (older != null && !com.translator.app.core.i18n.AppLocale.hasSavedChoice()) com.translator.app.core.i18n.AppLocale.set(older)
+                com.translator.app.core.i18n.AppLocale.current
+            },
             onboardingDone = isDone,
             // The cloud features (AI, voice and camera reading) are always available now; there is no switch for them any more,
             // and the first-run privacy screen tells the person what is sent before they agree. A value saved by an older
@@ -100,7 +106,10 @@ class DataStoreSettingsStore(context: Context) : SettingsStore {
         )
     }
 
-    override suspend fun setAppLanguage(code: String) { store.edit { it[K.appLanguage] = code } }
+    override suspend fun setAppLanguage(code: String) {
+        com.translator.app.core.i18n.AppLocale.set(code)
+        store.edit { it[K.appLanguage] = com.translator.app.core.i18n.AppLocale.current }
+    }
 
     override suspend fun completeOnboarding(cloudConsent: Boolean, crashReports: Boolean) {
         syncPrefs.onboardingDone = true

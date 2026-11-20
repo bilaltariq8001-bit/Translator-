@@ -22,6 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:label="AI Translator"
         android:supportsRtl="true"
+        android:localeConfig="@xml/locales_config"
         android:theme="@style/Theme.Translator">
         <!-- AdMob app id: Google's test id unless admob.appId is set in local.properties. -->
         <meta-data android:name="com.google.android.gms.ads.APPLICATION_ID" android:value="${admobAppId}" />
@@ -34,7 +35,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.Translator.Starting"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|layoutDirection|fontScale|uiMode"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|locale|layoutDirection|fontScale|uiMode"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">

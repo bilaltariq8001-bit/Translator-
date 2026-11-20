@@ -107,10 +107,11 @@ private enum class Tab(@androidx.annotation.StringRes val label: Int, val icon: 
 @Composable
 fun AppRoot(container: AppContainer) {
     val loaded by remember { container.settings.settings.map<AppSettings, AppSettings?> { it } }.collectAsStateWithLifecycle(initialValue = null)
-    val settings = loaded ?: run { Box(Modifier.fillMaxSize().background(Tk.Bg)); return }
+    // The app language always comes from AppLocale (Compose state): it is already applied before the first frame, and a new
+    // choice shows at once, without waiting for the settings store to write and read it back.
+    val settings = (loaded ?: run { Box(Modifier.fillMaxSize().background(Tk.Bg)); return })
+        .copy(appLanguage = com.translator.app.core.i18n.AppLocale.current)
     val scope = rememberCoroutineScope()
-    // Apply the saved app language (and any change made in Settings) to every string in the app.
-    androidx.compose.runtime.SideEffect { com.translator.app.core.i18n.AppLocale.set(settings.appLanguage) }
 
     // Under an RTL app language (Urdu, Arabic) the whole layout mirrors.
     val rtl = Languages.byCodeOrNull(settings.appLanguage)?.rtl == true
@@ -129,7 +130,7 @@ fun AppRoot(container: AppContainer) {
                 val onboardingDoneAd = com.translator.app.core.backpress.rememberNavigationAd(com.translator.app.core.config.RcKeys.ONBOARDING_DONE)
                 OnboardingFlow(
                     appLanguage = settings.appLanguage,
-                    onAppLanguage = { scope.launch { container.settings.setAppLanguage(it) } },
+                    onAppLanguage = { code -> com.translator.app.core.i18n.AppLocale.set(code); scope.launch { container.settings.setAppLanguage(code) } },
                     askAnalytics = askAnalytics,
                     onFinish = { cloud, crash, analytics ->
                         val ask = container.ads.askAnalytics()
@@ -279,7 +280,7 @@ private fun MainNav(container: AppContainer) {
                         historyCount = historyCount.all.size,
                         offlineCount = offlineReady.size,
                         onOpenOffline = { nav.navigate("offline") },
-                        onAppLanguage = { scope.launch { container.settings.setAppLanguage(it) } },
+                        onAppLanguage = { code -> com.translator.app.core.i18n.AppLocale.set(code); scope.launch { container.settings.setAppLanguage(code) } },
                         onSpeakAloud = { scope.launch { container.settings.setSpeakAloud(it) } },
                         onHaptics = { scope.launch { container.settings.setHaptics(it) } },
                         onTextSize = { scope.launch { container.settings.setTextSize(it) } },
