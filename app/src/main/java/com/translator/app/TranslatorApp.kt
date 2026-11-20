@@ -19,6 +19,8 @@ class TranslatorApp : Application(), Application.ActivityLifecycleCallbacks, Def
     private val main = Handler(Looper.getMainLooper())
     private var currentMainActivity = WeakReference<MainActivity>(null)
     private var foregroundReturnPending = false
+    /** The activity covered in black for a resume App Open ad, until that ad shows or turns out not to. */
+    private var coveredForResume = WeakReference<Activity>(null)
 
     override fun onCreate() {
         super<Application>.onCreate()
@@ -37,6 +39,9 @@ class TranslatorApp : Application(), Application.ActivityLifecycleCallbacks, Def
         Log.d(TAG, "process foregrounded; backgroundReturn=$isBackgroundReturn")
         if (isBackgroundReturn) {
             foregroundReturnPending = true
+            // The resume App Open ad is about to show: make the screen black before the app draws its first frame, so the
+            // app's own screen never flashes between coming back and the ad appearing.
+            coverForResumeAd()
             // ProcessLifecycleOwner reports after Activity start; waiting for onResume avoids showing on a half-ready Activity.
             main.post(::showPendingForegroundAdWhenResumed)
         }
@@ -68,6 +73,27 @@ class TranslatorApp : Application(), Application.ActivityLifecycleCallbacks, Def
         if (currentMainActivity.get() === activity) currentMainActivity.clear()
     }
 
+    private fun coverForResumeAd() {
+        val activity = currentMainActivity.get() ?: return
+        if (activity.isFinishing || activity.isDestroyed) return
+        try {
+            if (!container.ads.appOpen.willShowOnReturn() || !activity.canShowAppOpenAd()) return
+        } catch (_: Throwable) { return }
+        if (com.translator.app.core.ads.AdBackdrop.isShowing(activity)) return
+        com.translator.app.core.ads.AdBackdrop.show(activity)
+        coveredForResume = WeakReference(activity)
+        // Safety net: never leave the app covered if the ad does not come up.
+        main.postDelayed(::uncoverIfNoResumeAd, COVER_TIMEOUT_MS)
+    }
+
+    /** Takes the black cover away again when the resume ad did not show (no ad, not allowed, or it failed). */
+    private fun uncoverIfNoResumeAd() {
+        val activity = coveredForResume.get() ?: return
+        coveredForResume.clear()
+        // While the ad is up it owns the backdrop and removes it itself when it closes.
+        if (!container.ads.appOpen.isShowing) com.translator.app.core.ads.AdBackdrop.hide(activity)
+    }
+
     private fun showPendingForegroundAdWhenResumed() {
         if (!foregroundReturnPending) return
         val activity = currentMainActivity.get() ?: return
@@ -76,6 +102,7 @@ class TranslatorApp : Application(), Application.ActivityLifecycleCallbacks, Def
         // Consume this process transition before attempting an ad. A missing/blocked ad is not retried late over app content.
         foregroundReturnPending = false
         container.ads.appOpen.onAppForegrounded(activity) { activity.canShowAppOpenAd() }
+        uncoverIfNoResumeAd()
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) = Unit
@@ -89,5 +116,8 @@ class TranslatorApp : Application(), Application.ActivityLifecycleCallbacks, Def
         super<Application>.onTerminate()
     }
 
-    private companion object { const val TAG = "TranslatorAppLifecycle" }
+    private companion object {
+        const val TAG = "TranslatorAppLifecycle"
+        const val COVER_TIMEOUT_MS = 1_500L
+    }
 }

@@ -93,6 +93,14 @@ android {
         compose = true
         buildConfig = true
     }
+    // The app switches its own interface language in Settings (109 languages), so every language's strings must be in the
+    // install. Without this, a Play Store install from an app bundle only gets the phone's own languages, and any other
+    // language picked in the app would show in English.
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
 }
 
 dependencies {

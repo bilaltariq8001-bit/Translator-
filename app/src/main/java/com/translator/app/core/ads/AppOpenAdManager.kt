@@ -194,6 +194,16 @@ class AppOpenAdManager(
         }
     }
 
+    /**
+     * True when coming back to the app will show the cached App Open ad (main thread). Used to cover the app with the black
+     * backdrop the moment it starts again, before its first frame, so the app's screen never flashes before the resume ad.
+     */
+    fun willShowOnReturn(): Boolean {
+        if (startupInProgress || isShowing || !prefs.onboardingDone || anotherFullscreenAdShowing()) return false
+        val model = config.appOpen()
+        return model.enabled && gate.canLoad() && hasFreshAd() && !isWithinCooldown()
+    }
+
     private fun hasFreshAd(): Boolean =
         appOpenAd != null && SystemClock.elapsedRealtime() - loadTimeElapsed <= AD_VALID_FOR_MS
 
